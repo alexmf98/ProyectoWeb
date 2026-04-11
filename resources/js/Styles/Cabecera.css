@@ -1,0 +1,7 @@
+.cabeceraHome{
+    display: flex;
+    width: 100%;
+    background-color: skyblue;
+    justify-content: space-around;
+}
+

@@ -1,0 +1,35 @@
+.pie{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: auto;
+    padding: 50px;
+    background: linear-gradient(to bottom, skyblue, white);
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.pie ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pie li{
+    margin-bottom: 8px;
+}
+
+.contacto{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.localizacion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}

@@ -1,8 +1,44 @@
 .cabeceraHome{
     display: flex;
     width: 100%;
-    background-color: skyblue;
+    background-color: #5BA9E1;
     justify-content: space-around;
     padding: 20px;
 }
 
+.cabeceraHome a{
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+}
+
+a:hover{
+    background-color: #A5D4F6;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+}
+
+.proyectos{
+    display: flex;
+    position: relative;
+}
+
+.subProyectos{
+    display: none;
+    border: 2px solid black;
+    border-radius: 10px;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    gap: 5px;
+    background: linear-gradient(to bottom, #5BA9E1, #A5D4F6);
+    z-index: 100;
+    min-width: 150px;
+    padding: 5px;
+}
+
+.proyectos:hover .subProyectos{
+    display: flex;
+}

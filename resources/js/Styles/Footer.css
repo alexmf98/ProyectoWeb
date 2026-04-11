@@ -1,9 +1,9 @@
 .pie{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     margin-top: auto;
     padding: 50px;
-    background: linear-gradient(to bottom, skyblue, white);
+    background: linear-gradient(to bottom, #5BA9E1, #A5D4F6);
     border: 2px solid black;
     border-radius: 5px;
 }

@@ -1,0 +1,68 @@
+.tituloEmpresa{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    font-family: cursive;
+    font-style: oblique;
+}
+
+.historiaEmpresa{
+    display: flex;
+    /* grid-template-columns: 1fr 1fr; */
+    height: 50vh;
+}
+
+.fotoEmpresa{
+    display: flex;
+    border: 2px solid red;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    
+}
+
+.textoEmpresa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.proyectosRealizados{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.imagenesProyectos{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    border: 2px solid red;
+}
+
+.imagen1Proyecto{
+    display: flex;
+    justify-content: center;
+}
+
+.imagen2Proyecto{
+    display: flex;
+    justify-content: center;
+}
+
+.imagen3Proyecto{
+    display: flex;
+    justify-content: center;
+}
+
+.empresasColaboradoras{
+    display: flex;
+    justify-content: center;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+}

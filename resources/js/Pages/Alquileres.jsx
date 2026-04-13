@@ -1,5 +1,7 @@
 import "../Styles/Alquiler.css";
-
+import dumper from "../Imagenes/maquinaria/dumper.png";
+import fresadora from "../Imagenes/maquinaria/fresadora.png";
+import retroexcavadora from "../Imagenes/maquinaria/retroexcavadora.png";
 export default function Alquiler(){
     return(
         <>
@@ -12,19 +14,19 @@ export default function Alquiler(){
 
             <div className="imagenesMaquinaria">
                     <div className="imagenMaquina1">
-                        <img src="" alt="Maquina 1" />
+                        <img src={dumper} alt="Maquina 1" />
 
                         <button>Informacion</button>
                     </div>
 
                     <div className="imagenMaquina2">
-                        <img src="" alt="Maquina 2" />
+                        <img src={fresadora} alt="Maquina 2" />
 
                         <button>Informacion</button>
                     </div>
 
                     <div className="imagenMaquina3">
-                        <img src="" alt="Maquina 3" />
+                        <img src={retroexcavadora} alt="Maquina 3" />
 
                         <button>Informacion</button>
                     </div>

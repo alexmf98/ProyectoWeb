@@ -1,0 +1,19 @@
+.contenedorTrabajar{
+    display: grid;
+    justify-content: center;
+    border: 2px solid red;
+}
+
+.tarjetaTrabajar form{
+    display: flex;
+    flex-direction: column;
+    
+    gap: 10px;
+    
+    border: 2px solid red;
+}
+
+.botonTrabajar{
+    display: flex;
+    gap: 10px;
+}

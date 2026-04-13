@@ -26,3 +26,15 @@ Route::get('/proyectos', function(){
 Route::get('/contactenos', function(){
     return Inertia::render('Contactenos');
 });
+
+Route::get('/restauracion', function(){
+    return Inertia::render('Restauracion');
+});
+
+Route::get('/adecuacion', function(){
+    return Inertia::render('Adecuacion');
+});
+
+Route::get('/personal', function(){
+    return Inertia::render('Personal');
+});

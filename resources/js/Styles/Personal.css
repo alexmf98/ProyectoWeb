@@ -1,0 +1,40 @@
+.contenedorPersonal{
+    display: grid;
+    
+}
+
+.tarjetaPersonal{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    border: 2px red solid;
+}
+
+.textAreaPersonal{
+    height: 100px;
+    width: 1000px;
+}
+
+.botonesPersonal{
+    display: flex;
+    gap: 10px;
+}
+
+.botonesPersonal button{
+    font-size: 15px;
+    font-style: oblique;
+}
+
+/* .botonesPersonal .btnEnviar:hover,
+.botonesPersonal .btnCancelar:hover {
+    background: linear-gradient(to bottom, #6FC072, #B7E0B8);
+} */
+
+.botonesPersonal button:hover {
+    background: linear-gradient(to bottom, #6FC072, #B7E0B8);
+    border-radius: 10px;
+}

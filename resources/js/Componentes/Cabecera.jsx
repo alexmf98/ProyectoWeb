@@ -17,11 +17,11 @@ export default function Cabecera(){
                 <Link href={'/proyectos'}>Proyectos</Link>
                 
                 <div className="subProyectos">
-                    <Link>Restauración</Link>
+                    <Link href={'/restauracion'}>Restauración</Link>
                     
-                    <Link>Adecuación</Link>
+                    <Link href={'/adecuacion'}>Adecuación</Link>
                     
-                    <Link>Personal</Link>
+                    <Link href={'/personal'}>Personal</Link>
                 </div>
             </div>
             

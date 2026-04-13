@@ -1,0 +1,28 @@
+.contenedorRestauracion{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 15px;
+    border: 2px red solid;
+}
+
+.contenedorRestauracion h1{
+    display: flex;
+    justify-content: center;
+    grid-column: 1 / -1;
+}
+
+.tarjetasRestauracion{
+    grid-column: 1 / -1;
+    display: flex;
+
+    /* justify-content: space-around; */
+    justify-content: center;
+    gap: 20px;
+    padding: 50px;
+    border: 2px red solid;
+}
+
+.tarjetasRestauracion img{
+    width: 150px;
+
+}

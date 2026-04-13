@@ -1,0 +1,28 @@
+.contenedorAdecuacion{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 15px;
+    border: 2px red solid;
+}
+
+.contenedorAdecuacion h1{
+    display: flex;
+    justify-content: center;
+    grid-column: 1 / -1;
+}
+
+.tarjetasAdecuacion{
+    grid-column: 1 / -1;
+    display: flex;
+
+    /* justify-content: space-around; */
+    justify-content: center;
+    gap: 20px;
+    padding: 50px;
+    border: 2px red solid;
+}
+
+.tarjetasAdecuacion img{
+    width: 150px;
+
+}

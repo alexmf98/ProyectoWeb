@@ -9,12 +9,12 @@
 .historiaEmpresa{
     display: flex;
     /* grid-template-columns: 1fr 1fr; */
-    height: 50vh;
+    /* height: 50vh; */
 }
 
 .fotoEmpresa{
     display: flex;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     justify-content: center;
     width: 50%;
     align-items: center;
@@ -32,6 +32,38 @@
     padding: 20px;
 }
 
+.historiaEmpresa {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+
+    background-image: url("../Imagenes/logo/construccion.png");
+    background-size: cover;
+    background-position: center;
+}
+
+/* capa oscura */
+.historiaEmpresa::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+/* texto */
+.overlayHistoria {
+    position: relative;
+    z-index: 1;
+    color: white;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+}
+
 .proyectosRealizados{
     display: flex;
     flex-direction: column;
@@ -46,7 +78,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     height: 300px;
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
 
 .imagenesProyectos img{
@@ -83,7 +115,6 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-
 }
 
 .fotosColaboradoras {
@@ -91,6 +122,36 @@
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     gap: 10px;
+
+    overflow: hidden;
+}
+
+.fotosColaboradoras img{
+    width: auto;
+    height: 100px;
+    object-fit: contain;
+}
+
+.slider {
+    display: flex;
+    width: max-content;
+    animation: scroll 10s linear infinite;
+}
+
+.slider img{
+    height: 250px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 30px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .imagen1Colaboradora, 
@@ -102,8 +163,33 @@
     height: 150px;  
 }
 
-.fotosColaboradoras img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.imagen1Proyecto,
+.imagen2Proyecto,
+.imagen3Proyecto {
+    position: relative;
 }
+
+.overlay{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    opacity: 0;
+    transition: all ease 0.4s;
+}
+
+.imagen1Proyecto:hover .overlay,
+.imagen2Proyecto:hover .overlay,
+.imagen3Proyecto:hover .overlay{
+    opacity: 1;
+}
+
+.imagen1Proyecto:hover img,
+.imagen2Proyecto:hover img,
+.imagen3Proyecto:hover img {
+    transform:scale(1.2) ;
+}
+

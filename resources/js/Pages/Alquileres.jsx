@@ -2,54 +2,52 @@ import "../Styles/Alquiler.css";
 import dumper from "../Imagenes/maquinaria/dumper.png";
 import fresadora from "../Imagenes/maquinaria/fresadora.png";
 import retroexcavadora from "../Imagenes/maquinaria/retroexcavadora.png";
-export default function Alquiler(){
-    return(
+import MaquinariaImg from "../Componentes/MaquinariaImg";
+export default function Alquiler() {
+    return (
         <>
             <h1>Alquileres</h1>
 
             <div className="contenedorAlquiler">
-                <input type="text" placeholder="Buscar..."/>
+                <input type="text" placeholder="Buscar..." />
                 <button>Buscar</button>
             </div>
 
+
             <div className="imagenesMaquinaria">
-                    <div className="imagenMaquina1">
-                        <img src={dumper} alt="Maquina 1" />
-
-                        <button>Informacion</button>
-                    </div>
-
-                    <div className="imagenMaquina2">
-                        <img src={fresadora} alt="Maquina 2" />
-
-                        <button>Informacion</button>
-                    </div>
-
-                    <div className="imagenMaquina3">
-                        <img src={retroexcavadora} alt="Maquina 3" />
-
-                        <button>Informacion</button>
-                    </div>
-
-                    <div className="imagenMaquina4">
-                        <img src="" alt="Maquina 4" />
-
-                        <button>Informacion</button>
-                    </div>
-
-                    <div className="imagenMaquina5">
-                        <img src="" alt="Maquina 5" />
-
-                        <button>Informacion</button>
-                    </div>
-
-                    <div className="imagenMaquina6">
-                        <img src="" alt="Maquina 6" />
-
-                        <button>Informacion</button>
-                    </div>
-
+                <div className="imagenMaquina">
+                    <MaquinariaImg titulo={"Dumper"} src={dumper} alt={"Imagen 1"} />
                 </div>
+                <div className="imagenMaquina">
+                    <MaquinariaImg titulo={""} src={fresadora} alt={"Imagen 2"} />
+                </div>
+
+                <div className="imagenMaquina">
+                    
+                    <MaquinariaImg titulo={""} src={retroexcavadora} alt={"Imagen 3"} />
+                
+                </div>
+
+                <div className="imagenMaquina">
+
+                    <MaquinariaImg titulo={""} src={""} alt={"Imagen 4"} />
+                
+                </div>
+
+                <div className="imagenMaquina">
+                
+                    <MaquinariaImg titulo={""} src={""} alt={"Imagen 5"} />
+                
+                </div>
+
+                <div className="imagenMaquina">
+
+                    <MaquinariaImg titulo={""} src={""} alt={"Imagen 6"} />
+                
+                </div>
+
+            </div>
+
         </>
     );
 }

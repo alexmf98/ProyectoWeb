@@ -6,11 +6,7 @@ export default function Personal(){
 
             <div className="contenedorPersonal">
 
-                <h1>Proyecto Personal</h1>
-
-                
-
-                    <h3>Tipo de proyecto</h3>
+                <h1>Solicite su tipo de proyecto personal</h1>
 
                     <form action="" className="tarjetaPersonal">
                     

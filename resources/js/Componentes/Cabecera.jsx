@@ -7,10 +7,8 @@ export default function Cabecera(){
     return(
         <div className="cabeceraHome">
             <Link href={'/home'}>Inicio</Link>
-            
-            <Link href={'/alquileres'}>Alquileres</Link>
-            
-            <Link href={'/trabajar'}>Trabaja con nosotros</Link>
+             
+            {/* <Link href={'/trabajar'}>Trabaja con nosotros</Link> */}
             
             <div className="proyectos">
             
@@ -21,9 +19,11 @@ export default function Cabecera(){
                     
                     <Link href={'/adecuacion'}>Adecuación</Link>
                     
-                    <Link href={'/personal'}>Personal</Link>
+                    {/* <Link href={'/personal'}>Personal</Link> */}
                 </div>
             </div>
+           
+            <Link href={'/alquileres'}>Alquileres</Link>
             
             <Link href={'/contactenos'}>Contactenos</Link>
             

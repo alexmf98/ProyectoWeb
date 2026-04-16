@@ -9,7 +9,7 @@ import media from "../Imagenes/colaboradora/media.png";
 export default function Home() {
     return (
         <>
-            <h1 className="tituloEmpresa">Historia de la empresa</h1>
+            {/* <h1 className="tituloEmpresa">Historia de la empresa</h1> */}
 
             {/* <div className="historiaEmpresa">
                 

@@ -1,6 +1,7 @@
 import { Link, router } from "@inertiajs/react";
 import "../Styles/Cabecera.css";
 import "../Styles/Login.css";
+import cs from "../Imagenes/logo/logo_sarmiento.svg";
 
 import { useAuth } from "../Hooks/useAuth";
 import { useEffect, useState } from "react";
@@ -25,6 +26,9 @@ export default function Cabecera() {
 
     return (
         <div className="cabeceraHome">
+
+            <img src={cs} alt="Construcciones Sarmiento" />
+
             <Link href={'/home'}>Inicio</Link>
 
             {/* <Link href={'/trabajar'}>Trabaja con nosotros</Link> */}

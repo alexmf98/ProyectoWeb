@@ -59,6 +59,17 @@
 .tarjetaFormulario button:hover{
     background: #0c447c;
 }
+
+.crearCuenta{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.crearCuenta:hover{
+    background: none;
+    border: none;
+}
 /* .login{
     position: relative;
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,12 @@ Route::get('/personal', function(){
 Route::get('/login', function(){
     return Inertia::render('Login');
 });
+
+Route::get('/crearcuenta', function(){
+    return Inertia::render('CrearCuenta');
+});
+
+Route::post('/crearcuenta',[UserController::class, 'store']);
 
 Route::post('login', function(Request $request){
     $credentials = $request->validate([

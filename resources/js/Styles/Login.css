@@ -61,6 +61,13 @@
     background: #0c447c;
 }
 
+.tarjetaFormulario span{
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    margin-left: 15px;
+}
+
 .crearCuenta{
     display: flex;
     justify-content: center;

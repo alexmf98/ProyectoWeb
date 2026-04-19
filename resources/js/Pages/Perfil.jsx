@@ -1,9 +1,24 @@
+import { router } from "@inertiajs/react";
 import { useAuth } from "../Hooks/useAuth";
 import "../Styles/Perfil.css";
+import { useState } from "react";
 
 export default function Perfil() {
 
     const { nombre, email } = useAuth();
+
+    const handleEdit = () =>{
+        router.get('/editPerfil');
+    }
+
+    const handleEliminar = () =>{
+        const confirmado =  confirm("¿Desea eliminar su cuenta?")
+
+        if (confirmado) {
+            router.post('/eliminarPerfil');
+        }
+    }
+
 
     return (
         <>
@@ -21,11 +36,10 @@ export default function Perfil() {
                 </div>
 
                     <div className="botonesPerfil">
-                        <button className="btnEditar">Editar</button>
+                        <button onClick={handleEdit} className="btnEditar">Editar</button>
 
                         
-
-                        <button className="btnEliminar">Eliminar</button>
+                        <button onClick={handleEliminar} className="btnEliminar">Eliminar</button>
                     </div>
                 </div>
             </div>

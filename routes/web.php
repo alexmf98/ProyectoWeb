@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,7 +11,7 @@ Route::get('/', function () {
 
 Route::get('/home', function(){
     return Inertia::render('Home');
-});
+})->name('home');
 
 Route::get('/alquileres', function(){
     return Inertia::render('Alquileres');
@@ -37,4 +39,37 @@ Route::get('/adecuacion', function(){
 
 Route::get('/personal', function(){
     return Inertia::render('Personal');
+});
+
+Route::get('/login', function(){
+    return Inertia::render('Login');
+});
+
+Route::post('login', function(Request $request){
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        return redirect()->route('home');
+    }
+
+    return back()->withErrors([
+        'email' => 'The provided credentials do not match our records.',
+    ])->onlyInput('email');
+
+});
+
+Route::middleware('auth')->group(function(){
+    Route::post('/logout', function(Request $request){
+        Auth::logout(); 
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect('/home');
+    })->name('logout');
 });

@@ -64,9 +64,9 @@ export default function Cabecera() {
                                 
                                 <Link>Historial Alquileres</Link>
                                 
-                                <Link>Perfil</Link>
+                                <Link href={'/perfil'}>Perfil</Link>
                                 
-                                <button onClick={handleLogout}>
+                                <button className="btnCerrarSesion" onClick={handleLogout}>
                                     Cerrar Sesión
                                 </button>
                                 {/* <Link>Cerrar Sesión</Link> */}

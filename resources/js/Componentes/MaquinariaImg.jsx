@@ -1,14 +1,15 @@
 import "../Styles/Alquiler.css";
-export default function MaquinariaImg({titulo, src, alt}){
+export default function MaquinariaImg({ titulo, src, alt="Imagen no disponible"}) {
     return (
-            <>
 
-                <h2>{titulo}</h2>
-                
-                <img src={src} alt={alt} />
 
-                <button> Informacion</button>
-            </>
+        <div className="imagenMaquina">
+            <h3>{titulo}</h3>
+            <img src={src} alt={alt} />
+
+            <button>Información</button>
+        </div>
+
 
     );
 }

@@ -70,7 +70,12 @@ Route::post('login', function(Request $request){
 
 });
 
+Route::get('/perfil', function(){
+    return Inertia::render('Perfil');
+});
+
 Route::middleware('auth')->group(function(){
+    
     Route::post('/logout', function(Request $request){
         Auth::logout(); 
         
@@ -79,4 +84,6 @@ Route::middleware('auth')->group(function(){
         
         return redirect('/home');
     })->name('logout');
+
+    Route::post('/editPerfil', [UserController::class, 'update']);
 });

@@ -6,5 +6,7 @@ export function useAuth(){
 
     return{
         user: user,
+        nombre: user?.name,
+        email: user?.email,
     }
 }

@@ -1,40 +1,98 @@
 .contenedorPersonal{
-    display: grid;
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
 }
 
 .tarjetaPersonal{
     display: flex;
     flex-direction: column;
-    height: auto;
-    align-items: center;
-    justify-content: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
 
-    gap: 10px;
-    border: 2px red solid;
+.tarjetaPersonal select{
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f9fafb;
+    color: #111;
+}
+
+.tarjetaPersonal select:focus{
+    border-color: #185FA5;
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
 }
 
 .textAreaPersonal{
-    height: 100px;
-    width: 1000px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 120px;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f9fafb;
+    color: #111;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.textAreaPersonal:focus{
+    border-color: #185FA5;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
 }
 
 .botonesPersonal{
     display: flex;
     gap: 10px;
+    margin-top: 8px;
 }
 
 .botonesPersonal button{
-    font-size: 15px;
-    font-style: oblique;
+    height: 42px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.btnEnviar {
+    background: #185FA5;
+    color: white;
+}
+
+.btnEnviar:hover {
+    background: #0c447c;
+}
+
+.btnCancelar {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #e5e7eb !important;
+}
+
+.btnCancelar:hover {
+    background: #e5e7eb;
 }
 
 /* .botonesPersonal .btnEnviar:hover,
 .botonesPersonal .btnCancelar:hover {
     background: linear-gradient(to bottom, #6FC072, #B7E0B8);
 } */
-
+/* 
 .botonesPersonal button:hover {
     background: linear-gradient(to bottom, #6FC072, #B7E0B8);
     border-radius: 10px;
-}
+} */

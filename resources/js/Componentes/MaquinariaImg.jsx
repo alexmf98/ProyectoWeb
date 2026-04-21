@@ -1,5 +1,13 @@
+import { router } from "@inertiajs/react";
 import "../Styles/Alquiler.css";
 export default function MaquinariaImg({ titulo, src, alt="Imagen no disponible"}) {
+
+    const handleInformacion = () =>{
+        
+        router.get('/informacion');
+
+    }
+
     return (
 
 
@@ -7,7 +15,7 @@ export default function MaquinariaImg({ titulo, src, alt="Imagen no disponible"}
             <h3>{titulo}</h3>
             <img src={src} alt={alt} />
 
-            <button>Información</button>
+            <button onClick={handleInformacion}>Información</button>
         </div>
 
 

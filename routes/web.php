@@ -74,6 +74,10 @@ Route::get('/perfil', function(){
     return Inertia::render('Perfil');
 })->name('perfil');
 
+Route::get('/informacion', function(){
+    return Inertia::render('Informacion');
+});
+
 Route::middleware('auth')->group(function(){
     
     Route::post('/logout', function(Request $request){

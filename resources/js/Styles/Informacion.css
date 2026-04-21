@@ -1,0 +1,44 @@
+.contenedorInformacion{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 50px;
+}
+
+.tarjetaImagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    border: 1px solid red;
+}
+
+.tarjetaInformacion{
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid red;
+}
+
+.tarjetaInformacion ul{
+    list-style: none;
+    padding: 35px;
+}
+
+.imagenMaquinaInformacion{
+    height: 50vh;
+    width: 100%;
+    max-width: 380px;
+}
+
+.tarjetaInformacion form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 240px;
+    
+}
+
+.tarjetaFormulario2{
+    display: flex;
+    justify-content: center;
+}

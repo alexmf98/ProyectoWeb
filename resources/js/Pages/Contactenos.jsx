@@ -1,5 +1,5 @@
-import Personal from "./Personal";
-import Trabajar from "./Trabajar";
+import Trabajar from "../Componentes/Trabajar";
+import Personal from "../Componentes/Personal";
 
 export default function Contactenos(){
     return(

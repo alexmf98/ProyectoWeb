@@ -53,6 +53,18 @@
     box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
 }
 
+.tarjetaPersonal input[type="email"]
+{
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f9fafb;
+    color: #111;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
 .botonesPersonal{
     display: flex;
     gap: 10px;

@@ -11,9 +11,9 @@ export default function Trabajar(){
                     <form action="">
 
                         <label htmlFor="email">Email</label>
-                        <input id="email" type="email" />
+                        <input id="email" type="email" placeholder="email" />
 
-                        <label htmlFor="telefono">Telefono</label>
+                        <label htmlFor="telefono">Teléfono</label>
                         <input id="telefono" type="text" placeholder="numero de teléfono"/>
 
                         <input type="file" placeholder="Añade tu CV"/>

@@ -8,5 +8,6 @@ export function useAuth(){
         user: user,
         nombre: user?.name,
         email: user?.email,
+        isAdmin: user?.role === 'administrador',
     }
 }

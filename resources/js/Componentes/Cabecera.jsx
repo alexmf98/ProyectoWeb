@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function Cabecera() {
 
-    const { user } = useAuth();
+    const { user, isAdmin } = useAuth();
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -59,10 +59,24 @@ export default function Cabecera() {
 
                         { menuOpen && (
                             <div className="submenus">
-                                
-                                <Link>Historial Proyectos</Link>
-                                
-                                <Link>Historial Alquileres</Link>
+
+                            {
+                                isAdmin &&
+                                <>
+                                    <Link href={'/editarUsuarios'}>Editar Usuario</Link>
+                                    <Link>Añadir Maquinaria</Link>
+                                    <Link>Añadir Proyecto</Link>
+                                    <Link>Maquinaria Alquilada</Link>
+                                    <Link>Ver Proyectos Personales</Link>
+                                </>  
+                            }
+                                {!isAdmin &&
+                                    <>
+                                        <Link>Historial Proyectos</Link>
+                                    
+                                        <Link>Historial Alquileres</Link>
+                                    </>
+                                }
                                 
                                 <Link href={'/perfil'}>Perfil</Link>
                                 

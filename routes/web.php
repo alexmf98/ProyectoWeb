@@ -95,4 +95,8 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/editPerfil', [UserController::class, 'update']);
     Route::post('/eliminarPerfil', [UserController::class, 'destroy']);
+    
+    //Admin
+    Route::get('/editarUsuarios', [UserController::class, 'index'])->name('editAdmin');
+    Route::post('/editarUsuario/{id}', [UserController::class, 'updateAdmin']);
 });

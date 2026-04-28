@@ -1,0 +1,141 @@
+.tablaEditUsuarioAdmin {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.tablaEditUsuarioAdmin table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Encabezado */
+.tablaEditUsuarioAdmin thead {
+    background-color: #185FA5;
+}
+
+.tablaEditUsuarioAdmin thead th {
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Filas */
+.tablaEditUsuarioAdmin tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+
+.tablaEditUsuarioAdmin tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tablaEditUsuarioAdmin tbody tr:hover {
+    background-color: #f5f3ff;
+}
+
+.tablaEditUsuarioAdmin tbody td {
+    padding: 12px 16px;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+/* Botón editar */
+.tablaEditUsuarioAdmin tbody td button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+}
+
+.tablaEditUsuarioAdmin tbody td button:hover {
+    background-color: #4338ca;
+}
+
+.formularioEditAdmin {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.formularioEditAdmin form {
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Inputs y select con el mismo estilo */
+.formularioEditAdmin form input,
+.formularioEditAdmin form select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #374151;
+    background-color: #f9fafb;
+    outline: none;
+    /* box-sizing: border-box; */
+}
+
+.formularioEditAdmin form input:focus,
+.formularioEditAdmin form select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    background-color: #fff;
+}
+
+/* Botón */
+.formularioEditAdmin form button {
+    
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botonEdit{
+    display: flex;
+    align-self: flex-end;
+    gap: 2rem;
+}
+
+.formularioEditAdmin form button:hover {
+    background-color: #4338ca;
+}
+
+.tablaEditUsuarioAdmin .deshabilitar{
+    background-color: #ef4444;
+    color: white;
+    border: none;
+}
+
+
+.tablaEditUsuarioAdmin .deshabilitar:hover{
+    background-color: #fee2e2;
+    color: #b91c1c;
+}

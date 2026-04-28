@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -14,7 +15,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('EditarUsuario',[
+            
+            'usuarios'=>User::all()
+    
+        ]);
     }
 
     /**
@@ -66,13 +71,15 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
+
         $user = Auth::user();
 
         $validated = $request->validate([
             'name'=>'required',
-            'email'=>'required',
+            'email'=>'required|unique:users,email,' . $user->id,
             'password'=>'nullable',
         ]);
+
 
         if($request->filled('password')){
             $validated['password'] = Hash::make($request->password);
@@ -84,6 +91,28 @@ class UserController extends Controller
 
         return redirect()->route('perfil');
     }
+
+    public function updateAdmin(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+
+    $validated = $request->validate([
+        'name'     => 'required',
+        'email'    => 'required|unique:users,email,' . $user->id,
+        'password' => 'nullable',
+        'role'     => 'required|in:administrador,usuario,trabajador',
+    ]);
+
+    if ($request->filled('password')) {
+        $validated['password'] = Hash::make($request->password);
+    } else {
+        unset($validated['password']);
+    }
+
+    $user->update($validated);
+
+    return redirect()->route('editAdmin');
+}
 
     /**
      * Remove the specified resource from storage.

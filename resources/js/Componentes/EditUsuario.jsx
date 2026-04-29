@@ -30,6 +30,8 @@ export default function EditUsuario() {
             email: email,
             role: role,
         });
+
+        setEditar(!editar);
     }
 
     const clickDesactivar = () =>{

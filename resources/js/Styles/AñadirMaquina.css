@@ -1,0 +1,88 @@
+.tarjetaAñadirMaquina {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.tarjetaAñadirMaquina form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 380px;
+    gap: 6px;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tarjetaAñadirMaquina form label{
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-top: 8px;
+}
+
+.tarjetaAñadirMaquina form input,
+.tarjetaAñadirMaquina form select,
+.tarjetaAñadirMaquina form textarea{
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #374151;
+    background-color: #f9fafb;
+    outline: none;
+    
+}
+
+.tarjetaAñadirMaquina form input:focus,
+.tarjetaAñadirMaquina form select:focus,
+.tarjetaAñadirMaquina form textarea:focus{
+    border-color: #4f46e5;
+    background-color: #fff;
+}
+
+.tarjetaAñadirMaquina form textarea{
+    resize: vertical;
+}
+
+.tarjetaAñadirMaquina form input[type="file"]{
+    padding: 6px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.botonAñadirMaquina{
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.botonAñadirMaquina button:first-child{
+    background-color:  #4f46e5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.botonAñadirMaquina button:first-child:hover{
+    background-color: #4338ca;
+}
+
+.botonAñadirMaquina button:last-child{
+
+    background-color: #fff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.botonAñadirMaquina button:last-child:hover{
+    background-color: #f3f4f6;
+}

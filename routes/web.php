@@ -99,4 +99,12 @@ Route::middleware('auth')->group(function(){
     //Admin
     Route::get('/editarUsuarios', [UserController::class, 'index'])->name('editAdmin');
     Route::post('/editarUsuario/{id}', [UserController::class, 'updateAdmin']);
+
+    Route::get('/añadirmaquina', function(){
+        return Inertia::render('MaquinariaAdmin');
+    });
+
+    Route::get('/añadirproyecto', function(){
+        return Inertia::render('ProyectoAdmin');
+    });
 });

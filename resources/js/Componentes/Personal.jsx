@@ -4,14 +4,18 @@ import ObraMenor from "./ObraMenor";
 import Adecuacion from "./Adecuacion";
 import Reforma from "./Reforma";
 import Otros from "./Otros";
+import { useAuth } from "../Hooks/useAuth";
 
 export default function Personal() {
 
     const [tipo, setTipo] = useState("");
 
+    const {user} = useAuth();
+
     return (
         <>
-
+        {
+            user &&
             <div className="contenedorPersonal">
 
                 <h1>Solicite su tipo de proyecto personal</h1>
@@ -64,6 +68,7 @@ export default function Personal() {
 
 
             </div>
+        }
         </>
     );
 }

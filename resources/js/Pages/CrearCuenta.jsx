@@ -6,6 +6,7 @@ import FormularioCrear from "../Componentes/FormularioCrear";
 export default function CrearCuenta() {
 
     const [name, setName] = useState("");
+    const [apellido, setApellido] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -16,6 +17,7 @@ export default function CrearCuenta() {
 
         router.post('/crearcuenta', {
             name: name,
+            apellido: apellido,
             email: email,
             password: password,
         });
@@ -25,6 +27,8 @@ export default function CrearCuenta() {
         <FormularioCrear submit={handleCrearCuenta}
                         name={name}
                         setName={setName}
+                        apellido={apellido}
+                        setApellido={setApellido}
                         email={email}
                         setEmail={setEmail}
                         password={password}

@@ -10,8 +10,19 @@ export default function AñadirMaquinaria(){
     const [caracteristicas, setCaracteristicas] = useState("");
     const [imagen, setImagen] = useState("");
 
+    const [nuevaCategoria, setNuevaCategoria] = useState(false);
+
+    const handleNuevaCategoria = ()=>{
+        setNuevaCategoria(true);
+    }
+
+    const handleLimpiarCampos = ()=>{
+        setNuevaCategoria(false);
+    }
+
     return(
         <>
+            <h1>{categoria}</h1>
             <div className="tarjetaAñadirMaquina">
                 <form>
                     
@@ -22,13 +33,30 @@ export default function AñadirMaquinaria(){
                             value={nombre}
                             onChange={(e)=>setNombre(e.target.value)}/>
 
-                    <label htmlFor="categoria">Categoria</label>
 
-                    <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
-                        <option value="excavacion">Excavación</option>
-                        <option value="tierra">Movimiento de tierra</option>
-                        <option value="fresado">Fresadora</option>
-                    </select>
+                    {
+                        !nuevaCategoria &&
+                        <>
+                            <label htmlFor="categoria">Categoria</label>
+                            <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
+                                <option value="">Seleccione una categoria</option>
+                                <option value="excavacion">Excavación</option>
+                                <option value="tierra">Movimiento de tierra</option>
+                                <option value="fresado">Fresadora</option>
+                            </select>
+                        </>
+                    }
+
+                    {
+                        nuevaCategoria &&
+                            <>
+                                <label htmlFor="nuevaCategoria">Nueva Categoria</label>
+                                <input type="text" 
+                                        id="nuevaCategoria"
+                                        onChange={(e)=>setCategoria(e.target.value)}
+                                />
+                            </>
+                    }
 
                     <label htmlFor="precio">Precio (€)</label>
 
@@ -64,6 +92,12 @@ export default function AñadirMaquinaria(){
                     </div>
 
                 </form>
+                
+                <div>
+                    <button onClick={handleNuevaCategoria}>Añadir nueva categoria</button>
+                    <button onClick={handleLimpiarCampos}>Cancelar</button>
+                </div>
+
             </div>
 
         </>

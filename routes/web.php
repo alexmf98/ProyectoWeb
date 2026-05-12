@@ -46,29 +46,14 @@ Route::get('/login', function(){
     return Inertia::render('Login');
 });
 
+Route::post('/login', [UserController::class, 'login']);
+
 Route::get('/crearcuenta', function(){
     return Inertia::render('CrearCuenta');
 });
 
 Route::post('/crearcuenta',[UserController::class, 'store']);
 
-Route::post('login', function(Request $request){
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-
-        return redirect()->route('home');
-    }
-
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ])->onlyInput('email');
-
-});
 
 Route::get('/perfil', function(){
     return Inertia::render('Perfil');
@@ -79,22 +64,18 @@ Route::get('/informacion', function(){
 });
 
 Route::middleware('auth')->group(function(){
-    
-    Route::post('/logout', function(Request $request){
-        Auth::logout(); 
-        
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        
-        return redirect('/home');
-    })->name('logout');
 
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::post('/logout', [UserController::class, 'logout']);
+    
     Route::get('/editPerfil', function(){
         return Inertia::render('EditPerfil');
     });
 
     Route::post('/editPerfil', [UserController::class, 'update']);
     Route::post('/eliminarPerfil', [UserController::class, 'destroy']);
+
+    Route::post('/desactivarPerfil/{user}', [UserController::class, 'desactivar']);
     
     //Admin
     Route::get('/editarUsuarios', [UserController::class, 'index'])->name('editAdmin');

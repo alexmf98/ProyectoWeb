@@ -1,6 +1,9 @@
 import "../Styles/Login.css";
 
-export default function FormularioCrear({submit,name, setName,email, setEmail, password, setPassword, texto}){
+export default function FormularioCrear({submit,name, setName,
+                                                apellido, setApellido,
+                                                email, setEmail, 
+                                        password, setPassword, texto}){
 
     return(
         <div className="contenedorFormulario">
@@ -12,6 +15,12 @@ export default function FormularioCrear({submit,name, setName,email, setEmail, p
                     type="text" 
                     value={name} 
                     onChange={(e)=>setName(e.target.value)}/>
+
+                <label htmlFor="apellido">Apellido</label>
+
+                <input type="text"
+                        value={apellido}
+                        onChange={(e)=>setApellido(e.target.value)} />
                 
                 <label htmlFor="email">Email</label>
                 

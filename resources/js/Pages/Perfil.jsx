@@ -1,24 +1,22 @@
 import { router } from "@inertiajs/react";
 import { useAuth } from "../Hooks/useAuth";
 import "../Styles/Perfil.css";
-import { useState } from "react";
 
 export default function Perfil() {
 
-    const { nombre, email } = useAuth();
+    const { nombre, email, user } = useAuth();
 
     const handleEdit = () =>{
         router.get('/editPerfil');
     }
 
-    const handleEliminar = () =>{
-        const confirmado =  confirm("¿Desea eliminar su cuenta?")
+    const handleDesactivar = () =>{
+        const confirmado =  confirm("¿Desea desactivar su cuenta?")
 
         if (confirmado) {
-            router.post('/eliminarPerfil');
+            router.post(`/desactivarPerfil/${user.id}`);
         }
     }
-
 
     return (
         <>
@@ -38,8 +36,15 @@ export default function Perfil() {
                     <div className="botonesPerfil">
                         <button onClick={handleEdit} className="btnEditar">Editar</button>
 
-                        
-                        <button onClick={handleEliminar} className="btnEliminar">Eliminar</button>
+                        {
+                            user.role !== 'administrador' &&
+                            
+                            <button onClick={handleDesactivar} 
+                            
+                                className="btnEliminar">Desactivar
+                            
+                            </button>
+                        }
                     </div>
                 </div>
             </div>

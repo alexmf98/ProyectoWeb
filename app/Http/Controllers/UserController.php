@@ -10,6 +10,38 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+
+    public function login(Request $request){
+        
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+    
+        if (Auth::attempt($credentials) && Auth::user()->is_active !== false) {
+            $request->session()->regenerate();
+    
+            return redirect()->route('home');
+        }
+    
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+            'is_active'=> 'Tu cuenta ha sido desactivada',
+        ])->onlyInput('email');
+    }
+
+    public function logout(Request $request){
+        
+        Auth::logout(); 
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect('/home');
+    
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -37,6 +69,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name'=>'required',
+            'apellido'=>'required',
             'email'=>'required',
             'password'=>'required',
         ]);
@@ -119,10 +152,20 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        $user->delete();
+        // $user->delete();
 
-        return redirect()->route('home');
+        // return redirect()->route('home');
+    }
+
+    public function desactivar(User $user){
+        
+       
+        $user->update([
+            'is_active'=>false,
+        ]);
+
+        return redirect()->route('logout');
     }
 }

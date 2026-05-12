@@ -64,10 +64,15 @@ export default function Cabecera() {
                                 isAdmin &&
                                 <>
                                     <Link href={'/editarUsuarios'}>Editar Usuario</Link>
+                                    <Link>Editar información de página</Link>
                                     <Link href={'/añadirmaquina'}>Añadir Maquinaria</Link>
                                     <Link href={'/añadirproyecto'}>Añadir Proyecto</Link>
                                     <Link>Maquinaria Alquilada</Link>
                                     <Link>Ver Proyectos Personales</Link>
+
+                                    <Link>Ver Proyectos Solicitados</Link>
+                                    <Link>Facturación</Link>
+                                    
                                 </>  
                             }
                                 {!isAdmin &&

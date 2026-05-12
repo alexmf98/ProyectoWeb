@@ -1,6 +1,7 @@
 import { router, usePage } from "@inertiajs/react";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "../Styles/EditUsuarioAdmin.css";
+import { useAuth } from "../Hooks/useAuth";
 
 export default function EditUsuario() {
 
@@ -11,7 +12,18 @@ export default function EditUsuario() {
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
 
+    const [users, setUsers] = useState([]);
+    const {user} = useAuth();
+
     const { usuarios } = usePage().props;
+
+
+    useEffect(()=>{
+        const handleFiltrar = usuarios.filter((usuario) => usuario.id !== user.id);
+
+        setUsers(handleFiltrar);
+    }, [usuarios, user.id]); 
+    
 
     const clickEditar = (usuario) => {
 
@@ -53,8 +65,8 @@ export default function EditUsuario() {
                     </thead>
                     <tbody>
                         {
-                            usuarios.map((dato) => (
-                                <tr>
+                            users.map((dato) => (
+                                <tr key={dato.id}>
                                     <td>
                                         {dato.name}
                                     </td>

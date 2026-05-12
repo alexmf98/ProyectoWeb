@@ -27,21 +27,15 @@ Route::get('/trabajar', function(){
     return Inertia::render('Trabajar');
 });
 
-Route::get('/proyectos', function(){
-    return Inertia::render('Proyectos');
-});
+Route::get('/proyectos', [ProyectoController::class, 'proyecto']);
 
 Route::get('/contactenos', function(){
     return Inertia::render('Contactenos');
 })->name('contactenos');
 
-Route::get('/restauracion', function(){
-    return Inertia::render('Restauracion');
-});
+Route::get('/restauracion', [ProyectoController::class, 'proyectoRestauracion']);
 
-Route::get('/adecuacion', function(){
-    return Inertia::render('Adecuacion');
-});
+Route::get('/adecuacion', [ProyectoController::class, 'proyectoAdecuacion']);
 
 Route::get('/personal', function(){
     return Inertia::render('Personal');

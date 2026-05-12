@@ -147,6 +147,64 @@ class ProyectoController extends Controller
         }
     }
 
+    public function proyecto(){
+        
+        $adecuacion = Proyecto::where('categoria', '=', 'adecuacion')->get()->map(function($dato){
+            return [
+                'nombre'=>$dato->nombre,
+                'coste'=>$dato->coste,
+                'localizacion'=>$dato->localizacion,
+                'imagen'=>Storage::url('/proyectos/adecuacion/'.$dato->imagen),
+            ];
+        });
+
+        $restauracion = Proyecto::where('categoria', '=', 'restauracion')->get()->map(function($dato){
+            return [
+                'nombre'=>$dato->nombre,
+                'coste'=>$dato->coste,
+                'localizacion'=>$dato->localizacion,
+                'imagen'=>Storage::url('/proyectos/restauracion/'.$dato->imagen),
+            ];
+        });
+        
+        return Inertia::render('Proyectos',[
+            'adecuacion'=>$adecuacion,
+            'restauracion'=>$restauracion,
+        ]);
+    }
+
+    public function proyectoAdecuacion(){
+
+        $adecuacion = Proyecto::where('categoria', '=', 'adecuacion')->get()->map(function($dato){
+            return [
+                'nombre'=>$dato->nombre,
+                'coste'=>$dato->coste,
+                'localizacion'=>$dato->localizacion,
+                'imagen'=>Storage::url('/proyectos/adecuacion/'.$dato->imagen),
+            ];
+        });
+
+        return Inertia::render('Adecuacion',[
+            'adecuacion'=>$adecuacion,
+        ]);
+    }
+
+    public function proyectoRestauracion(){
+
+        $restauracion = Proyecto::where('categoria', '=', 'restauracion')->get()->map(function($dato){
+            return [
+                'nombre'=>$dato->nombre,
+                'coste'=>$dato->coste,
+                'localizacion'=>$dato->localizacion,
+                'imagen'=>Storage::url('/proyectos/restauracion/'.$dato->imagen),
+            ];
+        });
+
+        return Inertia::render('Restauracion',[
+            'restauracion'=>$restauracion,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */

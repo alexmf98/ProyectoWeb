@@ -44,7 +44,6 @@ export default function AñadirMaquinaria(){
 
     return(
         <>
-            <h1>{categoria}</h1>
             <div className="tarjetaAñadirMaquina">
                 <form onSubmit={handleEnviar}>
                     

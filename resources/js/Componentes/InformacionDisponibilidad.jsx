@@ -16,9 +16,11 @@ export default function InformacionDisponibilidad() {
     const [numTarjeta, setNumTarjeta] = useState("");
     const [cvv, setCvv] = useState("");
     const [pin, setPin] = useState("");
+    const [precio_maq, setPrecioMaq] = useState(0);
 
     const handlePrueba = () => {
         setPrueba(!prueba);
+        precio();
     }
 
     const handleAlquiler = (e) => {
@@ -35,6 +37,34 @@ export default function InformacionDisponibilidad() {
             pin: pin,
         });
     }
+    
+    const precio = ()=>{
+        const fInicio = new Date(fecha_inicio).getTime();
+        const fFin = new Date(fecha_fin).getTime();
+
+        
+        const diferencia = Math.floor((fFin - fInicio) / (1000*60*60*24));
+        
+        if(diferencia < 0) setPrueba(false);
+
+        const precio_maquina = maquina.precio;
+        
+        if(diferencia === 0){
+            setPrecioMaq(precio_maquina)
+        }else{
+            setPrecioMaq(diferencia * precio_maquina);
+        }
+    }
+
+    const handleLimpiar = ()=>{
+        setPrueba(false);
+        setFechaInicio("")
+        setFechaFin("")
+        setNumTarjeta("")
+        setCvv("")
+        setPin("")
+        setPrecioMaq(0)
+    }
 
     return (
         <>
@@ -50,12 +80,12 @@ export default function InformacionDisponibilidad() {
                     <div className="tarjetaFormulario2">
 
                         <label htmlFor="fecha_inicio">Fecha Inicio</label>
-                        <input type="date"
+                        <input type="date" value={fecha_inicio}
                             onChange={(e) => setFechaInicio(e.target.value)}
                         />
 
                         <label htmlFor="fecha_fin">Fecha Fin</label>
-                        <input type="date"
+                        <input type="date" value={fecha_fin}
                             onChange={(e) => setFechaFin(e.target.value)}
                         />
                     
@@ -77,11 +107,16 @@ export default function InformacionDisponibilidad() {
                     <div className="form-seccion-fechas">
                         <div className="form-field">
                             <label>Fecha inicio</label>
-                            <input type="text" value={fecha_inicio} readOnly />
+                            <input type="text" 
+                            value={fecha_inicio}
+                            onChange={(e)=>setFechaInicio(e.target.value)}
+                            readOnly />
                         </div>
                         <div className="form-field">
                             <label>Fecha fin</label>
-                            <input type="text" value={fecha_fin} readOnly />
+                            <input type="text" value={fecha_fin}
+                            onChange={(e)=>setFechaFin(e.target.value)}
+                            readOnly />
                         </div>
                     </div>
 
@@ -105,11 +140,18 @@ export default function InformacionDisponibilidad() {
                                 placeholder="••••"
                                 onChange={(e) => setPin(e.target.value)} />
                         </div>
+
+                        <div className="form-field">
+                        
+                            <label>Coste</label>
+                            <input type="text" value={precio_maq + " €"} /> 
+                        
+                        </div>
                     </div>
 
                     <div className="form-botones">
                         <button type="submit">Confirmar alquiler</button>
-                        <button type="button">Cancelar</button>
+                        <button type="button" onClick={handleLimpiar}>Cancelar</button>
                     </div>
 
                 </form>

@@ -13,10 +13,25 @@ class MaquinariaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $maquinas = Maquinaria::all()->map(function($dato){
+        // $maquinas = Maquinaria::all()->map(function($dato){
+        //     return [
+        //         'id' => $dato->id,
+        //         'nombre' => $dato->nombre,
+        //         'caracteristicas' => $dato->caracteristicas,
+        //         'imagen' => Storage::url('maquinaria/' . $dato->imagen),
+        //     ];
+        // });
+
+        $maquinas = Maquinaria::query();
+
+        if ($buscar = $request->query('nombre')) {
+            $maquinas->whereLike('nombre', "%$buscar%", false);
+        }
+
+        $maquinas = $maquinas->get()->map(function ($dato) {
             return [
                 'id' => $dato->id,
                 'nombre' => $dato->nombre,
@@ -25,8 +40,8 @@ class MaquinariaController extends Controller
             ];
         });
 
-        return Inertia::render('Alquileres',[
-            'maquinas'=> $maquinas,
+        return Inertia::render('Alquileres', [
+            'maquinas' => $maquinas,
         ]);
     }
 

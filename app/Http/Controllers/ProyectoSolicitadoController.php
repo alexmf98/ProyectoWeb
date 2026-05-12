@@ -15,7 +15,7 @@ class ProyectoSolicitadoController extends Controller
      */
     public function index()
     {
-
+        
         // $pSolicitado = ProyectoSolicitado::where('user_id', '=', Auth::user()->id)->get();
         $pSolicitado = ProyectoSolicitado::where('user_id', '=', Auth::user()->id)->get()->map(function($dato){
             return [

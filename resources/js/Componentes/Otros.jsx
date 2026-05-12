@@ -1,13 +1,13 @@
 import "../Styles/Personal.css";
 
-export default function Otros() {
+export default function Otros({onChange}) {
     return (
         <>
             <textarea className="textAreaPersonal"
-                name="" id="" placeholder="Especifique el tipo de proyecto que desea realizar">
-
-            </textarea>
-
+                placeholder="Especifique el tipo de proyecto que desea realizar"
+                onChange={(e)=>onChange(e.target.value)}
+            />
+            
         </>
     );
 }

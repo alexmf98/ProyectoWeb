@@ -64,6 +64,7 @@ export default function EditUsuario() {
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Apellido</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -76,6 +77,9 @@ export default function EditUsuario() {
                                 <tr key={dato.id}>
                                     <td>
                                         {dato.name}
+                                    </td>
+                                    <td>
+                                        {dato.apellido}
                                     </td>
                                     <td>
                                         {dato.email}

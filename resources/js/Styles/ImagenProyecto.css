@@ -1,0 +1,37 @@
+.galeria-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 2rem;
+    justify-content: center;
+}
+
+.galeria-imagenes img {
+    width: 280px;
+    height: 200px;
+    object-fit: cover;    /* recorta la imagen para que encaje */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.galeria-imagen-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* centra el botón horizontalmente */
+    gap: 8px;
+}
+
+.galeria-imagen-card button {
+    padding: 8px 20px;
+    background-color: #ef4444;  /* rojo porque es eliminar */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+}
+
+.galeria-imagen-card button:hover {
+    background-color: #dc2626;
+}

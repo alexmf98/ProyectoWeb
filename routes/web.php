@@ -33,7 +33,7 @@ Route::get('/proyectos', function(){
 
 Route::get('/contactenos', function(){
     return Inertia::render('Contactenos');
-});
+})->name('contactenos');
 
 Route::get('/restauracion', function(){
     return Inertia::render('Restauracion');

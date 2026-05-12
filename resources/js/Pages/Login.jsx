@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import Formulario from "../Componentes/Formulario";
 
 export default function Login(){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    
+    const {errors} = usePage().props;
 
     const handleLogin = (e)=>{
 
@@ -19,11 +19,17 @@ export default function Login(){
     }
 
     return(
-        <Formulario submit={handleLogin}
-                    email={email}
-                    setEmail={setEmail}
-                    password={password}
-                    setPassword={setPassword}
-                    texto={'Iniciar Sesión'} />
+
+        <>
+            <h1>{errors.is_active}</h1>
+            
+            <Formulario submit={handleLogin}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
+                        texto={'Iniciar Sesión'} />
+        </>
+        
     );
 }

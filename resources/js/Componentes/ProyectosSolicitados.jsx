@@ -22,7 +22,7 @@ export default function ProyectosSolicitados(){
             estado: 'rechazado',
         }); 
     }
-
+    
     return(
         <>
             <div className="tabla-container">

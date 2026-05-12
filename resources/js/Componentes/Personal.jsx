@@ -5,12 +5,35 @@ import Adecuacion from "./Adecuacion";
 import Reforma from "./Reforma";
 import Otros from "./Otros";
 import { useAuth } from "../Hooks/useAuth";
+import { router } from "@inertiajs/react";
 
 export default function Personal() {
 
     const [tipo, setTipo] = useState("");
+    const [email, setEmail] = useState("");
+    const [checkSeleccionado, setCheckSeleccionado] = useState([]);
 
     const {user} = useAuth();
+
+    const handleCheck = (valor)=>{
+        setCheckSeleccionado(valor);
+    }
+
+    const handleProyectoSolicitado = (e)=>{
+        e.preventDefault();
+
+        const opcionesString = Array.isArray(checkSeleccionado)
+        ? checkSeleccionado.join()
+        : checkSeleccionado; 
+
+        console.log(opcionesString)
+
+        router.post('/crearproyectosolicitado',{
+            email: email,
+            tipo: opcionesString,
+            user_id: user.id,
+        });
+    }
 
     return (
         <>
@@ -20,12 +43,16 @@ export default function Personal() {
 
                 <h1>Solicite su tipo de proyecto personal</h1>
 
-                <form action="" className="tarjetaPersonal">
+                <form onSubmit={handleProyectoSolicitado} className="tarjetaPersonal">
 
-                    <label htmlFor="email">Email</label>
-                    <input id="email" type="email" placeholder="email" />
+                    <label htmlFor="email">Email de contacto</label>
+                    <input id="email" 
+                        type="email" 
+                        placeholder="Email" 
+                        onChange={(e)=>setEmail(e.target.value)}
+                    />
 
-                    <select name="" id="" onChange={(e) => setTipo(e.target.value)}>
+                    <select onChange={(e) => setTipo(e.target.value)}>
 
                         <option value="">Seleccione una opción</option>
 
@@ -40,29 +67,29 @@ export default function Personal() {
 
                     {
                         tipo === "obraMenor" &&
-                        <ObraMenor />
+                        <ObraMenor onChange={handleCheck} />
                     }
 
                     {
                         tipo === 'adecuacion' &&
-                        <Adecuacion />
+                        <Adecuacion onChange={handleCheck}/>
                     }
 
                     {
                         tipo === "reforma" &&
-                        <Reforma />
+                        <Reforma onChange={handleCheck}/>
                     }
 
                     {
                         tipo === "otros" &&
-                        <Otros />
+                        <Otros onChange={handleCheck}/>
                     }
 
                     <div className="botonesPersonal">
 
-                        <button className="btnEnviar">Enviar</button>
+                        <button type="submit" className="btnEnviar">Enviar</button>
 
-                        <button className="btnCancelar">Cancelar</button>
+                        <button type="reset" className="btnCancelar">Cancelar</button>
                     </div>
                 </form>
 

@@ -1,0 +1,71 @@
+.tarjeta-historial-proyecto{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 2rem;
+    justify-content: center;
+    
+}
+
+.tarjeta-proyecto{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 280px;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-proyecto-fila{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 6px 0px;
+}
+
+.tarjeta-proyecto-fila{
+    border-bottom: none;
+}
+
+.tarjeta-proyecto-fila label{
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 1.2rem;
+}
+
+.tarjeta-proyecto-fila p{
+    color: #374151;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.tarjeta-proyecto-fila img {
+    width: 100%;        /* ocupa todo el ancho de la tarjeta */
+    height: 180px;      /* altura fija */
+    object-fit: cover;  /* recorta la imagen para que encaje sin deformarse */
+    border-radius: 6px; /* esquinas redondeadas */
+}
+
+.boton-proyecto-fila{
+    display: flex;
+    justify-content: center;
+    padding: 12px 0px;
+}
+
+.boton-proyecto-fila button{
+    padding: 8px 20px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;   
+}
+
+.boton-proyecto-fila button:hover{
+    background-color: #4338ca;
+}

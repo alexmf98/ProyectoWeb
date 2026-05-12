@@ -1,0 +1,45 @@
+/* contenedor que pone las tarjetas en fila */
+.tarjeta-personal-Adm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 2rem;
+    justify-content: center;
+}
+
+/* cada tarjeta individual */
+.tarjeta-personal-card {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    gap: 4px;
+}
+
+/* cada fila label + dato */
+.tarjeta-personal-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 6px 0;
+}
+
+.tarjeta-personal-fila:last-child {
+    border-bottom: none;
+}
+
+.tarjeta-personal-fila label {
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 1.0rem;
+}
+
+.tarjeta-personal-fila p {
+    color: #374151;
+    font-size: 0.9rem;
+    margin: 0;
+}

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\HistorialMaquinariaController;
+use App\Http\Controllers\HistorialProyectoController;
 use App\Http\Controllers\MaquinariaController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +87,7 @@ Route::middleware('auth')->group(function(){
 
     Route::put('/cancelarAlquiler/{historialMaquinaria}', [HistorialMaquinariaController::class, 'update']);
 
+    Route::get('/historialProyectos', [HistorialProyectoController::class, 'index']);
     
     //Admin
     Route::get('/editarUsuarios', [UserController::class, 'index'])->name('editAdmin');
@@ -104,4 +107,12 @@ Route::middleware('auth')->group(function(){
 
     Route::put('/cancelarAlquilerAdmin/{historialMaquinaria}', 
         [HistorialMaquinariaController::class, 'updateAdmin']);
+
+    
+    Route::get('/añadirproyecto', [ProyectoController::class, 'index']);
+    Route::post('/añadirproyecto', [ProyectoController::class, 'store']);
+    Route::get('/proyectoPersonalAdm', [ProyectoController::class, 'indexAdm']);
+    Route::post('/subirimagen/{proyecto}', [ProyectoController::class, 'subirImagenes']);
+    Route::get('/verimagenes/{proyecto}', [ProyectoController::class, 'verImagenes']);
+    Route::delete('/eliminarImagen/{proyectoImagen}', [ProyectoController::class, 'eliminarImagen']);
 });

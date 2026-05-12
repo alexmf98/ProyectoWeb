@@ -1,9 +1,7 @@
 import "../Styles/Alquiler.css";
-import dumper from "../Imagenes/maquinaria/dumper.png";
-import fresadora from "../Imagenes/maquinaria/fresadora.png";
-import retroexcavadora from "../Imagenes/maquinaria/retroexcavadora.png";
 import MaquinariaImg from "../Componentes/MaquinariaImg";
-export default function Alquiler() {
+export default function Alquiler({ maquinas }) {
+
     return (
         <>
 
@@ -13,20 +11,23 @@ export default function Alquiler() {
             </div>
 
 
-           <div className="imagenesMaquinaria">
+            <div className="imagenesMaquinaria">
 
-                <MaquinariaImg titulo={"Dumper"} src={dumper} alt={"Imagen dumper"} />
+                {
+                    maquinas.map((dato) => (
+                        <>
 
-                <MaquinariaImg titulo={"Fresadora"} src={fresadora} alt={"Imagen fresadora"} />
+                            <MaquinariaImg
+                                id={dato.id}
+                                titulo={dato.nombre}
+                                src={dato.imagen}
+                                alt={dato.nombre} />
 
-                <MaquinariaImg titulo={"Retroexcavadora"} src={retroexcavadora} alt={"Imagen retroexcavadora"} />
+                        </>
+                    ))
+                }
 
-                <MaquinariaImg titulo={""} src={""} />
-
-                <MaquinariaImg titulo={""} src={""} />
-
-                <MaquinariaImg titulo={""} src={""} />
-           </div>
+            </div>
         </>
     );
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HistorialMaquinariaController;
+use App\Http\Controllers\MaquinariaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,9 +61,8 @@ Route::get('/perfil', function(){
     return Inertia::render('Perfil');
 })->name('perfil');
 
-Route::get('/informacion', function(){
-    return Inertia::render('Informacion');
-});
+Route::get('/alquileres', [MaquinariaController::class, 'index'])->name('alquiler');
+Route::get('informacion/{maquinaria}', [MaquinariaController::class, 'show']);
 
 Route::middleware('auth')->group(function(){
 
@@ -76,16 +77,31 @@ Route::middleware('auth')->group(function(){
     Route::post('/eliminarPerfil', [UserController::class, 'destroy']);
 
     Route::post('/desactivarPerfil/{user}', [UserController::class, 'desactivar']);
+
+    Route::post('/maquinariaAlquiler', [HistorialMaquinariaController::class, 'store']);
+
+    Route::get('/historialmaquinaria', [HistorialMaquinariaController::class, 'index'])
+        ->name('historialMaquinaria');
+
+    Route::put('/cancelarAlquiler/{historialMaquinaria}', [HistorialMaquinariaController::class, 'update']);
+
     
     //Admin
     Route::get('/editarUsuarios', [UserController::class, 'index'])->name('editAdmin');
-    Route::post('/editarUsuario/{id}', [UserController::class, 'updateAdmin']);
+    Route::put('/editarUsuario/{id}', [UserController::class, 'updateAdmin']);
+    Route::put('/desactivarPerfilAdmin/{user}', [UserController::class, 'desactivarAdmin']);
 
-    Route::get('/añadirmaquina', function(){
-        return Inertia::render('MaquinariaAdmin');
-    });
+    Route::get('/añadirmaquina', [MaquinariaController::class, 'añadirMaquinaria'])->name('añadirMaquina');
+    Route::post('/añadirMaquina', [MaquinariaController::class, 'store']);
+    Route::get('/detallemaquina/{maquinaria}', [MaquinariaController::class, 'detalleMaquina']);
+    Route::put('editarMaquinaria/{maquinaria}', [MaquinariaController::class, 'update']);
 
     Route::get('/añadirproyecto', function(){
         return Inertia::render('ProyectoAdmin');
     });
+
+    Route::get('/maquinariaAlquilada', [HistorialMaquinariaController::class, 'alquileres']);
+
+    Route::put('/cancelarAlquilerAdmin/{historialMaquinaria}', 
+        [HistorialMaquinariaController::class, 'updateAdmin']);
 });

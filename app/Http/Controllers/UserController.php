@@ -126,26 +126,26 @@ class UserController extends Controller
     }
 
     public function updateAdmin(Request $request, $id)
-{
-    $user = User::findOrFail($id);
+    {
+        $user = User::findOrFail($id);
 
-    $validated = $request->validate([
-        'name'     => 'required',
-        'email'    => 'required|unique:users,email,' . $user->id,
-        'password' => 'nullable',
-        'role'     => 'required|in:administrador,usuario,trabajador',
-    ]);
+        $validated = $request->validate([
+            'name'     => 'required',
+            'email'    => 'required|unique:users,email,' . $user->id,
+            'password' => 'nullable',
+            'role'     => 'required|in:administrador,usuario,trabajador',
+        ]);
 
-    if ($request->filled('password')) {
-        $validated['password'] = Hash::make($request->password);
-    } else {
-        unset($validated['password']);
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($request->password);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('editAdmin');
     }
-
-    $user->update($validated);
-
-    return redirect()->route('editAdmin');
-}
 
     /**
      * Remove the specified resource from storage.
@@ -167,5 +167,13 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('logout');
+    }
+
+    public function desactivarAdmin(Request $request, User $user){
+        $user->update([
+            'is_active'=>$request->is_active,
+        ]);
+        
+        return redirect()->route('editAdmin');
     }
 }

@@ -1,11 +1,18 @@
 import { router } from "@inertiajs/react";
 import "../Styles/Alquiler.css";
-export default function MaquinariaImg({ titulo, src, alt="Imagen no disponible"}) {
+import { useAuth } from "../Hooks/useAuth";
+export default function MaquinariaImg({id, titulo, src, alt="Imagen no disponible"}) {
+
+    const {isAdmin} = useAuth();  
 
     const handleInformacion = () =>{
         
-        router.get('/informacion');
+        router.get(`/informacion/${id}`);
 
+    }
+    
+    const detalleMaquina = ()=>{
+        router.get(`/detallemaquina/${id}`)
     }
 
     return (
@@ -15,7 +22,16 @@ export default function MaquinariaImg({ titulo, src, alt="Imagen no disponible"}
             <h3>{titulo}</h3>
             <img src={src} alt={alt} />
 
-            <button onClick={handleInformacion}>Información</button>
+            <div className="imagenMaquinaBoton">
+
+                <button onClick={handleInformacion}>Información</button>
+                {
+                    isAdmin &&
+                        <button onClick={detalleMaquina}>
+                            Editar
+                        </button>
+                }
+            </div>
         </div>
 
 

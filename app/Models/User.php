@@ -49,4 +49,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function alquileres(){
+        return $this->hasMany(HistorialMaquinaria::class);
+    }
+
+    // public function proyectosSolicitados(){
+    //     return $this->hasMany(ProyectoSolicitado::class);
+    // }
 }

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "../Styles/AñadirMaquina.css";
+import { router } from "@inertiajs/react";
 
 export default function AñadirMaquinaria(){
 
@@ -20,11 +21,32 @@ export default function AñadirMaquinaria(){
         setNuevaCategoria(false);
     }
 
+    const handleEnviar = (e)=>{
+        e.preventDefault();
+
+        router.post('añadirMaquina',{
+            nombre: nombre,
+            categoria: categoria,
+            precio: precio,
+            stock: stock,
+            caracteristicas: caracteristicas,
+            imagen: imagen,
+        });
+    }
+
+    const array = ["Excavación", "Movimiento de tierra", "Fresadora"]
+
+    const [ver, setVer] = useState(false);
+
+    const handleVer = () =>{
+        setVer(!ver);
+    }
+
     return(
         <>
             <h1>{categoria}</h1>
             <div className="tarjetaAñadirMaquina">
-                <form>
+                <form onSubmit={handleEnviar}>
                     
                     <label htmlFor="nombre">Nombre Maquina</label>
                     
@@ -37,12 +59,21 @@ export default function AñadirMaquinaria(){
                     {
                         !nuevaCategoria &&
                         <>
-                            <label htmlFor="categoria">Categoria</label>
+                            {/* <label htmlFor="categoria">Categoria</label>
                             <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
                                 <option value="">Seleccione una categoria</option>
                                 <option value="excavacion">Excavación</option>
                                 <option value="tierra">Movimiento de tierra</option>
                                 <option value="fresado">Fresadora</option>
+                            </select> */}
+                            <label htmlFor="categoria">Categoria</label>
+                            <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
+                                <option value="">Seleccione una categoria</option>
+                                {
+                                    array.map((dato)=>(
+                                        <option value={dato}>{dato}</option>
+                                    ))
+                                }
                             </select>
                         </>
                     }
@@ -93,13 +124,45 @@ export default function AñadirMaquinaria(){
 
                 </form>
                 
-                <div>
+                <div className="botonAñadirCategoria">
                     <button onClick={handleNuevaCategoria}>Añadir nueva categoria</button>
+                    <button onClick={handleVer}>Información Categorias</button>
                     <button onClick={handleLimpiarCampos}>Cancelar</button>
                 </div>
 
             </div>
-
+                    
+            {
+                ver && 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nombre Categoria
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Accion
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    preuba 1
+                                </td>
+                                <td>
+                                    Activo
+                                </td>
+                                <td>
+                                    <button>Activar o desactivar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            }
         </>
     )
 }

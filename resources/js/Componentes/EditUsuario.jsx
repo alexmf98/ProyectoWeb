@@ -11,12 +11,13 @@ export default function EditUsuario() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
-
+    
+    
     const [users, setUsers] = useState([]);
     const {user} = useAuth();
-
+    
     const { usuarios } = usePage().props;
-
+    
 
     useEffect(()=>{
         const handleFiltrar = usuarios.filter((usuario) => usuario.id !== user.id);
@@ -37,7 +38,7 @@ export default function EditUsuario() {
     const handleEditar = (e) => {
         e.preventDefault();
 
-        router.post(`/editarUsuario/${id}`, {
+        router.put(`/editarUsuario/${id}`, {
             name: name,
             email: email,
             role: role,
@@ -46,10 +47,15 @@ export default function EditUsuario() {
         setEditar(!editar);
     }
 
-    const clickDesactivar = () =>{
-        const confirmacion = confirm("¿Desea desactivar esta cuenta?");
+    const clickDesactivar = (id, is_active) =>{
+        const confirmacion = is_active ? confirm("¿Desea desactivar esta cuenta?") 
+                                : confirm("¿Desea activar esta cuenta?");
+        
+        confirmacion && router.put(`/desactivarPerfilAdmin/${id}`,{
+            is_active: is_active ? false : true,
+        });
 
-        return confirmacion ? alert("Cuenta desactivada") : "";
+        return confirmacion == is_active ? alert("Cuenta desactivada") : alert("Cuenta activada");
     }
     return (
         <>
@@ -60,6 +66,7 @@ export default function EditUsuario() {
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th colSpan={2}>Acción</th>
                         </tr>
                     </thead>
@@ -77,11 +84,19 @@ export default function EditUsuario() {
                                         {dato.role}
                                     </td>
                                     <td>
+                                        {dato.is_active ? 'activo' : 'desactivada'}
+                                    </td>
+                                    <td>
                                         <button onClick={() => clickEditar(dato)}>Editar</button>
                                     </td>
                                     <td>
-                                        <button onClick={()=>clickDesactivar()} className="deshabilitar">Deshabilitar</button>
+                                        <button className="deshabilitar" 
+                                        onClick={()=>clickDesactivar(dato.id, dato.is_active)} 
+                                        >
+                                            {dato.is_active ? "Desactivar": "Activar"}
+                                        </button>
                                     </td>
+                                   
                                 </tr>
                             ))
                         }

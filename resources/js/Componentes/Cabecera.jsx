@@ -67,19 +67,22 @@ export default function Cabecera() {
                                     <Link>Editar información de página</Link>
                                     <Link href={'/añadirmaquina'}>Añadir Maquinaria</Link>
                                     <Link href={'/añadirproyecto'}>Añadir Proyecto</Link>
-                                    <Link>Maquinaria Alquilada</Link>
-                                    <Link>Ver Proyectos Personales</Link>
+                                    <Link href={'/maquinariaAlquilada'}>Maquinaria Alquilada</Link>
+                                    <Link href={'/proyectoPersonalAdm'}>Ver Proyectos Personales</Link>
 
-                                    <Link>Ver Proyectos Solicitados</Link>
-                                    <Link>Facturación</Link>
+                                    <Link href={'/proyectosSolicitados'}>Ver Proyectos Solicitados</Link>
+                                    <Link>Facturación Proyecto</Link>
+                                    <Link>Facturación Maquinaria</Link>
                                     
                                 </>  
                             }
                                 {!isAdmin &&
                                     <>
-                                        <Link>Historial Proyectos</Link>
+                                        <Link href={'/historialProyectos'} >Historial Proyectos</Link>
+
+                                        <Link href={'proyectoSolicitado'}>Mis proyectos solicitados</Link>
                                     
-                                        <Link>Historial Alquileres</Link>
+                                        <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
                                     </>
                                 }
                                 

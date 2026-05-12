@@ -1,0 +1,31 @@
+.rojo {
+    background: red;
+    color: white;
+}
+
+.verde {
+    background: green;
+    color: white;
+}
+
+.gris {
+    background: #ccc;
+    color: #888;
+    pointer-events: none; /* No clickable */
+}
+
+.react-calendar__tile.rojo {
+    background: red !important;
+    color: white !important;
+}
+
+.react-calendar__tile.verde {
+    background: green !important;
+    color: white !important;
+}
+
+.react-calendar__tile.gris {
+    background: #ccc !important;
+    color: #888 !important;
+    pointer-events: none;
+}

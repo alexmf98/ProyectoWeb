@@ -1,0 +1,58 @@
+.tarjetaEditMaquinaria{
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    border: 2px solid red;
+}
+
+.tarjetaEditMaquinaria form{
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 380px;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    gap: 6px;
+}
+
+.tarjetaEditMaquinaria form label{
+    font-size: 1rem;
+    font-weight: 600;
+    color:  #374151;
+    margin-top: 8px;
+}
+
+.tarjetaEditMaquinaria form input{
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #374151;
+    background-color: #f9fafb;
+    outline: none;
+}
+
+.tarjetaEditMaquinaria form input:focus{
+    border-color: #4f46e5;
+    background-color: #fff;
+}
+
+.tarjetaEditMaquinaria form button{
+    margin-top: 10px;
+    padding: 10px 14px;
+    align-self: flex-end;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+
+}
+
+.tarjetaEditMaquinaria form button:hover{
+    background-color: #4338ca;
+}

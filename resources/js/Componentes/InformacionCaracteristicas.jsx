@@ -1,30 +1,29 @@
 import "../Styles/Informacion.css";
-import dumper from "../Imagenes/maquinaria/dumper.png";
 import InformacionDisponibilidad from "./InformacionDisponibilidad";
+import { usePage } from "@inertiajs/react";
 
 export default function InformacionCaracteristicas() {
+
+    const {maquina, imagen} = usePage().props;
+
     return (
         <>
+
             <div className="tarjetaImagen">
 
-                <img className="imagenMaquinaInformacion" src={dumper} alt="Dumper" />
+                <img className="imagenMaquinaInformacion" 
+                    src={imagen} 
+                    alt={maquina.nombre} />
 
             </div>
 
             <div className="tarjetaInformacion">
-                <h2>Dumper</h2>
+                
+                <h2>{maquina.nombre}</h2>
 
                 <ul>
                     <h3>Caracteristicas</h3>
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nulla id architecto
-                        voluptatem, numquam asperiores! Obcaecati sapiente libero dolor dolorum aliquid aliquam laborum
-                        quos sint consequuntur, eveniet unde! Optio, cumque?
-                    </li>
-
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nulla id architecto
-                        voluptatem, numquam asperiores! Obcaecati sapiente libero dolor dolorum aliquid aliquam laborum
-                        quos sint consequuntur, eveniet unde! Optio, cumque?
-                    </li>
+                    {maquina.caracteristicas}
                 </ul>
                 
                 <InformacionDisponibilidad />

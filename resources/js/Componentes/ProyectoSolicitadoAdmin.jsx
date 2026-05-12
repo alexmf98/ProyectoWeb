@@ -2,7 +2,7 @@ import { router, usePage } from "@inertiajs/react"
 import "../Styles/ProyectoSolicitado.css";
 import { useState } from "react";
 
-export default function ProyectoSolicitadoAdm() {
+export default function ProyectoSolicitadoAdmin() {
 
     const { proyectoSolicitado } = usePage().props;
 

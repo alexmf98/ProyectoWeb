@@ -1,6 +1,9 @@
 import "../Styles/Login.css";
 
-export default function FormularioEditar({submit,name, setName,email, setEmail, password, setPassword, texto}){
+export default function FormularioEditar({submit,name, setName,
+                                        apell, setApell,
+                                        email, setEmail, 
+                                        password, setPassword, texto}){
 
     return(
         <div className="contenedorFormulario">
@@ -12,6 +15,13 @@ export default function FormularioEditar({submit,name, setName,email, setEmail, 
                     type="text" 
                     value={name} 
                     onChange={(e)=>setName(e.target.value)}/>
+
+                <label htmlFor="apellido">Apellido</label>
+                
+                <input id="apellido" 
+                    type="text" 
+                    value={apell} 
+                    onChange={(e)=>setApell(e.target.value)}/>
                 
                 <label htmlFor="email">Email</label>
                 

@@ -5,9 +5,10 @@ import FormularioEditar from "../Componentes/FormularioEditar";
 
 export default function EditPerfil() {
 
-    const {nombre, email} = useAuth();
+    const {nombre, apellido, email} = useAuth();
 
     const [name, setName] = useState(nombre || "");
+    const [apell, setApell] = useState(apellido || "");
     const [Email, setEmail] = useState(email || "");
     const [password, setPassword] = useState("");
 
@@ -17,16 +18,19 @@ export default function EditPerfil() {
 
         router.post('/editPerfil', {
             name: name,
+            apellido: apell,
             email: Email,
             password: password,
         });
     }
-    
+    console.log(apell)
     return (
         <>
             <FormularioEditar submit={handleEdit}
                 name={name}
                 setName={setName}
+                apell={apell}
+                setApell={setApell}
                 email={Email}
                 setEmail={setEmail}
                 password={password}

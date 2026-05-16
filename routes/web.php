@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacturacionMaquinariaController;
 use App\Http\Controllers\FacturacionProyectoController;
 use App\Http\Controllers\HistorialMaquinariaController;
 use App\Http\Controllers\HistorialProyectoController;
@@ -121,4 +122,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/facturacionproyecto', [FacturacionProyectoController::class, 'index']);
     Route::post('/facturacionproyecto', [FacturacionProyectoController::class, 'store']);
+
+
+    Route::get('/facturamaquinaria', [FacturacionMaquinariaController::class, 'index']);
 });

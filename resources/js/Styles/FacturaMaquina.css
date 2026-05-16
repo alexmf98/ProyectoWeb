@@ -1,0 +1,20 @@
+.fechaMaquinaria{
+    display: flex;
+    padding: 10px 20px;   
+    justify-content: center;
+}
+
+.fechaMaquinaria label{
+    padding: 10px;
+}
+
+.fechaMaquinaria form {
+    display: flex;
+    gap: 10px;
+
+}
+
+.fechaMaquinaria button{
+    padding: 10px 20px;
+
+}

@@ -1,0 +1,35 @@
+.tarjetaTrabajador{
+    display: flex;
+    justify-content: center;
+}
+
+.tarjetaTrabajador form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 380px;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 10px 12px 14px rgba(0, 0, 0, 0.10);
+}
+
+.tarjetaTrabajador label{
+    padding: 10px 12px;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.tarjetaTrabajador input{
+    padding: 10px;
+}
+
+.tarjetaTrabajador button{
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.tarjetaTrabajador select{
+    padding: 10px;
+    
+}

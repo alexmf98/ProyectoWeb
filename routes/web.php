@@ -7,6 +7,7 @@ use App\Http\Controllers\HistorialProyectoController;
 use App\Http\Controllers\MaquinariaController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoSolicitadoController;
+use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -125,4 +126,10 @@ Route::middleware('auth')->group(function(){
 
 
     Route::get('/facturamaquinaria', [FacturacionMaquinariaController::class, 'index']);
+
+    //Trabajador
+    Route::get('/trabajador', [TrabajadorController::class, 'index']);
+    Route::post('/trabajador', [TrabajadorController::class, 'store']);
+
+    Route::get('/nomina', [TrabajadorController::class, 'nomina']);
 });

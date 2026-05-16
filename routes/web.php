@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EdicionController;
 use App\Http\Controllers\FacturacionMaquinariaController;
 use App\Http\Controllers\FacturacionProyectoController;
 use App\Http\Controllers\HistorialMaquinariaController;
@@ -127,9 +128,16 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/facturamaquinaria', [FacturacionMaquinariaController::class, 'index']);
 
+    Route::get('/edicion', [EdicionController::class, 'index']);
+    Route::get('/home', [EdicionController::class, 'mostrarImagen']);
+
+    Route::put('/mostrarimagen/{proyecto}', [EdicionController::class, 'show_imagen']);
+
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);
     Route::post('/trabajador', [TrabajadorController::class, 'store']);
 
     Route::get('/nomina', [TrabajadorController::class, 'nomina']);
+
+
 });

@@ -38,9 +38,9 @@ export default function Cabecera() {
                 <Link href={'/proyectos'}>Proyectos</Link>
 
                 <div className="subProyectos">
-                    <Link href={'/restauracion'}>Restauración</Link>
+                    <Link href={'/restauracion'}>Obra pública</Link>
 
-                    <Link href={'/adecuacion'}>Adecuación</Link>
+                    <Link href={'/adecuacion'}>Obra civíl</Link>
 
                     {/* <Link href={'/personal'}>Personal</Link> */}
                 </div>
@@ -93,14 +93,14 @@ export default function Cabecera() {
                                     </>
                                 }
 
-                                {/* {
+                                {
                                     trabajador && 
                                         <>
                                             <Link href={'/nomina'}>Nomina</Link>
                                             <Link>Proyectos </Link>
                                         </>
                                 }
-                                 */}
+                                
                                 <Link href={'/perfil'}>Perfil</Link>
                                 
                                 <button className="btnCerrarSesion" onClick={handleLogout}>

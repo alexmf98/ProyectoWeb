@@ -12,7 +12,7 @@ class Proyecto extends Model
         'localizacion',
         'categoria',
         'imagen',
-        // 'show_home',
+        'show_home',
     ];
 
     public function historialProyectos(){

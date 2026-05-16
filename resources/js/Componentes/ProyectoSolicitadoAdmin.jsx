@@ -91,7 +91,7 @@ export default function ProyectoSolicitadoAdmin() {
                                     <td className={dato.estado === 'aceptado' ? 'fila-deshabilitada' : ""}>
 
                                         <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
-                                            onClick={() => handleAceptar(dato.id)}>Aceptar</button>
+                                            onClick={() => handleAceptar(dato.id)}>Aceptar o Añdir proyecto</button>
 
                                     </td>
                                     
@@ -101,6 +101,7 @@ export default function ProyectoSolicitadoAdmin() {
                                             <button onClick={() => setId(dato.id)}>Cancelar</button>
                                         </form>
                                     </td>
+
                                 </tr>
                             ))
                         }

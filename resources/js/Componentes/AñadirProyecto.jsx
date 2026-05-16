@@ -64,8 +64,8 @@ export default function AñadirProyecto(){
 
                     <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
                         <option value="">Seleccione una categoria</option>
-                        <option value="adecuacion">Adecuación</option>
-                        <option value="restauracion">Restauración</option>
+                        <option value="adecuacion">Obra civíl</option>
+                        <option value="restauracion">Obra pública</option>
                         <option value="personal">Personal</option>
                     </select>
 

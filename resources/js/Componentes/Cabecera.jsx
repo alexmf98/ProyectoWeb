@@ -4,11 +4,11 @@ import "../Styles/Login.css";
 import cs from "../Imagenes/logo/logo_sarmiento.svg";
 
 import { useAuth } from "../Hooks/useAuth";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 export default function Cabecera() {
 
-    const { user, isAdmin } = useAuth();
+    const { user, isAdmin, trabajador } = useAuth();
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -50,6 +50,8 @@ export default function Cabecera() {
 
             <Link href={'/contactenos'}>Contactenos</Link>
 
+          
+
             <div className="login">
                 {user ? (
                     <div className="menuHamburguesa">
@@ -59,6 +61,10 @@ export default function Cabecera() {
 
                         { menuOpen && (
                             <div className="submenus">
+
+                            <div>
+                               <p>Login: {user?.name}</p> 
+                            </div>
 
                             {
                                 isAdmin &&
@@ -71,12 +77,13 @@ export default function Cabecera() {
                                     <Link href={'/proyectoPersonalAdm'}>Ver Proyectos Personales</Link>
 
                                     <Link href={'/proyectosSolicitados'}>Ver Proyectos Solicitados</Link>
-                                    <Link>Facturación Proyecto</Link>
-                                    <Link>Facturación Maquinaria</Link>
-                                    
+                                    <Link href={'/facturacionproyecto'}>Facturación Proyecto</Link>
+                                    <Link href={'/facturamaquinaria'}>Facturación Maquinaria</Link>
+                                    <Link href={'/trabajador'}>Nominas</Link>
+                                    <Link href={'/edicion'}>Modo edicion</Link>
                                 </>  
                             }
-                                {!isAdmin &&
+                                {!isAdmin && !trabajador &&
                                     <>
                                         <Link href={'/historialProyectos'} >Historial Proyectos</Link>
 
@@ -85,7 +92,15 @@ export default function Cabecera() {
                                         <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
                                     </>
                                 }
-                                
+
+                                {/* {
+                                    trabajador && 
+                                        <>
+                                            <Link href={'/nomina'}>Nomina</Link>
+                                            <Link>Proyectos </Link>
+                                        </>
+                                }
+                                 */}
                                 <Link href={'/perfil'}>Perfil</Link>
                                 
                                 <button className="btnCerrarSesion" onClick={handleLogout}>

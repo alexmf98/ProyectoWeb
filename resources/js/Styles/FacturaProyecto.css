@@ -1,0 +1,174 @@
+.tarjetaproyectofactura {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.tarjetaproyectofactura form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 440px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+}
+
+.tarjetaproyectofactura label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.tarjetaproyectofactura select,
+.tarjetaproyectofactura input[type="date"] {
+    padding: 9px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #111827;
+    background-color: white;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.tarjetaproyectofactura select:focus,
+.tarjetaproyectofactura input[type="date"]:focus {
+    border-color: #6b7280;
+}
+
+/* Zona de subida de archivo */
+.tarjetaproyectofactura .file-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    background-color: #f9fafb;
+    transition: border-color 0.2s, background-color 0.2s;
+    text-align: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.tarjetaproyectofactura .file-zone:hover {
+    border-color: #9ca3af;
+    background-color: #f3f4f6;
+}
+
+.tarjetaproyectofactura button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #111827;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tarjetaproyectofactura button[type="submit"]:hover {
+    background-color: #374151;
+}
+
+.botonAñadirFactura{
+    display: flex;
+    padding: 10px 20px;
+
+}
+
+/* .botonAñadirFactura button {
+    padding: 10px 20px;
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.botonAñadirFactura button:hover {
+    background-color: #1D4ED8;
+} */
+
+.botonAñadirFactura button {
+    padding: 10px 20px;
+    background-color: #111827;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.botonAñadirFactura button:hover {
+    background-color: #374151;
+}
+
+.tablafacturaproyecto td a {
+    background: none;
+    border: none;
+}
+
+.buscardorFecha{
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+}
+
+.buscardorFecha input{
+    gap: 10px;
+    padding: 10px 20px;
+    margin: 10px;
+}
+
+.buscardorFecha button{
+    gap: 10px;
+    padding: 10px 20px;
+    margin: 10px;
+}
+
+
+
+/* Paginacion */
+
+.paginacion {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.paginacion button {
+    padding: 6px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #374151;
+    background: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.paginacion button:hover:not(:disabled) {
+    background-color: #f3f4f6;
+}
+
+.paginacion button.activo {
+    background-color: #111827;
+    color: white;
+    border-color: #111827;
+}
+
+.paginacion button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacturacionProyectoController;
 use App\Http\Controllers\HistorialMaquinariaController;
 use App\Http\Controllers\HistorialProyectoController;
 use App\Http\Controllers\MaquinariaController;
@@ -33,9 +34,9 @@ Route::get('/contactenos', function(){
     return Inertia::render('Contactenos');
 })->name('contactenos');
 
-Route::get('/restauracion', [ProyectoController::class, 'proyectoRestauracion']);
+Route::get('/obracivil', [ProyectoController::class, 'proyectoRestauracion']);
 
-Route::get('/adecuacion', [ProyectoController::class, 'proyectoAdecuacion']);
+Route::get('/obrapublica', [ProyectoController::class, 'proyectoAdecuacion']);
 
 Route::get('/personal', function(){
     return Inertia::render('Personal');
@@ -117,4 +118,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/proyectosSolicitados', [ProyectoSolicitadoController::class, 'indexAdmin']);
     Route::put('/proyectosSolicitados/{proyectoSolicitado}', [ProyectoSolicitadoController::class, 'update']);
+
+    Route::get('/facturacionproyecto', [FacturacionProyectoController::class, 'index']);
+    Route::post('/facturacionproyecto', [FacturacionProyectoController::class, 'store']);
 });

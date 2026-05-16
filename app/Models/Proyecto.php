@@ -12,6 +12,7 @@ class Proyecto extends Model
         'localizacion',
         'categoria',
         'imagen',
+        // 'show_home',
     ];
 
     public function historialProyectos(){
@@ -21,4 +22,12 @@ class Proyecto extends Model
     public function imagenes(){
         return $this->hasMany(ProyectoImagen::class);
     }
+
+    public function facturas(){
+        return $this->hasMany(FacturacionProyecto::class);
+    }
+
+    // public function trabajadores(){
+    //     return $this->hasMany(Trabajador::class);
+    // }
 }

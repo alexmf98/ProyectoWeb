@@ -10,50 +10,92 @@ export default function AñadirMaquinaria(){
     const [stock, setStock] = useState(0); 
     const [caracteristicas, setCaracteristicas] = useState("");
     const [imagen, setImagen] = useState("");
-    const [ver, setVer] = useState(false);
+    const [categoriaid, setCategoriaId] = useState(null);
 
     const [nuevaCategoria, setNuevaCategoria] = useState(false);
+
+    const {Categoria, cat} = usePage().props;
 
     const handleNuevaCategoria = ()=>{
         setNuevaCategoria(true);
     }
 
     const handleLimpiarCampos = ()=>{
-        setNuevaCategoria(false);
         setNombre("");
         setCategoria("");
         setPrecio(0);
         setStock(0);
         setCaracteristicas("");
         setImagen("");
+        setCategoriaId(null);
+        setNuevaCategoria(false);
         setVer(false);
     }
-
+    
     const handleEnviar = (e)=>{
         e.preventDefault();
-
+       
         router.post('añadirMaquina',{
             nombre: nombre,
-            categoria: categoria,
             precio: precio,
             stock: stock,
             caracteristicas: caracteristicas,
             imagen: imagen,
+            categoria_id: categoriaid,
         });
     }
 
-    const array = ["Excavación", "Movimiento de tierra", "Fresadora"]
+    const [ver, setVer] = useState(false);
 
     const handleVer = () =>{
         setVer(true);
     }
 
-    const {Categoria} = usePage().props;
-    console.log(Categoria);
 
+    const handleCategoria = (e)=>{
+
+        e.preventDefault();
+
+        router.post('/categorias', {
+            categoria: categoria,
+        })
+    }
+
+    const handleDesactivar = (id)=>{
+        router.put(`/categoria/${id}`, {
+            is_active: false,
+        });
+    }
+
+    const handleActivar = (id)=>{
+        router.put(`/categoria/${id}`, {
+            is_active: true,
+        });
+    }
     return(
         <>
+        {
+            nuevaCategoria &&
+                <div className="tarjetaAñadirMaquina">
+                    <form onSubmit={handleCategoria}>
+                                    <>
+                                        <label htmlFor="nuevaCategoria">Nueva Categoria</label>
+                                        <input type="text" 
+                                                id="nuevaCategoria"
+                                                onChange={(e)=>setCategoria(e.target.value)}
+                                        />
+                                    </>
+
+                                    <button>Aceptar</button>
+                    </form>
+                </div>
+            }
+
             <div className="tarjetaAñadirMaquina">
+
+                {
+                    !nuevaCategoria &&
+
                 <form onSubmit={handleEnviar}>
                     
                     <label htmlFor="nombre">Nombre Maquina</label>
@@ -64,31 +106,17 @@ export default function AñadirMaquinaria(){
                             onChange={(e)=>setNombre(e.target.value)}/>
 
 
-                    {
-                        !nuevaCategoria &&
                         <>
                             <label htmlFor="categoria">Categoria</label>
-                            <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
+                            <select id="categoria" onChange={(e)=>setCategoriaId(e.target.value)}>
                                 <option value="">Seleccione una categoria</option>
                                 {
-                                    array.map((dato)=>(
-                                        <option value={dato}>{dato}</option>
-                                    ))
+                                   Categoria.map((dato)=>(
+                                    <option value={dato.id}>{dato.categoria}</option>
+                                   ))
                                 }
                             </select>
                         </>
-                    }
-
-                    {
-                        nuevaCategoria &&
-                            <>
-                                <label htmlFor="nuevaCategoria">Nueva Categoria</label>
-                                <input type="text" 
-                                        id="nuevaCategoria"
-                                        onChange={(e)=>setCategoria(e.target.value)}
-                                />
-                            </>
-                    }
 
                     <label htmlFor="precio">Precio (€)</label>
 
@@ -124,6 +152,7 @@ export default function AñadirMaquinaria(){
                     </div>
 
                 </form>
+                }
                 
                 <div className="botonAñadirCategoria">
                     <button onClick={handleNuevaCategoria}>Añadir nueva categoria</button>
@@ -132,9 +161,9 @@ export default function AñadirMaquinaria(){
                 </div>
 
             </div>
-                    
+                 
             {
-                ver && 
+                ver &&
                 <div className="tablaCategoria">
                     <table>
                         <thead>
@@ -145,26 +174,36 @@ export default function AñadirMaquinaria(){
                                 <th>
                                     Estado
                                 </th>
-                                <th>
+                                <th colSpan={2}>
                                     Accion
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    preuba 1
-                                </td>
-                                <td>
-                                    Activo
-                                </td>
-                                <td>
-                                    <button>Activar o desactivar</button>
-                                </td>
-                            </tr>
+                            {
+                                cat.map((dato)=>(
+                                    <tr>
+                                        <td>
+                                            {dato.categoria}
+                                        </td>
+                                        <td>
+                                            {dato.is_active ? 'Activo' : 'Desactivado'}
+                                        </td>
+
+                                        <td>
+                                            <button onClick={()=>handleActivar(dato.id)}>Activar</button>
+                                        </td>
+
+                                        <td>
+                                            <button onClick={()=>handleDesactivar(dato.id)}>Desactivar</button>
+                                        </td>
+
+                                    </tr>
+                                ))
+                            }
                         </tbody>
                     </table>
-                </div>
+                </div> 
             }
         </>
     )

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\HistorialMaquinaria;
 use App\Models\Maquinaria;
 use Illuminate\Http\Request;
@@ -47,12 +48,12 @@ class MaquinariaController extends Controller
 
     public function añadirMaquinaria(){
 
-        // $categoria = Maquinaria::all()->where('categoria_active', '=', true)->get();
-
-        $categoria = Maquinaria::select('categoria')->get();
+        $categoria = Categoria::where('is_active', true)->get();
+        $c = Categoria::all();
 
         return Inertia::render('MaquinariaAdmin',[
             'Categoria'=>$categoria,
+            'cat'=>$c,
         ]);
     
     }
@@ -72,14 +73,13 @@ class MaquinariaController extends Controller
     {
         $validate = $request->validate([
             'nombre'=>'required',
-            'categoria'=>'required',
             'precio'=>'required',
             'stock'=>'required',
             'caracteristicas'=>'required',
             'imagen'=>'nullable',
+            'categoria_id'=>"exists:categorias,id",
         ]);
 
-        // dd($validate);
 
         if($request->hasFile('imagen')){
             $path = Storage::disk('public')->put('maquinaria/', $request->file('imagen'));

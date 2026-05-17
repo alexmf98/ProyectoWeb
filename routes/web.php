@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EdicionController;
 use App\Http\Controllers\FacturacionMaquinariaController;
 use App\Http\Controllers\FacturacionProyectoController;
@@ -145,6 +146,9 @@ Route::middleware('auth')->group(function(){
     Route::put('/informacionempresa/{empresa}', [EdicionController::class, 'update']);
 
     Route::delete('/informacionempresa/{empresa}', [EdicionController::class, 'destroy']);
+
+    Route::post('/categorias', [CategoriaController::class, 'store']);
+    Route::put('/categoria/{categoria}', [CategoriaController::class, 'update']);
 
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);

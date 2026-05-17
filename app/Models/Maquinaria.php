@@ -8,14 +8,18 @@ class Maquinaria extends Model
 {
     protected $fillable = [
         'nombre',
-        'categoria',
         'precio',
         'stock',
         'caracteristicas',
         'imagen',
+        'categoria_id',
     ];
     
     public function alquileres(){
         return $this->hasMany(HistorialMaquinaria::class);
+    }
+
+    public function categoria(){
+        return $this->belongsTo(Categoria::class);
     }
 }

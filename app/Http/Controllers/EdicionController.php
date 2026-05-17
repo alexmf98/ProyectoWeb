@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmpresaColaboradora;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,8 +14,16 @@ class EdicionController extends Controller
 
         $proyecto = Proyecto::where('categoria', '!=', 'personal')->get();
 
+        $empresaColaboradora = EmpresaColaboradora::all()->map(function($dato){
+            return[
+                'id'=>$dato->id,
+                'imagen'=>Storage::url('colaboradoras/' . $dato->imagen),
+            ];
+        });
+
         return Inertia::render('EdicionPagina',[
             'proyecto'=>$proyecto,
+            'empresa'=>$empresaColaboradora,
         ]);
     }
 
@@ -34,8 +43,16 @@ class EdicionController extends Controller
                         ];
                     });
 
+        $empresaColaboradora = EmpresaColaboradora::all()->map(function($dato){
+            return[
+                'id'=>$dato->id,
+                'imagen'=>Storage::url('colaboradoras/' . $dato->imagen),
+            ];
+        });
+
         return Inertia::render('Home',[
             'imagen'=>$imagen,
+            'empresa'=>$empresaColaboradora,
         ]);
     }
 
@@ -49,5 +66,28 @@ class EdicionController extends Controller
             'show_home'=>$validate['show_home'],
         ]);
 
+    }
+
+    public function empresa(Request $request){
+        $validate = $request->validate([
+            'imagen'=>'required',
+        ]);
+
+        if($request->hasFile('imagen')){
+            $path = Storage::disk('public')->put('colaboradoras/', $request->file('imagen'));
+            $validate['imagen'] = basename($path);  
+        }
+
+        EmpresaColaboradora::create($validate);
+
+        return redirect()->back();
+    }
+
+    public function eliminar(EmpresaColaboradora $empresa){
+        Storage::delete('colaboradoras/'. $empresa->imagen);
+
+        $empresa->delete();
+
+        return redirect()->back();
     }
 }

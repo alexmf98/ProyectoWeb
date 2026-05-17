@@ -38,9 +38,9 @@ export default function Cabecera() {
                 <Link href={'/proyectos'}>Proyectos</Link>
 
                 <div className="subProyectos">
-                    <Link href={'/restauracion'}>Obra pública</Link>
+                    <Link href={'/obracivil'}>Obra civíl</Link>
 
-                    <Link href={'/adecuacion'}>Obra civíl</Link>
+                    <Link href={'/obrapublica'}>Obra pública</Link>
 
                     {/* <Link href={'/personal'}>Personal</Link> */}
                 </div>

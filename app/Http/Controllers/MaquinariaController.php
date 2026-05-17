@@ -144,7 +144,29 @@ class MaquinariaController extends Controller
      */
     public function update(Request $request, Maquinaria $maquinaria)
     {
-        //
+        $validate = $request->validate([
+            'nombre' => 'required',
+            'categoria'=>'required',
+            'precio' => 'required',
+            'stock'=>'required',
+            'caracteristicas'=>'required',
+            'imagen' => 'nullable',
+        ]);
+    
+        if($request->hasFile('imagen')){
+           
+            // borrar imagen antigua
+            Storage::disk('public')->delete('maquinaria/' . $maquinaria->imagen);
+    
+            // guardar nueva
+            $path = Storage::disk('public')->put('maquinaria', $request->file('imagen'));
+    
+            $validate['imagen'] = basename($path);
+        }
+
+        $maquinaria->update($validate);
+    
+        return redirect()->route('alquiler');
     }
 
     /**

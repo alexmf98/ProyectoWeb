@@ -1,6 +1,10 @@
+import { usePage } from "@inertiajs/react";
 import "../Styles/Home.css";
 
-export default function EmpresaColaboradora({children}) {
+export default function EmpresaColaboradora() {
+
+    const {empresa} = usePage().props;
+
     return (
         <div className="empresasColaboradoras">
             <h3>
@@ -9,7 +13,16 @@ export default function EmpresaColaboradora({children}) {
 
             <div className="fotosColaboradoras">
                 <div className="slider">
-                    {children}
+                    {
+                        empresa.map((dato)=>(
+                            <img src={dato.imagen} alt="no disponible" />
+                        ))
+                    }
+                    {
+                        empresa.map((dato)=>(
+                            <img src={dato.imagen} alt="no disponible" />
+                        ))
+                    }
                 </div>
             </div>
         </div>

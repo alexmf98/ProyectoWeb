@@ -1,0 +1,138 @@
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.edicionContainer {
+    padding: 2rem;
+}
+
+/* ===== TÍTULOS ===== */
+.edicionContainer h1 {
+    /* color: #185FA5; */
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    margin-top: 2rem;
+}
+
+.edicionContainer h1:first-child {
+    margin-top: 0;
+}
+
+/* ===== TABLA ===== */
+.tablaEdicion {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 2rem 0;
+}
+
+.tablaEdicion table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Encabezado */
+.tablaEdicion thead {
+    background-color: #185FA5;
+}
+
+.tablaEdicion thead th {
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Filas */
+.tablaEdicion tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+
+.tablaEdicion tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tablaEdicion tbody tr:hover {
+    background-color: #eaf2fc;
+}
+
+.tablaEdicion tbody td {
+    padding: 12px 16px;
+    color: #374151;
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+/* ===== BOTÓN MOSTRAR ===== */
+.tablaEdicion tbody td .btnMostrar {
+    background-color: #185FA5;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.tablaEdicion tbody td .btnMostrar:hover {
+    background-color: #0f4278;
+}
+
+/* ===== BOTÓN OCULTAR ===== */
+.tablaEdicion tbody td .btnOcultar {
+    background-color: #fff;
+    color: #185FA5;
+    border: 1.5px solid #185FA5;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.tablaEdicion tbody td .btnOcultar:hover {
+    background-color: #eaf2fc;
+}
+
+/* ===== ACCIONES ===== */
+.botonEdit {
+    display: flex;
+    align-self: flex-end;
+    gap: 2rem;
+}
+
+.añadirEmpresa {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+/* .inputFile {
+    display: none;
+} */
+
+.btnFile {
+    background-color: #fff;
+    color: #185FA5;
+    border: 1.5px solid #185FA5;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.btnFile:hover {
+    background-color: #eaf2fc;
+}

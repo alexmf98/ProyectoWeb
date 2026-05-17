@@ -19,9 +19,9 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
-Route::get('/home', function(){
-    return Inertia::render('Home');
-})->name('home');
+// Route::get('/home', function(){
+//     return Inertia::render('Home');
+// })->name('home');
 
 Route::get('/alquileres', function(){
     return Inertia::render('Alquileres');
@@ -64,6 +64,8 @@ Route::get('/perfil', function(){
 
 Route::get('/alquileres', [MaquinariaController::class, 'index'])->name('alquiler');
 Route::get('informacion/{maquinaria}', [MaquinariaController::class, 'show']);
+
+Route::get('/home', [EdicionController::class, 'mostrarImagen'])->name('home');
 
 Route::middleware('auth')->group(function(){
 
@@ -129,9 +131,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/facturamaquinaria', [FacturacionMaquinariaController::class, 'index']);
 
     Route::get('/edicion', [EdicionController::class, 'index']);
-    Route::get('/home', [EdicionController::class, 'mostrarImagen']);
+   
 
     Route::put('/mostrarimagen/{proyecto}', [EdicionController::class, 'show_imagen']);
+
+    Route::put('editarmaquina/{maquinaria}', [MaquinariaController::class, 'update']);
+
+    Route::post('/empresacolaboradora', [EdicionController::class, 'empresa']);
+    Route::delete('/empresacolaboradora/{empresa}', [EdicionController::class, 'eliminar']);
 
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);

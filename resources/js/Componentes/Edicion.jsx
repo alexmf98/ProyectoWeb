@@ -1,5 +1,7 @@
 import { router, usePage } from "@inertiajs/react"
-import { useState } from "react";
+import AñadirEmpresaColaboradora from "../Componentes/AñadirEmpresaColaboradora";
+
+import "../Styles/Edicion.css";
 
 export default function Edicion() {
 
@@ -25,53 +27,47 @@ export default function Edicion() {
 
     return (
         <>
-            <h1>Edicion</h1>
 
-            <h1>Proyectos realizados</h1>
+            <div className="edicionContainer">
+                <h1>Edicion</h1>
+                <h1>Proyectos realizados</h1>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre Proyecto</th>
-                        <th>Localizacion</th>
-                        <th>Mostrar(seleccionar máximo 3)</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {
-                        proyecto.map((dato) => (
-                            <tr>
-                                <td>{dato.nombre}</td>
-                                <td>{dato.localizacion}</td>
-                                <td>
-                                    <form onSubmit={(e) => handleShowImagen(e, dato.id)}>
-
-                                        <button type="submit">
+                <div className="tablaEdicion">
+                    <table>
+                        <thead> <tr>
+                            <th>Nombre Proyecto</th>
+                            <th>Localizacion</th>
+                            <th colSpan={2}>Mostrar(seleccionar máximo 3)</th>
+                        </tr></thead>
+                        <tbody>
+                            {proyecto.map((dato) => (
+                                <tr key={dato.id}>
+                                    <td>{dato.nombre}</td>
+                                    <td>{dato.localizacion}</td>
+                                    <td>
+                                        <button className="btnMostrar" onClick={(e) => handleShowImagen(e, dato.id)}>
                                             Mostrar
                                         </button>
-
-                                    </form>
-                                </td>
-                                {
-                                    dato.show_home &&
-                                    <td>
-                                        <form onSubmit={(e) => handleOcultarImagen(e, dato.id)}>
-
-                                            <button type="submit">
+                                    </td>
+                                    {dato.show_home && (
+                                        <td>
+                                            <button className="btnOcultar" onClick={(e) => handleOcultarImagen(e, dato.id)}>
                                                 Ocultar
                                             </button>
+                                        </td>
+                                    )}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-                                        </form>
-                                    </td>
-                                }
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+                <AñadirEmpresaColaboradora />
 
-            <h1>Empresas Colaboradoras</h1>
+            </div>
+
+
+
 
             <h1>Informacion de empresa</h1>
         </>

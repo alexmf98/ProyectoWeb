@@ -1,7 +1,4 @@
 import "../Styles/Home.css";
-import leroy from "../Imagenes/colaboradora/leroy.png";
-import martillo from "../Imagenes/colaboradora/martillo.png";
-import media from "../Imagenes/colaboradora/media.png";
 import HistoariaEmpresa from "../Componentes/HistoriaEmpresa";
 import ProyectosRealizados from "../Componentes/ProyectosRealizados";
 import EmpresaColaboradora from "../Componentes/EmpresaColaboradora";
@@ -24,19 +21,7 @@ export default function Home() {
             
 
 
-            <EmpresaColaboradora>
-                <img src={leroy} alt="Leroy Merlin" />
-                <img src={media} alt="Media Markt" />
-                <img src={martillo} alt="Constructora" />
-                
-                <img src={leroy} alt="Leroy Merlin" />
-                <img src={media} alt="Media Markt" />
-                <img src={martillo} alt="Constructora" />
-
-
-            </EmpresaColaboradora>
-
-
+            <EmpresaColaboradora />
 
         </>
     );

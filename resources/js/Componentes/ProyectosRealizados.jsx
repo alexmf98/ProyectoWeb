@@ -1,8 +1,4 @@
 import "../Styles/Home.css";
-
-import construccion1 from "../Imagenes/construccion/construccion1.jpg";
-import construccion2 from "../Imagenes/construccion/construccion2.jpg";
-import casa from "../Imagenes/construccion/casa.png";
 import { usePage } from "@inertiajs/react";
 
 

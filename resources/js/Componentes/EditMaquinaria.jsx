@@ -1,9 +1,35 @@
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import "../Styles/EditarMaquinaria.css";
+import { use, useState } from "react";
 
 export default function EditMaquinaria() {
 
     const { maquina } = usePage().props;
+
+    const [nombre, setNombre] = useState("" || maquina.nombre);
+    const [precio, setPrecio] = useState(0 || maquina.precio);
+    const [imagen, setImagen] = useState("" || maquina.imagen);
+    const [categoria, setCategoria] = useState("" || maquina.categoria);
+    const [stock, setStock] = useState(0 || maquina.stock);
+    const [caracteristicas, setCaracteristicas] = useState("" || maquina.caracteristicas);
+
+    const [id, setId] = useState(null);
+
+    const handleEditar = (e) => {
+
+        e.preventDefault();
+
+        const newFormdData = new FormData();
+
+        newFormdData.append("nombre", nombre);
+        newFormdData.append("precio", precio);
+        newFormdData.append("imagen", imagen);
+        newFormdData.append("categoria", categoria);
+        newFormdData.append("stock", stock);
+        newFormdData.append("caracteristicas", caracteristicas);
+
+        router.put(`/editarmaquina/${id}`, newFormdData);
+    }
 
     return (
         <>
@@ -11,19 +37,47 @@ export default function EditMaquinaria() {
 
 
             <div className="tarjetaEditMaquinaria">
-                <form>
+                <form onSubmit={handleEditar}>
 
                     <label htmlFor="nombre">Nombre</label>
                     <input type="text"
-                        value={maquina.nombre}
+                        value={nombre}
+                        onChange={(e) => setNombre(e.target.value)}
+                    />
+
+                    <label htmlFor="categoria">Categoria</label>
+                    <input type="text"
+                        value={categoria}
+                        onChange={(e) => setCategoria(e.target.value)}
                     />
 
                     <label htmlFor="precio">Precio</label>
                     <input type="number"
-                        value={maquina.precio}
+                        value={precio}
+                        onChange={(e) => setPrecio(e.target.value)}
                     />
 
-                    <button>Aceptar</button>
+                    <label htmlFor="stock">Numero de stock</label>
+                    <input type="number"
+                        value={stock}
+                        onChange={(e) => setStock(e.target.value)}
+                    />
+
+                    <label htmlFor="caracteristicas">Caracteristicas</label>
+                    <textarea id="caracteriscticas"
+                            value={caracteristicas}
+                            onChange={(e)=>setCaracteristicas(e.target.value)}
+                            rows={4}
+                            />
+
+                    <label htmlFor="imagen">Imagen</label>
+                    <input type="file"
+                        onChange={(e) => setImagen(e.target.files[0])}
+                    />
+
+                    <button type="submit"
+                            onClick={()=>setId(maquina.id)}
+                            >Aceptar</button>
                 </form>
 
             </div>

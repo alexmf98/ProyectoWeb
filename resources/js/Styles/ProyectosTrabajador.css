@@ -1,0 +1,48 @@
+.tarjetaProyectoTrabajador {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 2rem 0;
+}
+
+.tarjetaProyectoTrabajador table {
+    width: 100%;
+    max-width: 500px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tarjetaProyectoTrabajador table thead {
+    background-color: #185FA5;
+}
+
+.tarjetaProyectoTrabajador table thead th {
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tarjetaProyectoTrabajador tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+
+.tarjetaProyectoTrabajador tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tarjetaProyectoTrabajador tbody tr:hover {
+    background-color: #eaf2fc;
+}
+
+.tarjetaProyectoTrabajador tbody td {
+    padding: 12px 16px;
+    color: #374151;
+    font-size: 0.95rem;
+}

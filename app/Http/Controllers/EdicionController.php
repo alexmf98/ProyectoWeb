@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmpresaColaboradora;
+use App\Models\InformacionEmpresa;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,7 @@ class EdicionController extends Controller
                 'imagen'=>Storage::url('colaboradoras/' . $dato->imagen),
             ];
         });
+
 
         return Inertia::render('EdicionPagina',[
             'proyecto'=>$proyecto,
@@ -85,6 +87,42 @@ class EdicionController extends Controller
 
     public function eliminar(EmpresaColaboradora $empresa){
         Storage::delete('colaboradoras/'. $empresa->imagen);
+
+        $empresa->delete();
+
+        return redirect()->back();
+    }
+
+    public function infoempresa(Request $request){
+        $validate = $request->validate([
+            'descripcion'=>'required',
+            'telefono'=>'required',
+            'email'=>'required',
+            'localizacion'=>'required',
+        ]);
+
+        InformacionEmpresa::create($validate);
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, InformacionEmpresa $empresa){
+        
+        $validate = $request->validate([
+            'descripcion'=>'required',
+            'telefono'=>'required',
+            'email'=>'required|email',
+            'localizacion'=>'required',
+        ]);
+
+        $empresa->update($validate);
+
+        return redirect()->back();
+
+    }
+
+    public function destroy(InformacionEmpresa $empresa){
+
 
         $empresa->delete();
 

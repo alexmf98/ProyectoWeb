@@ -27,6 +27,10 @@ export default function EmpresaColabora() {
         router.post('/empresacolaboradora', newFormaData);
     }
 
+    const handleCancelar = ()=>{
+        setVer(false);
+    }
+
     return (
         <>
             <h1>Empresas Colaboradoras</h1>
@@ -61,7 +65,7 @@ export default function EmpresaColabora() {
 
             </div>
             
-            <button className="btnMostrar btnAñadir" onClick={() => handleAddEmpresa()}>
+            <button className="btnAñadir" onClick={() => handleAddEmpresa()}>
                     Añadir empresa colaboradora
             </button>
             
@@ -79,7 +83,8 @@ export default function EmpresaColabora() {
                                 className="inputFile"
                                 onChange={(e)=>setImagen(e.target.files[0])}
                             />
-                            <button className="btnMostrar" type="submit">Aceptar</button>
+                            <button className="btnAceptar" type="submit">Aceptar</button>
+                            <button type="reset" className="btnCancelar" onClick={handleCancelar}>Cancelar</button>
                         </div>
                     </form>
                 }

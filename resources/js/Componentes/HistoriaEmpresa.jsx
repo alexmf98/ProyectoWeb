@@ -1,11 +1,15 @@
 import "../Styles/Home.css";
+import { useInfoEmpresa } from "../Hooks/useInfoEmpresa";
 
-export default function HistoariaEmpresa({children}){
+export default function HistoariaEmpresa(){
+
+    const {descripcion} = useInfoEmpresa();
+
     return(
         <div className="historiaEmpresa">
                         <div className="overlayHistoria">
                             <p>
-                               {children}
+                                {descripcion}                        
                             </p>
                         </div>
                     </div>

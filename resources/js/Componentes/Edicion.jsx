@@ -2,6 +2,7 @@ import { router, usePage } from "@inertiajs/react"
 import AñadirEmpresaColaboradora from "../Componentes/AñadirEmpresaColaboradora";
 
 import "../Styles/Edicion.css";
+import InformacionEmpresa from "./InformacionEmpresa";
 
 export default function Edicion() {
 
@@ -29,16 +30,17 @@ export default function Edicion() {
         <>
 
             <div className="edicionContainer">
-                <h1>Edicion</h1>
                 <h1>Proyectos realizados</h1>
 
                 <div className="tablaEdicion">
                     <table>
-                        <thead> <tr>
-                            <th>Nombre Proyecto</th>
-                            <th>Localizacion</th>
-                            <th colSpan={2}>Mostrar(seleccionar máximo 3)</th>
-                        </tr></thead>
+                        <thead> 
+                            <tr>
+                                <th>Nombre Proyecto</th>
+                                <th>Localizacion</th>
+                                <th colSpan={2}>Mostrar(seleccionar máximo 3)</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {proyecto.map((dato) => (
                                 <tr key={dato.id}>
@@ -64,12 +66,9 @@ export default function Edicion() {
 
                 <AñadirEmpresaColaboradora />
 
-            </div>
+                <InformacionEmpresa />
 
-
-
-
-            <h1>Informacion de empresa</h1>
+            </div>            
         </>
     )
 }

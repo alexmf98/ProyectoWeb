@@ -49,7 +49,11 @@ class MaquinariaController extends Controller
 
         // $categoria = Maquinaria::all()->where('categoria_active', '=', true)->get();
 
-        return Inertia::render('MaquinariaAdmin');
+        $categoria = Maquinaria::select('categoria')->get();
+
+        return Inertia::render('MaquinariaAdmin',[
+            'Categoria'=>$categoria,
+        ]);
     
     }
 

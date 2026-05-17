@@ -136,3 +136,110 @@
 .btnFile:hover {
     background-color: #eaf2fc;
 }
+
+.btnAñadir, .btnAceptar{
+    color: #185FA5;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+
+}
+.btnCancelar{
+    color: #ff4b4b;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+/* ===== BOTONES ACCIONES ===== */
+.btnAceptar {
+    background-color: #185FA5;
+    color: white;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-right: 0.5rem;
+}
+
+.btnAceptar:hover {
+    background-color: #0f4278;
+}
+
+.btnCancelar {
+    background-color: #fff;
+    color: #ff4b4b;
+    border: 1.5px solid #185FA5;
+    padding: 7px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-right: 0.5rem;
+}
+
+.btnCancelar:hover {
+    background-color: #eaf2fc;
+}
+
+/* ===== ACCIONES ===== */
+.accionesEmpresa {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+}
+
+/* ===== FORMULARIO ===== */
+.formularioEmpresa {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 2rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-width: 500px;
+    margin: 1rem auto;
+    justify-content: center;
+}
+
+.formularioEmpresa label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #185FA5;
+}
+
+.formularioEmpresa input,
+.formularioEmpresa textarea {
+    border: 1.5px solid #c5d8ef;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 0.9rem;
+    color: #374151;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    font-family: inherit;
+}
+
+.formularioEmpresa input:focus,
+.formularioEmpresa textarea:focus {
+    border-color: #185FA5;
+}
+
+.formularioEmpresa textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.formularioEmpresa .botonesForm {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}

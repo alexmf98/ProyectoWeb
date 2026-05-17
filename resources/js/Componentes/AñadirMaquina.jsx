@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "../Styles/AñadirMaquina.css";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 
 export default function AñadirMaquinaria(){
 
@@ -10,6 +10,7 @@ export default function AñadirMaquinaria(){
     const [stock, setStock] = useState(0); 
     const [caracteristicas, setCaracteristicas] = useState("");
     const [imagen, setImagen] = useState("");
+    const [ver, setVer] = useState(false);
 
     const [nuevaCategoria, setNuevaCategoria] = useState(false);
 
@@ -19,6 +20,13 @@ export default function AñadirMaquinaria(){
 
     const handleLimpiarCampos = ()=>{
         setNuevaCategoria(false);
+        setNombre("");
+        setCategoria("");
+        setPrecio(0);
+        setStock(0);
+        setCaracteristicas("");
+        setImagen("");
+        setVer(false);
     }
 
     const handleEnviar = (e)=>{
@@ -36,11 +44,12 @@ export default function AñadirMaquinaria(){
 
     const array = ["Excavación", "Movimiento de tierra", "Fresadora"]
 
-    const [ver, setVer] = useState(false);
-
     const handleVer = () =>{
-        setVer(!ver);
+        setVer(true);
     }
+
+    const {Categoria} = usePage().props;
+    console.log(Categoria);
 
     return(
         <>
@@ -58,13 +67,6 @@ export default function AñadirMaquinaria(){
                     {
                         !nuevaCategoria &&
                         <>
-                            {/* <label htmlFor="categoria">Categoria</label>
-                            <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
-                                <option value="">Seleccione una categoria</option>
-                                <option value="excavacion">Excavación</option>
-                                <option value="tierra">Movimiento de tierra</option>
-                                <option value="fresado">Fresadora</option>
-                            </select> */}
                             <label htmlFor="categoria">Categoria</label>
                             <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
                                 <option value="">Seleccione una categoria</option>
@@ -118,14 +120,14 @@ export default function AñadirMaquinaria(){
                     <div className="botonAñadirMaquina">
                         
                         <button>Añadir</button>
-                        <button>Cancelar</button>
+                        <button onClick={handleLimpiarCampos}>Cancelar</button>
                     </div>
 
                 </form>
                 
                 <div className="botonAñadirCategoria">
                     <button onClick={handleNuevaCategoria}>Añadir nueva categoria</button>
-                    <button onClick={handleVer}>Información Categorias</button>
+                    <button className="btnInfoCategoria" onClick={handleVer}>Información Categorias</button>
                     <button onClick={handleLimpiarCampos}>Cancelar</button>
                 </div>
 
@@ -133,6 +135,7 @@ export default function AñadirMaquinaria(){
                     
             {
                 ver && 
+                <div className="tablaCategoria">
                     <table>
                         <thead>
                             <tr>
@@ -161,6 +164,7 @@ export default function AñadirMaquinaria(){
                             </tr>
                         </tbody>
                     </table>
+                </div>
             }
         </>
     )

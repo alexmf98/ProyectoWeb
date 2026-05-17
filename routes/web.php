@@ -140,11 +140,17 @@ Route::middleware('auth')->group(function(){
     Route::post('/empresacolaboradora', [EdicionController::class, 'empresa']);
     Route::delete('/empresacolaboradora/{empresa}', [EdicionController::class, 'eliminar']);
 
+    Route::post('/informacionempresa', [EdicionController::class, 'infoempresa']);
+
+    Route::put('/informacionempresa/{empresa}', [EdicionController::class, 'update']);
+
+    Route::delete('/informacionempresa/{empresa}', [EdicionController::class, 'destroy']);
+
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);
     Route::post('/trabajador', [TrabajadorController::class, 'store']);
 
     Route::get('/nomina', [TrabajadorController::class, 'nomina']);
 
-
+    Route::get('/proyectotrabajador', [TrabajadorController::class, 'proyectos']);
 });

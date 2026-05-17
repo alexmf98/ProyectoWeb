@@ -89,17 +89,44 @@ class TrabajadorController extends Controller
         //
     }
 
-    public function nomina(){
+    public function nomina(Request $request){
 
-        $nomina = Trabajador::where('user_id', Auth::user()->id)->get()->map(function($dato){
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+
+        $query = Trabajador::where('user_id', Auth::user()->id);
+
+        if($fecha_inicio && $fecha_fin ){
+            $query->whereBetween('fecha_nomina', [$fecha_inicio, $fecha_fin]);
+        }
+
+        $nomina = $query->get()
+                        ->map(function($dato){
             return[
                 'fecha_nomina'=>Carbon::parse($dato->fecha_nomina)->format('d/m/Y'),
                 'nomina'=>Storage::url($dato->nomina),
             ];
         });
 
+
         return Inertia::render('NominaTrabajador',[
             'nomina'=>$nomina,
+        ]);
+    }
+
+    public function proyectos(){
+
+        // $proyectos = Trabajador::where('user_id', Auth::user()->id)->get();
+        $proyectos = Trabajador::with('proyecto')->get()->map(function($dato){
+            return[
+                'proyecto'=>[
+                    'nombre'=>$dato->proyecto->nombre,
+                ]
+            ];
+        });
+
+        return Inertia::render('ProyectoTrabaja',[
+            'proyectos'=>$proyectos
         ]);
     }
 }

@@ -48,6 +48,8 @@ class HandleInertiaRequests extends Middleware
                 ] :
                 null,
             ],
+
+            'infoEmpresa'=> fn() =>\App\Models\InformacionEmpresa::first(),
         ];
     }
 }

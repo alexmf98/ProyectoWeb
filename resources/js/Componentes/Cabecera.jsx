@@ -70,11 +70,10 @@ export default function Cabecera() {
                                 isAdmin &&
                                 <>
                                     <Link href={'/editarUsuarios'}>Editar Usuario</Link>
-                                    <Link>Editar información de página</Link>
                                     <Link href={'/añadirmaquina'}>Añadir Maquinaria</Link>
                                     <Link href={'/añadirproyecto'}>Añadir Proyecto</Link>
                                     <Link href={'/maquinariaAlquilada'}>Maquinaria Alquilada</Link>
-                                    <Link href={'/proyectoPersonalAdm'}>Ver Proyectos Personales</Link>
+                                    <Link href={'/proyectoPersonalAdm'}>Ver Proyectos</Link>
 
                                     <Link href={'/proyectosSolicitados'}>Ver Proyectos Solicitados</Link>
                                     <Link href={'/facturacionproyecto'}>Facturación Proyecto</Link>
@@ -97,7 +96,7 @@ export default function Cabecera() {
                                     trabajador && 
                                         <>
                                             <Link href={'/nomina'}>Nomina</Link>
-                                            <Link>Proyectos </Link>
+                                            <Link href={'/proyectotrabajador'}>Proyectos </Link>
                                         </>
                                 }
                                 

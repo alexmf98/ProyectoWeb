@@ -27,7 +27,7 @@ class Proyecto extends Model
         return $this->hasMany(FacturacionProyecto::class);
     }
 
-    // public function trabajadores(){
-    //     return $this->hasMany(Trabajador::class);
-    // }
+    public function trabajadores(){
+        return $this->hasMany(Trabajador::class);
+    }
 }

@@ -150,6 +150,9 @@ Route::middleware('auth')->group(function(){
     Route::post('/categorias', [CategoriaController::class, 'store']);
     Route::put('/categoria/{categoria}', [CategoriaController::class, 'update']);
 
+    Route::get('/maquinaria', [MaquinariaController::class, 'ocultar']);
+    Route::put('/ocultarmaquina/{maquinaria}', [MaquinariaController::class, 'updateocultar']);
+
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);
     Route::post('/trabajador', [TrabajadorController::class, 'store']);

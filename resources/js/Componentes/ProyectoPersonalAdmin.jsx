@@ -7,14 +7,17 @@ export default function ProyectoPersonalAdmin() {
     const { proyectos } = usePage().props;
 
     const [imagenes, setImagenes] = useState([]);
-    const [id, setId] = useState(null);
+    const [id, setId] = useState("");
+    const [categoria, setCategoria] = useState("");
 
     const handleEnviar = (id) =>{
         setId(id);
     }
 
     const handleLimpiar = ()=>{
-        setId();
+        setId("");
+        setCategoria("");
+        router.get('/proyectoPersonalAdm', {}, { replace: true });
     }
 
     const handleSubir = (e) => {
@@ -30,8 +33,33 @@ export default function ProyectoPersonalAdmin() {
         router.get(`/verimagenes/${id}`);
     }
 
+    const handleBuscar = (e)=>{
+        e.preventDefault();
+
+        router.get('/proyectoPersonalAdm',{
+            'categoria': categoria,
+        });
+    }
+
     return (
         <>
+
+            <div className="buscadorProyectoAdm">
+                <form onSubmit={handleBuscar}>
+                    <label>Buscar: </label>
+                    <select onChange={(e)=>setCategoria(e.target.value)}>
+                        <option value="">Seleccione una opcion</option>
+                        <option value="restauracion">Obra civíl</option>
+                        <option value="adecuacion">Obra Pública</option>
+                        <option value="personal">Personal</option>
+                    </select>
+
+                    <button>Aceptar</button>
+                    <button type="button" onClick={handleLimpiar}>Cancelar</button>
+                </form>
+            </div>
+
+
             <div className="tarjeta-personal-Adm">
                 {
                     proyectos.map((dato) => (
@@ -71,7 +99,7 @@ export default function ProyectoPersonalAdmin() {
                             />
 
                             <button>Aceptar</button>
-                            <button type="submit" onClick={handleLimpiar}>Cancelar</button>
+                            <button type="button" onClick={handleLimpiar}>Cancelar</button>
                         </form>
                     </div>
             }

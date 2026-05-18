@@ -32,7 +32,7 @@ class MaquinariaController extends Controller
             $maquinas->whereLike('nombre', "%$buscar%", false);
         }
 
-        $maquinas = $maquinas->get()->map(function ($dato) {
+        $maquinas = $maquinas->where('show_maquina', true)->get()->map(function ($dato) {
             return [
                 'id' => $dato->id,
                 'nombre' => $dato->nombre,
@@ -179,5 +179,32 @@ class MaquinariaController extends Controller
     public function destroy(Maquinaria $maquinaria)
     {
         //
+    }
+
+    public function ocultar(){
+
+        $maquinas = Maquinaria::all()->map(function ($dato) {
+            return [
+                'id' => $dato->id,
+                'show_maquina'=>$dato->show_maquina,
+                'nombre' => $dato->nombre,
+                'caracteristicas' => $dato->caracteristicas,
+                'imagen' => Storage::url('maquinaria/' . $dato->imagen),
+            ];
+        });
+
+        return Inertia::render('OcultarMaquinariaAdm',[
+            'maquinas'=>$maquinas,
+        ]);
+    }
+
+    public function updateocultar(Request $request, Maquinaria $maquinaria){
+        $validate = $request->validate([
+            'show_maquina'=>'required',
+        ]);
+
+        $maquinaria->update($validate);
+
+        return redirect()->back();
     }
 }

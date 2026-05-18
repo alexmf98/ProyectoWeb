@@ -75,7 +75,7 @@ export default function Cabecera() {
                                     <Link href={'/maquinariaAlquilada'}>Maquinaria Alquilada</Link>
                                     <Link href={'/proyectoPersonalAdm'}>Ver Proyectos</Link>
 
-                                    <Link>Ver maquinaria oculatar o mostrar imagen</Link>
+                                    <Link href={'/maquinaria'}>Ver maquinaria</Link>
 
                                     <Link href={'/proyectosSolicitados'}>Ver Proyectos Solicitados</Link>
                                     <Link href={'/facturacionproyecto'}>Facturación Proyecto</Link>

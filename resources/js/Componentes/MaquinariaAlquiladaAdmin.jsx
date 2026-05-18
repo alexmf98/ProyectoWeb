@@ -29,8 +29,6 @@ export default function MaquinariaAlquiladaAdmin() {
 
     return (
         <>
-            <h1>Maquinaria alquilada</h1>
-
             <div className="tablaEditAlquiladaAdmin">
                 <table>
                     <thead>

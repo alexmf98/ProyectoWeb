@@ -8,7 +8,8 @@ export default function AñadirProyecto(){
     const [localizacion, setLocalizacion] = useState("");
     const [categoria, setCategoria] = useState("");
     const [imagen, setImagen] = useState("");
-    
+    const [formKey, setFormKey] = useState(0);
+
     const handleEnviar = (e) =>{
         e.preventDefault();
 
@@ -19,32 +20,23 @@ export default function AñadirProyecto(){
             categoria: categoria,
             imagen: imagen,
         });
-        // if(user_id){
-            
-        //     router.post('/añadirproyecto',{
-        //         nombre: nombre,
-        //         coste: coste,
-        //         localizacion: localizacion,
-        //         categoria: categoria,
-        //         imagen: imagen,
-        //         user_id: user_id,
-        //     });    
-        // }else{
-        //     router.post('/añadirproyecto',{
-        //         nombre: nombre,
-        //         coste: coste,
-        //         localizacion: localizacion,
-        //         categoria: categoria,
-        //         imagen: imagen,
-        //     });
-        // }
+        
+        handleLimpiarCampos();
+    }
 
+    const handleLimpiarCampos = ()=>{
+        setNombre("");
+        setCoste(0);
+        setLocalizacion("");
+        setCategoria("");
+        setImagen("");
+        setFormKey(prev => prev + 1);
     }
         
     return(
         <>
             <div className="tarjetaAñadirProyecto">
-                <form onSubmit={handleEnviar}>
+                <form key={formKey} onSubmit={handleEnviar}>
                     
                     <label htmlFor="nombre">Nombre</label>
 
@@ -66,7 +58,7 @@ export default function AñadirProyecto(){
 
                     <label htmlFor="categoria">Categoria</label>
 
-                    <select id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
+                    <select value={categoria} id="categoria" onChange={(e)=>setCategoria(e.target.value)}>
                         <option value="">Seleccione una categoria</option>
                         <option value="adecuacion">Obra civíl</option>
                         <option value="restauracion">Obra pública</option>

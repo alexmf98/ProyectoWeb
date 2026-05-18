@@ -13,6 +13,7 @@ class Maquinaria extends Model
         'caracteristicas',
         'imagen',
         'categoria_id',
+        'show_maquina',
     ];
     
     public function alquileres(){

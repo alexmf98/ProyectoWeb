@@ -29,6 +29,10 @@ export default function FacturacionMaquinaria() {
             fecha_fin: fechaFin,
         })
     }
+
+    const handleLimpiarCampos = () =>{
+        router.get('/facturamaquinaria', {}, {replace: true})
+    }
     return (
         <>
             <div className="fechaMaquinaria">
@@ -47,6 +51,8 @@ export default function FacturacionMaquinaria() {
 
 
                     <button>Buscar</button>
+
+                    <button type="button" onClick={handleLimpiarCampos}>Cancelar</button>
                 </form>
             </div>
 

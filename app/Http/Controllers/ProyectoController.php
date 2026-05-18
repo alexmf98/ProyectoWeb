@@ -23,8 +23,17 @@ class ProyectoController extends Controller
 
     }
 
-    public function indexAdm(){
-        $proyecto = Proyecto::all();
+    public function indexAdm(Request $request){
+
+        $categoria = $request->input('categoria');
+        $query = Proyecto::query();
+
+        if($categoria){
+            $query->where('categoria', $categoria);
+        }
+
+
+        $proyecto = $query->get();
 
         return Inertia::render('ProyectoPersonalAdm',[
             'proyectos'=>$proyecto,

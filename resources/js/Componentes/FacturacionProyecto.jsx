@@ -18,6 +18,8 @@ export default function FacturacionProyecto() {
         setFactura("");
         setProyectoId(null);
         setAñadirFactura(false);
+
+        router.get('facturacionproyecto', {}, {replace: true})
     }
 
     const handleFactura = (e)=> {
@@ -71,6 +73,8 @@ export default function FacturacionProyecto() {
                     />
 
                     <button>Buscar</button>
+
+                    <button type="button" onClick={handleLimpiarCampos}>Cancelar</button>
                 </form>
             </div>
 

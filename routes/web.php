@@ -125,6 +125,8 @@ Route::middleware('auth')->group(function(){
     Route::put('/editarimagen/{imagen}', [ProyectoController::class, 'editImagen']);
     Route::post('/crearcertificado', [CertificadoController::class, 'store']);
 
+    Route::put('/editproyecto/{proyecto}', [ProyectoController::class, 'update']);
+
     Route::get('/proyectosSolicitados', [ProyectoSolicitadoController::class, 'indexAdmin']);
     Route::put('/proyectosSolicitados/{proyectoSolicitado}', [ProyectoSolicitadoController::class, 'update']);
 

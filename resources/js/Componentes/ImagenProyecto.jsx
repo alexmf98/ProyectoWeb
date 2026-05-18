@@ -32,7 +32,8 @@ export default function ImagenProyecto() {
         setFormKey(prev => prev + 1);
     }
 
-    const handleAñadir = () => {
+    const handleAñadir = (id) => {
+        setId(id);
         setVer(true);
     }
 
@@ -75,9 +76,9 @@ export default function ImagenProyecto() {
         handleLimpiarCampos();
     }
 
-    const handleAceptarCertificado = (id) => {
-        setId(id)
-    }
+    // const handleAceptarCertificado = (id) => {
+    //     setId(id)
+    // }
 
     const handleCertificado = (e) => {
 
@@ -89,17 +90,22 @@ export default function ImagenProyecto() {
             proyecto_imagen_id: id,
         });
 
+
         handleLimpiarCampos();
     }
 
+    const hayCertificados = imagenes.some(
+        (img) => img.certificados.length > 0
+    );
+    
     return (
         <>
             <h1>{proyecto.nombre}</h1>
-
+       
             {
                 isAdmin && 
                     <div className="btnAñadirCertificado">
-                        <button onClick={handleAñadir}>Añadir Certificado</button>
+                        
 
                         {
                             ver &&
@@ -118,16 +124,10 @@ export default function ImagenProyecto() {
                                 />
 
                                 <div className="botonesFormImagen">
-                                    {
-                                        imagenes.map((dato) => (
+                                    <button type="submit">
+                                        Aceptar
+                                    </button>
 
-                                            <button type="submit"
-                                                onClick={() => handleAceptarCertificado(dato.id)}
-                                            >
-                                                Aceptar
-                                            </button>
-                                        ))
-                                    }
                                     <button type="button" onClick={ocultar}>Cancelar</button>
                                 </div>
                             </form>
@@ -223,6 +223,12 @@ export default function ImagenProyecto() {
                                         >
                                             Editar descripcion
                                         </button>
+
+                                        <button
+                                            onClick={() => handleAñadir(img.id)}
+                                        >
+                                            Añadir certificado
+                                        </button>
                                     </>
                                 }
 
@@ -233,8 +239,10 @@ export default function ImagenProyecto() {
                     </div>
                 ))}
             </div>
-
-            <div className="tablaCertificados">
+        
+        {
+            hayCertificados &&
+                <div className="tablaCertificados">
                 <table>
                     <thead>
                         <tr>
@@ -266,7 +274,8 @@ export default function ImagenProyecto() {
                     </tbody>
                 </table>
             </div>
-
+        }
+            
         </>
     )
 }

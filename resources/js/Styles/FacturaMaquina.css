@@ -18,3 +18,9 @@
     padding: 10px 20px;
 
 }
+
+.tablafacturamaquinaria table{
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}

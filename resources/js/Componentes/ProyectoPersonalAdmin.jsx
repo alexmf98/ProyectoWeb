@@ -10,12 +10,23 @@ export default function ProyectoPersonalAdmin() {
     const [id, setId] = useState("");
     const [categoria, setCategoria] = useState("");
 
+    const [nombre, setNombre] = useState("");
+    const [coste, setCoste] = useState(0);
+    const [localizacion, setLocalizacion] = useState("");
+    const [Categoria, setCategorias] = useState("");
+    const [Imagen, setImagen] = useState("");
+    const [editar, setEditar] = useState(false);
+    const [añadirImagen, setAñadirImagen] = useState(false);
+    const [formKey, setFormKey] = useState(0);
+
     const subir = ()=>{
         window.scrollTo({top:0, behavior: "smooth"})
     }
 
     const handleEnviar = (id) =>{
         setId(id);
+        setAñadirImagen(true);
+        setEditar(false);
         subir();
     }
 
@@ -23,6 +34,7 @@ export default function ProyectoPersonalAdmin() {
         setId("");
         setCategoria("");
         router.get('/proyectoPersonalAdm', {}, { replace: true });
+        setFormKey(prev => prev + 1);
     }
 
     const handleSubir = (e) => {
@@ -32,6 +44,8 @@ export default function ProyectoPersonalAdmin() {
         imagenes.forEach(img => formData.append('imagenes[]', img));
 
         router.post(`/subirimagen/${id}`, formData);
+
+        handleLimpiar();
     }
 
     const handleVer = (id) =>{
@@ -46,6 +60,46 @@ export default function ProyectoPersonalAdmin() {
         });
     }
 
+    const handleBotonEditar = (id,nombre,coste,localizacion,categoria,imagen)=>{
+        setId(id);
+        setNombre(nombre);
+        setCoste(coste);
+        setLocalizacion(localizacion);
+        setCategorias(categoria)
+        setImagen(imagen);
+        setEditar(true);
+
+        handleSubirEditar();
+    }
+
+    const handleLimpiarCampos = ()=>{
+        setNombre("");
+        setCoste("");
+        setLocalizacion("");
+        setCategorias("");
+        setImagen("");
+        setId("");
+        setEditar(false);
+    }
+
+    const handleSubirEditar = ()=>{
+        window.scrollTo({top:0, behavior:"smooth"})
+    }
+
+    const handleEditar = (e)=>{
+        e.preventDefault();
+
+        router.put(`editproyecto/${id}`,{
+            nombre: nombre,
+            coste: coste,
+            localizacion: localizacion,
+            categoria: Categoria,
+            imagen: Imagen,
+        });
+
+        handleLimpiarCampos();
+    }
+    
     return (
         <>
 
@@ -65,9 +119,60 @@ export default function ProyectoPersonalAdmin() {
             </div>
 
             {
-                id && 
+                editar &&
+                <form className="formularioproyectopersonalAdm"
+                        onSubmit={handleEditar}
+                >
+                    <label htmlFor="">Nombre</label>
+                    <input type="text" 
+                        value={nombre}
+                        onChange={(e)=>setNombre(e.target.value)}
+                    />
+
+                    <label htmlFor="">Coste</label>
+                    <input type="number" 
+                            value={coste}
+                            onChange={(e)=>setCoste(e.target.value)}
+                    />
+
+                    <label htmlFor="">Localizacion</label>
+                    <input type="text"
+                            value={localizacion}
+                            onChange={(e)=>setLocalizacion(e.target.value)}
+                    />
+
+                    {
+                        Categoria !== 'personal' &&
+                        <>
+                            <label htmlFor="">Categoria</label>
+                            <select id=""
+                                    value={Categoria}
+                                    onChange={(e)=>setCategorias(e.target.value)}
+                                >
+                                    <option value="">Seleccione una opcion</option>
+                                    <option value="restauracion">Obra civíl</option>
+                                    <option value="adecuacion">Obra Pública</option>
+                                </select>
+                        </>
+                    }
+
+                    <label htmlFor="">Imagen</label>
+                    <input type="file" 
+                            onChange={(e)=>setImagen(e.target.files[0])}
+                    />
+
+                    <button>Aceptar</button>
+                    <button type="button"
+                            onClick={handleLimpiarCampos}
+                            >Cancelar</button>
+
+                </form>
+            }
+
+            {
+                añadirImagen && 
                     <div className="tarjeta-personal-Adm">
-                        <form className="tarjeta-personal-card" onSubmit={handleSubir}>
+                        <form key={formKey}  className="tarjeta-personal-card" onSubmit={handleSubir}>
                             <input
                                 type="file"
                                 multiple
@@ -84,6 +189,7 @@ export default function ProyectoPersonalAdmin() {
                 {
                     proyectos.map((dato) => (
                         <div className="tarjeta-personal-card" key={dato.id}>
+                            
                             <div className="tarjeta-personal-fila">
                                 <label>Nombre</label>
                                 <p>{dato.nombre}</p>
@@ -104,8 +210,23 @@ export default function ProyectoPersonalAdmin() {
                             </div>
 
                             <div className="boton-proyecto-fila">
-                                <button>Editar Proyecto</button>
+                                <button
+                                    onClick={()=>
+                                        handleBotonEditar(
+                                            dato.id,
+                                            dato.nombre,
+                                            dato.coste,
+                                            dato.localizacion,
+                                            dato.categoria,
+                                            dato.imagen
+                                        )
+                                    }
+                                >
+                                    Editar Proyecto
+                                </button>
                             </div>
+
+                            
                             
                         </div>
                     ))

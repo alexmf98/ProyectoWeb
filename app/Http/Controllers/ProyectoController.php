@@ -8,6 +8,7 @@ use App\Models\ProyectoImagen;
 use App\Models\ProyectoSolicitado;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
@@ -69,7 +70,7 @@ class ProyectoController extends Controller
 
                 return [
                     'certificado' => Storage::url('certificados/' . $cert->certificado),
-                    'fecha_certificado' => $cert->fecha_certificado,
+                    'fecha_certificado' => Carbon::parse($cert->fecha_certificado)->format('d/m/Y'),
                 ];
 
             }),
@@ -112,7 +113,7 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $user_id = $request->user_id;
         if($user_id){
             $validated = $request->validate([
@@ -250,7 +251,42 @@ class ProyectoController extends Controller
      */
     public function update(Request $request, Proyecto $proyecto)
     {
-        //
+        $validate = $request->validate([
+            'nombre'=>'required',
+            'coste'=>'required',        
+            'localizacion'=>'required',
+            'categoria'=>'required',
+            'imagen'=>'nullable',     
+        ]);
+        
+        if($request->hasFile('imagen')){
+            
+            if($request->input('categoria') === 'adecuacion'){
+                Storage::delete('proyectos/adecuacion/' . $proyecto->imagen);
+                
+                $path = Storage::disk('public')->put('proyectos/adecuacion/', $request->file('imagen'));
+                $validate['imagen'] = basename($path);
+            }
+
+            if($request->input('categoria') === 'restauracion'){
+                Storage::delete('proyectos/restauracion/' . $proyecto->imagen);
+
+                $path = Storage::disk('public')->put('proyectos/restauracion/', $request->file('imagen'));
+                $validate['imagen'] = basename($path);
+            }
+
+            if($request->input('categoria') === 'personal'){
+                Storage::delete('proyectos/' . $proyecto->imagen);
+
+                $path = Storage::disk('public')->put('proyectos/', $request->file('imagen'));
+                $validate['imagen'] = basename($path);
+            }
+            
+        }
+
+        $proyecto->update($validate);
+
+        return redirect()->back();
     }
 
     /**

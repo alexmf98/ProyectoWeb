@@ -5,7 +5,7 @@ export default function ProyectoAdecuacion() {
 
     const { adecuacion } = usePage().props;
 
-    console.log(adecuacion)
+    
     return (
         <>
             <div className="contenedorAdecuacion">

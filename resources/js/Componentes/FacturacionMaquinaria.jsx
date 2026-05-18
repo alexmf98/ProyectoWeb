@@ -56,37 +56,38 @@ export default function FacturacionMaquinaria() {
                 </form>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre maquina</th>
-                        <th>Coste</th>
-                        <th>Fecha Alquiler</th>
-                    </tr>
-                </thead>
+            <div className="tablafacturamaquinaria">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre maquina</th>
+                            <th>Coste</th>
+                            <th>Fecha Alquiler</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {
-                        historial.map((dato) => (
+                    <tbody>
+                        {
+                            historial.map((dato) => (
 
-                            <tr>
-                                <td>{dato.maquinaria.nombre}</td>
+                                <tr>
+                                    <td>{dato.maquinaria.nombre}</td>
 
-                                <td>{dato.coste} €</td>
+                                    <td>{dato.coste} €</td>
 
-                                <td>
-                                    {dato.fecha_inicio} / {dato.fecha_fin}
-                                </td>
-                            </tr>
-                        ))
-                    }
-                    <tr>
-                        <td></td>
-                        <td>Total: {handleSumaCoste()} €</td>
-                    </tr>
-                </tbody>
-            </table>
-
+                                    <td>
+                                        {dato.fecha_inicio} / {dato.fecha_fin}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        <tr>
+                            <td></td>
+                            <td>Total: {handleSumaCoste()} €</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
         </>
     )

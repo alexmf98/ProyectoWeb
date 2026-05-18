@@ -113,6 +113,12 @@
     background-color: #374151;
 }
 
+.tablafacturaproyecto table{
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 .tablafacturaproyecto td a {
     background: none;
     border: none;

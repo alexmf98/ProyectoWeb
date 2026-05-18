@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FacturacionProyecto;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -31,7 +32,7 @@ class FacturacionProyectoController extends Controller
         $facturacion = $query->with('proyecto')->get()->map(function($dato){
             return[
                 'id'=> $dato->id,
-                'fecha_facturacion' => $dato->fecha_facturacion,
+                'fecha_facturacion' => Carbon::parse($dato->fecha_facturacion)->format('d/m/Y'),
                 'factura'=>Storage::url('facturacionProyecto/' . $dato->factura),
                 'proyecto_id'=>[
                     'id' => $dato->proyecto->id,

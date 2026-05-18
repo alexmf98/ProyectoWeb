@@ -19,6 +19,10 @@ export default function Nomina(){
         });
     }
 
+    const handleLimpiarCampos = () =>{
+        router.get('/nomina', {}, {replace: true})
+    }
+
     return(
         <>
             <div className="buscadorfechanomina">
@@ -36,6 +40,8 @@ export default function Nomina(){
                             />
 
                     <button type="submit">Buscar</button>
+
+                    <button type="button" onClick={handleLimpiarCampos}>Cancelar</button>
                 </form>
             </div>
 

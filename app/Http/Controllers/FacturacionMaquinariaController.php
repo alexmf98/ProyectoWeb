@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FacturacionMaquinaria;
 use App\Models\HistorialMaquinaria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 
 class FacturacionMaquinariaController extends Controller
@@ -36,8 +37,8 @@ class FacturacionMaquinariaController extends Controller
                                             return[
                                                 'id' => $dato->maquinaria_id,
                                                 'coste'=>$dato->coste,
-                                                'fecha_inicio'=>$dato->fecha_inicio,
-                                                'fecha_fin'=>$dato->fecha_fin,
+                                                'fecha_inicio'=>Carbon::parse($dato->fecha_inicio)->format('d/m/Y'),
+                                                'fecha_fin'=>Carbon::parse($dato->fecha_fin)->format('d/m/Y'),
                                                 'maquinaria'=>[
                                                     'id'=>$dato->maquinaria->id,
                                                     'nombre'=>$dato->maquinaria->nombre,

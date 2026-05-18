@@ -18,14 +18,9 @@ class ProyectoController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('role', '=', 'usuario')->get();
 
-        $proyecto_personal = ProyectoSolicitado::with('user')->where('estado', '=', 'aceptado')->get();
+        return Inertia::render('ProyectoAdmin');
 
-        return Inertia::render('ProyectoAdmin',[
-            'usuarios'=>$usuarios,
-            'usuario_aceptado' => $proyecto_personal,
-        ]);
     }
 
     public function indexAdm(){
@@ -100,6 +95,7 @@ class ProyectoController extends Controller
                 'imagen'=>'nullable',
                 'user_id'=>'exists:users,id',
             ]);
+       
 
             if($request->hasFile('imagen')){
                 $path = Storage::disk('public')->put('proyectos/', $request->file('imagen'));

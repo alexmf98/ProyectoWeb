@@ -13,12 +13,22 @@ class FacturacionProyectoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $proyectos = Proyecto::whereDoesntHave('facturas')->get();
 
-        $facturacion = FacturacionProyecto::with('proyecto')->get()->map(function($dato){
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+
+
+        $query = FacturacionProyecto::query();
+
+        if($fecha_inicio && $fecha_fin){
+            $query->whereBetween('fecha_facturacion', [$fecha_inicio, $fecha_fin]);
+        }
+
+        $facturacion = $query->with('proyecto')->get()->map(function($dato){
             return[
                 'id'=> $dato->id,
                 'fecha_facturacion' => $dato->fecha_facturacion,

@@ -5,14 +5,41 @@ import { useState } from "react";
 export default function ProyectoSolicitadoAdmin() {
 
     const { proyectoSolicitado } = usePage().props;
+    // const {usuarios } = usePage().props;
+
 
     const [ver, setVer] = useState(false);
     const [id, setId] = useState(null);
     const [file, setFile] = useState("");
+    const [verProyecto, setVerProyecto] = useState(false);
+    const [user_id, setUserId] = useState(null);
+    const [nombre, setNombre] = useState("");
+    const [coste, setCoste] = useState(0);
+    const [localizacion, setLocalizacion] = useState("");
+    const [imagen, setImagen] = useState("");
+
+    const [nombreUsuario, setNombreUsuario] = useState("");
+
+    const handlelimpiarCampos = () =>{
+        setNombre("");
+        setCoste(0);
+        setLocalizacion("");
+        setImagen("");
+        setUserId(null);
+        setVerProyecto(false);
+        setFile("");
+        setVer(false);
+    }
 
     const handleAceptar = (id) => {
         setVer(true);
         setId(id);
+    }
+
+    const handleAceptarProyecto = (nombreusuario, id)=>{
+        setVerProyecto(true);
+        setNombreUsuario(nombreusuario)
+        setUserId(id);
     }
 
     const handleCancelarPresupuesto = () => {
@@ -27,6 +54,8 @@ export default function ProyectoSolicitadoAdmin() {
             presupuesto: file,
             estado: 'enviado',
         });
+
+        handlelimpiarCampos();
     }
 
     const handleCancelar = (e) => {
@@ -38,10 +67,27 @@ export default function ProyectoSolicitadoAdmin() {
         });
     }
 
+    const handleAñadirProyecto = (e)=>{
+        
+        e.preventDefault();
+
+        const newFormData = new FormData();
+
+        newFormData.append("user_id", user_id);
+        newFormData.append("nombre", nombre);
+        newFormData.append("coste", coste);
+        newFormData.append("localizacion", localizacion);
+        newFormData.append("imagen", imagen);
+        newFormData.append("categoria", 'personal');
+
+
+        router.post('/añadirproyecto', newFormData);
+
+        handlelimpiarCampos();
+    }
+
     return (
         <>
-            <h1>Proyecto solicitado</h1>
-
             <div className="tabla-container">
                 <table>
                     <thead>
@@ -88,17 +134,36 @@ export default function ProyectoSolicitadoAdmin() {
                                         {dato.user.name + " " + dato.user.apellido}
                                     </td>
                                     
-                                    <td className={dato.estado === 'aceptado' ? 'fila-deshabilitada' : ""}>
+                                    <td>
 
-                                        <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
-                                            onClick={() => handleAceptar(dato.id)}>Aceptar o Añdir proyecto</button>
+                                        {
+                                            dato.estado === 'aceptado' &&
+                                                <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
+                                                onClick={() => handleAceptarProyecto(dato.user.name, dato.user.id)}>
+                                                    Añadir Proyecto
+                                                </button>
+                                        }
+
+                                        {
+                                            dato.estado === 'pendiente' &&
+                                                <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
+                                                onClick={() => handleAceptar(dato.id)}>
+                                                    Añadir Presupuesto
+                                                </button>
+                                        }
 
                                     </td>
                                     
                                     <td>
                                         <form onSubmit={handleCancelar}>
 
-                                            <button onClick={() => setId(dato.id)}>Cancelar</button>
+                                            {
+                                                dato.estado !== 'realizado' &&
+                                                    <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""} 
+                                                        onClick={() => setId(dato.id)}>
+                                                            Cancelar
+                                                    </button>
+                                            }
                                         </form>
                                     </td>
 
@@ -125,6 +190,56 @@ export default function ProyectoSolicitadoAdmin() {
                     </div>
                 }
             </div>
+
+           <div className="formularioProyecto">
+                {
+                    verProyecto && 
+                        <form onSubmit={handleAñadirProyecto}>
+
+                            <h3>Proyecto para {nombreUsuario}</h3>
+
+                            <label htmlFor="nombre">Nombre Proyecto</label>
+                            <input type="text" 
+                                    value={nombre}
+                                    onChange={(e)=>setNombre(e.target.value)}
+                                    id="nombre" />
+
+                            <label htmlFor="coste">Coste</label>
+                            <input type="number" 
+                                    id="coste"
+                                    value={coste}
+                                    onChange={(e)=>setCoste(e.target.value)}
+                                    />
+
+                            <label htmlFor="localizacion">Localización</label>
+                            <input type="text"
+                                    id="localizacion"
+                                    value={localizacion}
+                                    onChange={(e)=>setLocalizacion(e.target.value)}
+                                />
+
+                            <label htmlFor="imagen">Imagen</label>
+                            <input type="file" 
+                                    id="imagen"
+                                    onChange={(e)=>setImagen(e.target.files[0])}
+                                    />
+
+                            <button className="btnAceptarProyecto" 
+                                    type="submit">
+                                        Aceptar
+                            </button>
+                           
+                            <button className="btnCancelarProyecto"
+                                    onClick={handlelimpiarCampos}
+                            >
+                            
+                                Cancelar
+
+                            </button>
+                        
+                        </form>
+                }
+           </div>
         </>
     )
 }

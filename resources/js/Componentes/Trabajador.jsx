@@ -8,8 +8,9 @@ export default function Trabajador(){
 
     const [fecha_nomina, setFechaNomina] = useState("");
     const [nomina, setNomina] = useState("");
-    const [proyecto_id, setProyectoId] = useState(null);
-    const [user_id, setUserId] = useState(null);
+    const [proyecto_id, setProyectoId] = useState("");
+    const [user_id, setUserId] = useState("");
+    const [formKey, setFormKey] = useState(0);
 
     const handleNomina = (e)=>{
         e.preventDefault();
@@ -23,14 +24,21 @@ export default function Trabajador(){
 
         router.post('/trabajador', newFormData);
 
+        handleLimpiarCampos();
     }
-   
+    
+    const handleLimpiarCampos = ()=>{
+        setFechaNomina("");
+        setNomina("");
+        setProyectoId("");
+        setUserId("");
+        setFormKey(prev => prev + 1);
+    }
+
     return(
         <>
-            <h1>Trabajador</h1>
-
             <div className="tarjetaTrabajador">
-                <form onSubmit={handleNomina}>
+                <form key={formKey} onSubmit={handleNomina}>
                     <label>Fecha nomina</label>
                     <input type="date" 
                             value={fecha_nomina}
@@ -39,13 +47,12 @@ export default function Trabajador(){
 
                     <label>Nomina</label>
                     <input type="file" 
-                           
                             onChange={(e)=>setNomina(e.target.files[0])}
                     />
 
                     <label>Proyecto</label>
 
-                    <select onChange={(e)=>setProyectoId(e.target.value)}>
+                    <select value={proyecto_id} onChange={(e)=>setProyectoId(e.target.value)}>
                         <option value="">Seleccione un opción</option>
                         {
                             proyectos.map((dato)=>(
@@ -56,7 +63,7 @@ export default function Trabajador(){
 
                     <label>Trabajador</label>
 
-                    <select onChange={(e)=>setUserId(e.target.value)}>
+                    <select value={user_id} onChange={(e)=>setUserId(e.target.value)}>
                         <option value="">Seleccione un opción</option>
                         {
                             trabajador.map((dato)=>(

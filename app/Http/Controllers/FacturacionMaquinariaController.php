@@ -12,13 +12,24 @@ class FacturacionMaquinariaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         // $historial = HistorialMaquinaria::with('facturas')
         //                                     ->where('is_cancelled', false)
         //                                     ->get();
-        $historial = HistorialMaquinaria::with('maquinaria')
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+
+        $query = HistorialMaquinaria::query();
+
+        if($fecha_inicio && $fecha_fin){
+            $query->where('fecha_inicio', '<=' , $fecha_fin)
+                    ->where('fecha_fin','>=', $fecha_inicio);
+        }
+
+
+        $historial = $query->with('maquinaria')
                                         ->where('is_cancelled', false)
                                         ->get()
                                         ->map(function($dato){

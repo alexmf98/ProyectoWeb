@@ -74,32 +74,37 @@ export default function ProyectosSolicitados(){
                                                 <a href={dato.presupuesto} download>Descargar</a>
                                         }
                                     </td>
+                                    
+                                    {
+                                        dato.estado !== "realizado" &&
+                                        <>
+                                            <td>
+                                                {
+                                                    dato.estado !== 'pendiente' &&
+                                                        <form onSubmit={handleAceptar}>
+                                                        
+                                                            <button className={dato.estado === "aceptado" ? "fila-deshabilitada" : ""}
+                                                                onClick={()=>setId(dato.id)}>
+                                                                Aceptar
+                                                            </button>
+                                                        
+                                                        </form>
+                                                }
 
-                                    <td>
-                                        {
-                                            dato.estado !== 'pendiente' &&
-                                                <form onSubmit={handleAceptar}>
+                                            </td>
 
-                                                    <button className={dato.estado === "aceptado" ? "fila-deshabilitada" : ""}
+                                            <td>
+                                                <form onSubmit={handleCancelar}>
+
+                                                    <button
                                                         onClick={()=>setId(dato.id)}>
-                                                        Aceptar
+                                                        Cancelar
                                                     </button>
                                                 
                                                 </form>
-                                        }
-
-                                    </td>
-
-                                    <td>
-                                        <form onSubmit={handleCancelar}>
-
-                                            <button
-                                                onClick={()=>setId(dato.id)}>
-                                                Cancelar
-                                            </button>
-                                        
-                                        </form>
-                                    </td>
+                                            </td>
+                                        </>
+                                    }
                                 </tr>
                             ))
                         }

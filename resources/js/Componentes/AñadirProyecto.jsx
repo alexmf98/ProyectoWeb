@@ -8,32 +8,36 @@ export default function AñadirProyecto(){
     const [localizacion, setLocalizacion] = useState("");
     const [categoria, setCategoria] = useState("");
     const [imagen, setImagen] = useState("");
-    const [user_id, setUserId] = useState(null);
-
-    const {usuarios, usuario_aceptado} = usePage().props;
-
+    
     const handleEnviar = (e) =>{
         e.preventDefault();
 
-        if(user_id){
+        router.post('/añadirproyecto',{
+            nombre: nombre,
+            coste: coste,
+            localizacion: localizacion,
+            categoria: categoria,
+            imagen: imagen,
+        });
+        // if(user_id){
             
-            router.post('/añadirproyecto',{
-                nombre: nombre,
-                coste: coste,
-                localizacion: localizacion,
-                categoria: categoria,
-                imagen: imagen,
-                user_id: user_id,
-            });    
-        }else{
-            router.post('/añadirproyecto',{
-                nombre: nombre,
-                coste: coste,
-                localizacion: localizacion,
-                categoria: categoria,
-                imagen: imagen,
-            });
-        }
+        //     router.post('/añadirproyecto',{
+        //         nombre: nombre,
+        //         coste: coste,
+        //         localizacion: localizacion,
+        //         categoria: categoria,
+        //         imagen: imagen,
+        //         user_id: user_id,
+        //     });    
+        // }else{
+        //     router.post('/añadirproyecto',{
+        //         nombre: nombre,
+        //         coste: coste,
+        //         localizacion: localizacion,
+        //         categoria: categoria,
+        //         imagen: imagen,
+        //     });
+        // }
 
     }
         
@@ -66,29 +70,11 @@ export default function AñadirProyecto(){
                         <option value="">Seleccione una categoria</option>
                         <option value="adecuacion">Obra civíl</option>
                         <option value="restauracion">Obra pública</option>
-                        <option value="personal">Personal</option>
                     </select>
 
                     <label htmlFor="imagen">Imagen</label>
 
                     <input type="file" onChange={(e)=>setImagen(e.target.files[0])}/>
-
-                    {
-                        categoria == "personal" &&
-                        <>
-                            <label htmlFor="usuario">Usuario</label>
-                            <select  id="usuario" onChange={(e)=>setUserId(e.target.value)}>
-                                <option value="">Seleccione un usuario</option>
-                                {
-                                    usuario_aceptado.map((dato)=>(
-                                        
-                                        <option value={dato.user.id}>{dato.user.name} {dato.user.apellido}</option>
-                                        
-                                    ))
-                                }
-                            </select>
-                        </>
-                    }
 
                     <div className="botonAñadirProyecto">
                         <button type="submit">Aceptar</button>

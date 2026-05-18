@@ -10,6 +10,15 @@ export default function FacturacionProyecto() {
     const [factura, setFactura] = useState("");
     const [proyecto_id, setProyectoId] = useState(null);
     const [añadirFactura, setAñadirFactura] = useState(false); 
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFin, setFechaFin] = useState("");
+
+    const handleLimpiarCampos = () =>{
+        setFechaFacturacion("");
+        setFactura("");
+        setProyectoId(null);
+        setAñadirFactura(false);
+    }
 
     const handleFactura = (e)=> {
 
@@ -25,23 +34,41 @@ export default function FacturacionProyecto() {
         //     forceFormData: true,
         // });
         router.post('/facturacionproyecto', formData);
+
+        handleLimpiarCampos();
     }
 
     const handleAñadirFactura = () => {
         setAñadirFactura(!añadirFactura);
     }
     
+    const handleFacturacion = (e) =>{
+
+        e.preventDefault();
+        
+        router.get('/facturacionproyecto',{
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin,
+        });
+    }
+
     return (
         <>
 
             <div className="buscardorFecha">
-                <form >
+                <form onSubmit={handleFacturacion}>
 
                     <label>Fecha inicio</label>
-                    <input type="date"/>
+                    <input type="date"
+                        value={fechaInicio}
+                        onChange={(e)=>setFechaInicio(e.target.value)}
+                    />
 
                     <label>Fecha Fin</label>
-                    <input type="date"/>
+                    <input type="date"
+                        value={fechaFin}
+                        onChange={(e)=>setFechaFin(e.target.value)}
+                    />
 
                     <button>Buscar</button>
                 </form>

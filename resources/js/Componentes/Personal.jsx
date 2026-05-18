@@ -19,6 +19,12 @@ export default function Personal() {
         setCheckSeleccionado(valor);
     }
 
+    const handleLimpiarCampos = () =>{
+        setTipo("");
+        setEmail("");
+        setCheckSeleccionado([]);
+    }
+
     const handleProyectoSolicitado = (e)=>{
         e.preventDefault();
 
@@ -33,6 +39,8 @@ export default function Personal() {
             tipo: opcionesString,
             user_id: user.id,
         });
+
+        handleLimpiarCampos();
     }
 
     return (
@@ -49,10 +57,11 @@ export default function Personal() {
                     <input id="email" 
                         type="email" 
                         placeholder="Email" 
+                        value={email}
                         onChange={(e)=>setEmail(e.target.value)}
                     />
 
-                    <select onChange={(e) => setTipo(e.target.value)}>
+                    <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
 
                         <option value="">Seleccione una opción</option>
 
@@ -89,7 +98,11 @@ export default function Personal() {
 
                         <button type="submit" className="btnEnviar">Enviar</button>
 
-                        <button type="reset" className="btnCancelar">Cancelar</button>
+                        <button className="btnCancelar"
+                                onClick={handleLimpiarCampos}
+                                >
+                                    Cancelar
+                                </button>
                     </div>
                 </form>
 

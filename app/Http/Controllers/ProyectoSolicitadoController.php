@@ -27,17 +27,24 @@ class ProyectoSolicitadoController extends Controller
             ];
         });
 
+        
+
         return Inertia::render('ProyectoSolicitadoUser',[
             'proyecto'=>$pSolicitado,
+            
         ]);
         
     }
 
     public function indexAdmin(){
+
         $pSolicitado = ProyectoSolicitado::with('user')->get();
+
+        $proyecto_personal = ProyectoSolicitado::with('user')->where('estado', '=', 'aceptado')->get();
 
         return Inertia::render('ProyectoSolicitadoAdm',[
             'proyectoSolicitado' => $pSolicitado,
+            'usuario_aceptado' => $proyecto_personal,
         ]);
     }
 

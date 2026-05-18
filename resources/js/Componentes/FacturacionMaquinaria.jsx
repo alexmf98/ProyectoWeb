@@ -1,37 +1,55 @@
-import { usePage } from "@inertiajs/react"
+import { router, usePage } from "@inertiajs/react"
 import "../Styles/FacturaMaquina.css";
+import { useState } from "react";
 
-export default function FacturacionMaquinaria(){
+export default function FacturacionMaquinaria() {
 
-    const {historial} = usePage().props;
+    const { historial } = usePage().props;
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFin, setFechaFin] = useState("");
 
 
-
-    function handleSumaCoste(){
+    function handleSumaCoste() {
 
         let total = 0;
 
-        historial.map((dato)=>(
+        historial.map((dato) => (
             total += Number(dato.coste)
         ))
 
         return total;
     }
 
-    return(
+    const handleFacturacion = (e)=>{
+
+        e.preventDefault();
+        
+        router.get('/facturamaquinaria',{
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin,
+        })
+    }
+    return (
         <>
             <div className="fechaMaquinaria">
-                <form>
+                <form onSubmit={handleFacturacion}>
                     <label>Fecha inicio</label>
-                    <input type="date" />
+                    <input type="date"
+                        value={fechaInicio}
+                        onChange={(e) => setFechaInicio(e.target.value)}
+                    />
 
-                    <label>Fecha fin</label>
-                    <input type="date" />
+                    <label>Fecha Fin</label>
+                    <input type="date"
+                        value={fechaFin}
+                        onChange={(e) => setFechaFin(e.target.value)}
+                    />
+
 
                     <button>Buscar</button>
                 </form>
             </div>
-            
+
             <table>
                 <thead>
                     <tr>
@@ -42,9 +60,9 @@ export default function FacturacionMaquinaria(){
                 </thead>
 
                 <tbody>
-                   {
-                       historial.map((dato)=>(
-                           
+                    {
+                        historial.map((dato) => (
+
                             <tr>
                                 <td>{dato.maquinaria.nombre}</td>
 
@@ -55,15 +73,15 @@ export default function FacturacionMaquinaria(){
                                 </td>
                             </tr>
                         ))
-                   }
-                        <tr>
-                                <td></td>
-                                <td>Total: {handleSumaCoste()} €</td>
-                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td>Total: {handleSumaCoste()} €</td>
+                    </tr>
                 </tbody>
             </table>
 
-           
+
         </>
     )
 }

@@ -10,8 +10,13 @@ export default function ProyectoPersonalAdmin() {
     const [id, setId] = useState("");
     const [categoria, setCategoria] = useState("");
 
+    const subir = ()=>{
+        window.scrollTo({top:0, behavior: "smooth"})
+    }
+
     const handleEnviar = (id) =>{
         setId(id);
+        subir();
     }
 
     const handleLimpiar = ()=>{
@@ -59,6 +64,21 @@ export default function ProyectoPersonalAdmin() {
                 </form>
             </div>
 
+            {
+                id && 
+                    <div className="tarjeta-personal-Adm">
+                        <form className="tarjeta-personal-card" onSubmit={handleSubir}>
+                            <input
+                                type="file"
+                                multiple
+                                onChange={(e) => setImagenes(Array.from(e.target.files))}
+                            />
+
+                            <button>Aceptar</button>
+                            <button type="button" onClick={handleLimpiar}>Cancelar</button>
+                        </form>
+                    </div>
+            }
 
             <div className="tarjeta-personal-Adm">
                 {
@@ -83,26 +103,15 @@ export default function ProyectoPersonalAdmin() {
                                 <button onClick={()=>handleVer(dato.id)}>Ver imágenes</button>
                             </div>
 
+                            <div className="boton-proyecto-fila">
+                                <button>Editar Proyecto</button>
+                            </div>
+                            
                         </div>
                     ))
                 }
             </div>
             
-            {
-                id && 
-                    <div className="tarjeta-personal-Adm">
-                        <form className="tarjeta-personal-card" onSubmit={handleSubir}>
-                            <input
-                                type="file"
-                                multiple
-                                onChange={(e) => setImagenes(Array.from(e.target.files))}
-                            />
-
-                            <button>Aceptar</button>
-                            <button type="button" onClick={handleLimpiar}>Cancelar</button>
-                        </form>
-                    </div>
-            }
         </>
     )
 }

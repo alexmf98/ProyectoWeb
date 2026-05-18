@@ -121,6 +121,8 @@ class MaquinariaController extends Controller
         ->where('is_cancelled', '=', false)
         ->get(['fecha_inicio', 'fecha_fin']);
 
+    
+    
     return Inertia::render('Informacion', [
         'maquina'   => $maquinaria,
         'imagen'    => Storage::url('maquinaria/' . $maquinaria->imagen),
@@ -138,8 +140,10 @@ class MaquinariaController extends Controller
     }
 
     public function detalleMaquina(Maquinaria $maquinaria){
+        $categorias = Categoria::all();
         return Inertia::render('EditarMaquina',[
             'maquina'=>$maquinaria,
+            'categorias' =>$categorias, 
         ]);
     }
 
@@ -150,7 +154,7 @@ class MaquinariaController extends Controller
     {
         $validate = $request->validate([
             'nombre' => 'required',
-            'categoria'=>'required',
+            'categoria_id'=>'required',
             'precio' => 'required',
             'stock'=>'required',
             'caracteristicas'=>'required',

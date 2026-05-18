@@ -22,7 +22,7 @@
     top: 24px;
 }
 
-.imagenMaquinaInformacion {
+.tarjetaImagen, .imagenMaquinaInformacion {
     height: 50vh;
     width: 100%;
     max-width: 420px;

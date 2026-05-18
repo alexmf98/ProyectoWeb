@@ -4,12 +4,12 @@ import { use, useState } from "react";
 
 export default function EditMaquinaria() {
 
-    const { maquina } = usePage().props;
+    const { maquina, categorias } = usePage().props;
 
     const [nombre, setNombre] = useState("" || maquina.nombre);
     const [precio, setPrecio] = useState(0 || maquina.precio);
     const [imagen, setImagen] = useState("" || maquina.imagen);
-    const [categoria, setCategoria] = useState("" || maquina.categoria);
+    const [categoria, setCategoria] = useState("" || maquina.categoria_id);
     const [stock, setStock] = useState(0 || maquina.stock);
     const [caracteristicas, setCaracteristicas] = useState("" || maquina.caracteristicas);
 
@@ -24,7 +24,7 @@ export default function EditMaquinaria() {
         newFormdData.append("nombre", nombre);
         newFormdData.append("precio", precio);
         newFormdData.append("imagen", imagen);
-        newFormdData.append("categoria", categoria);
+        newFormdData.append("categoria_id", categoria);
         newFormdData.append("stock", stock);
         newFormdData.append("caracteristicas", caracteristicas);
 
@@ -33,9 +33,7 @@ export default function EditMaquinaria() {
 
     return (
         <>
-            <h1>Editar maquinaria</h1>
-
-
+          
             <div className="tarjetaEditMaquinaria">
                 <form onSubmit={handleEditar}>
 
@@ -46,10 +44,14 @@ export default function EditMaquinaria() {
                     />
 
                     <label htmlFor="categoria">Categoria</label>
-                    <input type="text"
-                        value={categoria}
-                        onChange={(e) => setCategoria(e.target.value)}
-                    />
+                    <select value={categoria} onChange={(e)=>setCategoria(e.target.value)}>
+                        <option value="">Seleccione una categoria</option>
+                        {
+                            categorias.map((dato)=>(
+                                <option value={dato.id}>{dato.categoria}</option>
+                            ))
+                        }
+                    </select>
 
                     <label htmlFor="precio">Precio</label>
                     <input type="number"

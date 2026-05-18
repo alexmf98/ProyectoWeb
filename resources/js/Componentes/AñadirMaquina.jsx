@@ -18,6 +18,7 @@ export default function AñadirMaquinaria(){
 
     const handleNuevaCategoria = ()=>{
         setNuevaCategoria(true);
+
     }
 
     const handleLimpiarCampos = ()=>{
@@ -59,6 +60,8 @@ export default function AñadirMaquinaria(){
         router.post('/categorias', {
             categoria: categoria,
         })
+
+        handleLimpiarCampos();
     }
 
     const handleDesactivar = (id)=>{

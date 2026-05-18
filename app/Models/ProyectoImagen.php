@@ -11,9 +11,14 @@ class ProyectoImagen extends Model
     protected $fillable = [
         'imagen',
         'proyecto_id',
+        'descripcion',
     ];
 
     public function proyecto(){
         return $this->belongsTo(Proyecto::class);
+    }
+
+    public function certificados(){
+        return $this->hasMany(Certificado::class);
     }
 }

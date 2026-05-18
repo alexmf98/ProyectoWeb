@@ -64,6 +64,15 @@ class ProyectoController extends Controller
             return [
                 'id' => $img->id,
                 'url' => Storage::url($img->imagen),
+                'descripcion'=> $img->descripcion,
+                'certificados' => $img->certificados->map(function($cert){
+
+                return [
+                    'certificado' => Storage::url('certificados/' . $cert->certificado),
+                    'fecha_certificado' => $cert->fecha_certificado,
+                ];
+
+            }),
             ];
         });
 
@@ -71,6 +80,16 @@ class ProyectoController extends Controller
             'proyecto' => $proyecto,
             'imagenes' => $imagenes,
         ]);
+    }
+
+    public function editImagen(Request $request, ProyectoImagen $imagen){
+        $validate = $request->validate([
+            'descripcion'=>'nullable',
+        ]);
+
+        $imagen->update($validate);
+
+        return redirect()->back();
     }
 
     public function eliminarImagen(ProyectoImagen $proyectoImagen){

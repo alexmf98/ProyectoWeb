@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\EdicionController;
 use App\Http\Controllers\FacturacionMaquinariaController;
 use App\Http\Controllers\FacturacionProyectoController;
@@ -121,6 +122,8 @@ Route::middleware('auth')->group(function(){
     Route::post('/subirimagen/{proyecto}', [ProyectoController::class, 'subirImagenes']);
     Route::get('/verimagenes/{proyecto}', [ProyectoController::class, 'verImagenes']);
     Route::delete('/eliminarImagen/{proyectoImagen}', [ProyectoController::class, 'eliminarImagen']);
+    Route::put('/editarimagen/{imagen}', [ProyectoController::class, 'editImagen']);
+    Route::post('/crearcertificado', [CertificadoController::class, 'store']);
 
     Route::get('/proyectosSolicitados', [ProyectoSolicitadoController::class, 'indexAdmin']);
     Route::put('/proyectosSolicitados/{proyectoSolicitado}', [ProyectoSolicitadoController::class, 'update']);

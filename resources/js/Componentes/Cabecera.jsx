@@ -82,7 +82,7 @@ export default function Cabecera() {
                                     <Link href={'/facturamaquinaria'}>Facturación Maquinaria</Link>
                                     <Link href={'/trabajador'}>Nominas</Link>
                                     <Link href={'/edicion'}>Modo edicion</Link>
-                                    <Link>CVitae</Link>
+                                    <Link href={'/cv'}>CVitae</Link>
                                 </>  
                             }
                                 {!isAdmin && !trabajador &&

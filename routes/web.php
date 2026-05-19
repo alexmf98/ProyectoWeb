@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\CurriculumVitaeController;
 use App\Http\Controllers\EdicionController;
 use App\Http\Controllers\FacturacionMaquinariaController;
 use App\Http\Controllers\FacturacionProyectoController;
@@ -157,6 +158,10 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/maquinaria', [MaquinariaController::class, 'ocultar']);
     Route::put('/ocultarmaquina/{maquinaria}', [MaquinariaController::class, 'updateocultar']);
+
+    Route::get('/cv', [CurriculumVitaeController::class, 'index']);
+    Route::post('/mandarcv', [CurriculumVitaeController::class, 'store']);
+    
 
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);

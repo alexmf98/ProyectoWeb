@@ -34,6 +34,9 @@ export default function MaquinariaAlquiladaAdmin() {
                     <thead>
                         <tr>
                             <th>
+                                Nombre maquina
+                            </th>
+                            <th>
                                 Fecha Inicio
                             </th>
                             <th>
@@ -62,13 +65,16 @@ export default function MaquinariaAlquiladaAdmin() {
                             alquileres.map((dato)=>(
                                 <tr>
                                     <td>
+                                        {dato.maquinaria.nombre}
+                                    </td>
+                                    <td>
                                         {transformarFecha(dato.fecha_inicio)}
                                     </td>
                                     <td>
                                         {transformarFecha(dato.fecha_fin)}
                                     </td>
                                     <td>
-                                        {dato.coste} €/dia
+                                        {dato.coste} €
                                     </td>
                                     <td>
                                         {dato.is_cancelled ? 'Cancelado' : 'Alquilado'}

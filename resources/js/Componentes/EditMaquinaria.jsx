@@ -1,6 +1,6 @@
 import { router, usePage } from "@inertiajs/react";
 import "../Styles/EditarMaquinaria.css";
-import { use, useState } from "react";
+import { useState } from "react";
 
 export default function EditMaquinaria() {
 
@@ -29,6 +29,10 @@ export default function EditMaquinaria() {
         newFormdData.append("caracteristicas", caracteristicas);
 
         router.put(`/editarmaquina/${id}`, newFormdData);
+    }
+
+    const handleVolver = () =>{
+        router.get('/alquileres', {}, {replace:true});
     }
 
     return (
@@ -77,14 +81,19 @@ export default function EditMaquinaria() {
                         onChange={(e) => setImagen(e.target.files[0])}
                     />
 
-                    <button type="submit"
-                            onClick={()=>setId(maquina.id)}
-                            >Aceptar</button>
+                        <button type="submit"
+                                onClick={()=>setId(maquina.id)}
+                                >Aceptar
+                        </button>
                 </form>
-
+                    
             </div>
-
-
+            <div className="btnVolver">
+                    <button
+                    onClick={handleVolver}>
+                    Volver
+                </button>
+            </div>
         </>
     );
 }

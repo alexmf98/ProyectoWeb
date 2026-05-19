@@ -1,6 +1,33 @@
+import { useState } from "react";
 import "../Styles/Trabajar.css";
+import { router } from "@inertiajs/react";
 
 export default function Trabajar(){
+    
+    const [email, setEmail] = useState("");
+    const [cv, setCv] = useState("");
+    const [formKey, setFormKey] = useState(0);
+
+    const handleMandarCv = (e)=>{
+
+        e.preventDefault();
+    
+        const newFormData = new FormData();
+
+        newFormData.append("email", email);
+        newFormData.append("cv", cv);
+
+        router.post('/mandarcv', newFormData);
+
+        handleLimpiarCampos();
+    }
+
+    const handleLimpiarCampos = () =>{
+        setEmail("");
+        setCv("");
+        setFormKey(prev => prev + 1);
+    }
+
     return(
         <>
 
@@ -8,20 +35,30 @@ export default function Trabajar(){
                 <h1>Trabajar con nosotros</h1>
                 
                 <div className="tarjetaTrabajar">
-                    <form action="">
+                    <form  key={formKey} 
+                        onSubmit={handleMandarCv}>
 
-                        <label htmlFor="email">Email</label>
-                        <input id="email" type="email" placeholder="email" />
+                        <label htmlFor="email">Email de contacto</label>
+                        <input id="email" 
+                            type="email" 
+                            placeholder="Email" 
+                            value={email}
+                            onChange={(e)=>setEmail(e.target.value)}
+                            />
 
-                        <label htmlFor="telefono">Teléfono</label>
-                        <input id="telefono" type="text" placeholder="numero de teléfono"/>
+                        <label htmlFor="cv">Añade tu curriculum vitae</label>
+                        <input  id="cv" 
+                            type="file"
 
-                        <input type="file" placeholder="Añade tu CV"/>
+                            onChange={(e)=>setCv(e.target.files[0])}
+                            />
 
                         <div className="botonTrabajar">
-                            <button>Aceptar</button>
+                            <button type="submit">Aceptar</button>
 
-                            <button>Cancelar</button>
+                            <button type="button"
+                                onClick={handleLimpiarCampos}
+                                >Cancelar</button>
                         </div>
                     </form>
                 </div>

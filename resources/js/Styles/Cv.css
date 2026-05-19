@@ -1,0 +1,15 @@
+.tablaCv{
+    display: flex;
+}
+
+.tablaCv table{
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.tablaCv a:hover{
+    background-color: white;
+    border: none;
+}

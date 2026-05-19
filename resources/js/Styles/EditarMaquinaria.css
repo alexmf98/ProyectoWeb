@@ -53,9 +53,20 @@
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.95rem;
-
+    
 }
 
 .tarjetaEditMaquinaria form button:hover{
     background-color: #4338ca;
+}
+
+.btnVolver{
+    display: flex;
+    justify-content: center;
+    margin: 10px 20px;
+
+}
+
+.btnVolver button{
+    padding: 10px 20px;
 }

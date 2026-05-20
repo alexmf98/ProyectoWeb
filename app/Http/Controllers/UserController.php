@@ -24,10 +24,16 @@ class UserController extends Controller
     
             return redirect()->route('home');
         }
-    
+        
+
+        if(Auth::user()?->is_active === false){
+            return back()->withErrors([
+                'is_active'=> 'Tu cuenta ha sido desactivada',
+            ]);
+        }
+
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-            'is_active'=> 'Tu cuenta ha sido desactivada',
+            'email' => 'Las credenciales no son correctas',
         ])->onlyInput('email');
     }
 
@@ -73,6 +79,20 @@ class UserController extends Controller
             'email'=>'required',
             'password'=>'required',
         ]);
+
+        $nombre = $request->input('name');
+        $apellido = $request->input('apellido');
+        $email = $request->input('email');
+
+        $existe = User::where('name', $nombre)
+                        ->where('apellido', $apellido)
+                        ->where('email', $email)->exists();
+
+        if($existe){
+            return back()->withErrors([
+                'errorcreate'=>"Ya existe ese usuario"
+            ]);
+        }
 
         $validated['password'] = Hash::make($request->password);
         $validated['role'] = 'usuario';

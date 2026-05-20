@@ -146,3 +146,8 @@
     border-color: #fecaca;
     color: #991b1b;
 }
+
+.inputError {
+    border: 1px solid #e74c3c;
+    outline-color: #e74c3c;
+}

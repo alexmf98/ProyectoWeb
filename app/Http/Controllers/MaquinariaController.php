@@ -158,11 +158,12 @@ class MaquinariaController extends Controller
             'precio' => 'required',
             'stock'=>'required',
             'caracteristicas'=>'required',
-            'imagen' => 'nullable',
+            'imagen' => 'nullable|mimes:jpg,png,jpeg',
         ]);
+
     
         if($request->hasFile('imagen')){
-           
+            
             // borrar imagen antigua
             Storage::disk('public')->delete('maquinaria/' . $maquinaria->imagen);
     

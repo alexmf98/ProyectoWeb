@@ -43,6 +43,7 @@ class ProyectoController extends Controller
 
     public function subirImagenes(Request $request, Proyecto $proyecto){
 
+        
         $request->validate([
             'imagenes' => 'required|array',
             'imagenes.*' => 'image|mimes:jpg,png,jpeg',

@@ -1,5 +1,6 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/ProyectoSolicitado.css";
+import "../Styles/Errores.css";
 import { useState } from "react";
 
 export default function ProyectoSolicitadoAdmin() {
@@ -17,8 +18,21 @@ export default function ProyectoSolicitadoAdmin() {
     const [coste, setCoste] = useState(0);
     const [localizacion, setLocalizacion] = useState("");
     const [imagen, setImagen] = useState("");
+    const [errores, setErrores] = useState({});
 
     const [nombreUsuario, setNombreUsuario] = useState("");
+
+    const validarPresupuesto = () => {
+        const nuevosErrores = {};
+    
+        if(!file){
+            nuevosErrores.file = "Debe seleccionar un archivo";
+        }else if(!/\.(pdf)$/i.test(file.name)){
+            nuevosErrores.file = "Solo se admite formato pdf";
+        }
+    
+        return nuevosErrores;
+    }
 
     const handlelimpiarCampos = () =>{
         setNombre("");
@@ -44,11 +58,21 @@ export default function ProyectoSolicitadoAdmin() {
 
     const handleCancelarPresupuesto = () => {
         setVer();
+        setErrores({});
     }
 
     const handlePresupuesto = (e) => {
 
         e.preventDefault();
+
+        const erroresValidacion = validarPresupuesto();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
 
         router.put(`/proyectosSolicitados/${id}`, {
             presupuesto: file,
@@ -183,6 +207,8 @@ export default function ProyectoSolicitadoAdmin() {
 
                             <label htmlFor="presupuesto">Presupuesto</label>
                             <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+
+                            {errores.file && <span className="mensajeError">{errores.file}</span>}
 
                             <button type="submit">Enviar</button>
                             <button onClick={handleCancelarPresupuesto}>Cancelar</button>

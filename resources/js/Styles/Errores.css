@@ -1,0 +1,25 @@
+.mensajeError {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.mensajeErrorInicio{
+    display: flex;
+    justify-content: center;    
+    margin-top: 25px;
+    font-size: 50px;
+    text-align: center;
+    color: #e74c3c;    
+    animation: quitar 7s forwards;      
+}
+
+@keyframes quitar {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../Hooks/useAuth";
 import Calendario from "./Calendario.jsx";
 import { router, usePage } from "@inertiajs/react";
+import "../Styles/Errores.css";
 
 export default function InformacionDisponibilidad() {
     const { user } = useAuth();
@@ -18,7 +19,59 @@ export default function InformacionDisponibilidad() {
     const [pin, setPin] = useState("");
     const [precio_maq, setPrecioMaq] = useState(0);
 
+    const [errores, setErrores] = useState({});
+
+    const validarFechas = () => {
+        const nuevosErrores = {};
+    
+        if(!fecha_inicio){
+            nuevosErrores.fecha_inicio = "Debe seleccionar una fecha de inicio";
+        }
+    
+        if(!fecha_fin){
+            nuevosErrores.fecha_fin = "Debe seleccionar una fecha de fin";
+        }
+    
+        if(fecha_inicio && fecha_fin && fecha_inicio > fecha_fin){
+            nuevosErrores.fecha_fin = "La fecha fin no puede ser anterior a la fecha inicio";
+        }
+    
+        return nuevosErrores;
+    }
+    
+    const validarPago = () => {
+        const nuevosErrores = {};
+    
+        if(!numTarjeta.trim()){
+            nuevosErrores.numTarjeta = "El número de tarjeta es obligatorio";
+        }else if(!/^[0-9]{16}$/.test(numTarjeta.replace(/\s/g, ""))){
+            nuevosErrores.numTarjeta = "El número de tarjeta debe tener 16 dígitos";
+        }
+    
+        if(!cvv.trim()){
+            nuevosErrores.cvv = "El CVV es obligatorio";
+        }else if(!/^[0-9]{3}$/.test(cvv)){
+            nuevosErrores.cvv = "El CVV debe tener 3 dígitos";
+        }
+    
+        if(!pin.trim()){
+            nuevosErrores.pin = "El PIN es obligatorio";
+        }else if(!/^[0-9]{4}$/.test(pin)){
+            nuevosErrores.pin = "El PIN debe tener 4 dígitos";
+        }
+    
+        return nuevosErrores;
+    }
+
     const handlePrueba = () => {
+        const erroresValidacion = validarFechas();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
         setPrueba(!prueba);
         precio();
     }
@@ -26,6 +79,15 @@ export default function InformacionDisponibilidad() {
     const handleAlquiler = (e) => {
 
         e.preventDefault();
+
+        const erroresValidacion = validarPago();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
 
         router.post('/maquinariaAlquiler', {
             user_id: user.id,
@@ -84,11 +146,14 @@ export default function InformacionDisponibilidad() {
                             onChange={(e) => setFechaInicio(e.target.value)}
                         />
 
+                   
+
+
                         <label htmlFor="fecha_fin">Fecha Fin</label>
                         <input type="date" value={fecha_fin}
                             onChange={(e) => setFechaFin(e.target.value)}
                         />
-                    
+
 
                     {
                         fecha_inicio && fecha_fin &&
@@ -112,6 +177,9 @@ export default function InformacionDisponibilidad() {
                             onChange={(e)=>setFechaInicio(e.target.value)}
                             readOnly />
                         </div>
+
+                    {errores.fecha_inicio && <span className="mensajeError">{errores.fecha_inicio}</span>}
+                       
                         <div className="form-field">
                             <label>Fecha fin</label>
                             <input type="text" value={fecha_fin}
@@ -120,12 +188,17 @@ export default function InformacionDisponibilidad() {
                         </div>
                     </div>
 
+                    {errores.fecha_fin && <span className="mensajeError">{errores.fecha_fin}</span>}
+
                     <div className="form-field">
                         <label>Número de tarjeta</label>
                         <input type="text" value={numTarjeta}
                             placeholder="1234 5678 9012 3456"
                             onChange={(e) => setNumTarjeta(e.target.value)} />
                     </div>
+
+                    {errores.numTarjeta && <span className="mensajeError">{errores.numTarjeta}</span>}
+
 
                     <div className="fila-pago">
                         <div className="form-field">
@@ -134,12 +207,17 @@ export default function InformacionDisponibilidad() {
                                 placeholder="123"
                                 onChange={(e) => setCvv(e.target.value)} />
                         </div>
+
+                        {errores.cvv && <span className="mensajeError">{errores.cvv}</span>}
+
                         <div className="form-field">
                             <label>PIN</label>
                             <input type="text" value={pin}
                                 placeholder="••••"
                                 onChange={(e) => setPin(e.target.value)} />
                         </div>
+
+                        {errores.pin && <span className="mensajeError">{errores.pin}</span>}
 
                         <div className="form-field">
                         

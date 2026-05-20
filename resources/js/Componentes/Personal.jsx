@@ -12,8 +12,30 @@ export default function Personal() {
     const [tipo, setTipo] = useState("");
     const [email, setEmail] = useState("");
     const [checkSeleccionado, setCheckSeleccionado] = useState([]);
+    const [errores, setErrores] = useState({});
 
     const {user} = useAuth();
+
+    const validar = () => {
+
+        const nuevosErrores = {}
+
+        if(!email.trim()){
+            nuevosErrores.email = "El email no puede estar vacio"
+        }else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+            nuevosErrores.email = "Formato de email no es correcto"
+        }
+
+        if(!tipo){
+            nuevosErrores.tipo = "Debe de seleccionar un tipo"
+        }
+
+        if(checkSeleccionado.length === 0){
+            nuevosErrores.checkSeleccionado = "Debe de elegir un tipo de opción"
+        }
+
+        return nuevosErrores;
+    }
 
     const handleCheck = (valor)=>{
         setCheckSeleccionado(valor);
@@ -23,24 +45,36 @@ export default function Personal() {
         setTipo("");
         setEmail("");
         setCheckSeleccionado([]);
+        setErrores({});
     }
 
     const handleProyectoSolicitado = (e)=>{
         e.preventDefault();
 
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
+
         const opcionesString = Array.isArray(checkSeleccionado)
         ? checkSeleccionado.join()
         : checkSeleccionado; 
 
-        console.log(opcionesString)
+        
 
         router.post('/crearproyectosolicitado',{
             email: email,
             tipo: opcionesString,
             user_id: user.id,
+        }, {
+            onSuccess: () => handleLimpiarCampos()
         });
 
-        handleLimpiarCampos();
     }
 
     return (
@@ -61,6 +95,8 @@ export default function Personal() {
                         onChange={(e)=>setEmail(e.target.value)}
                     />
 
+                    {errores.email && <span className="mensajeError">{errores.email}</span>}
+
                     <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
 
                         <option value="">Seleccione una opción</option>
@@ -73,6 +109,8 @@ export default function Personal() {
 
                         <option value="otros">Otros...</option>
                     </select>
+
+                    {errores.tipo && <span className="mensajeError">{errores.tipo}</span>}
 
                     {
                         tipo === "obraMenor" &&
@@ -94,11 +132,14 @@ export default function Personal() {
                         <Otros onChange={handleCheck}/>
                     }
 
+                    {errores.checkSeleccionado && <span className="mensajeError">{errores.checkSeleccionado}</span>}
+
                     <div className="botonesPersonal">
 
                         <button type="submit" className="btnEnviar">Enviar</button>
 
                         <button className="btnCancelar"
+                                type="button"
                                 onClick={handleLimpiarCampos}
                                 >
                                     Cancelar

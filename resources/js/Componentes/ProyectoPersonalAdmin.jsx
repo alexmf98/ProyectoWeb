@@ -1,5 +1,6 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/ProyectoPersonalAdmin.css";
+import "../Styles/Errores.css";
 import { useState } from "react";
 
 export default function ProyectoPersonalAdmin() {
@@ -19,6 +20,56 @@ export default function ProyectoPersonalAdmin() {
     const [añadirImagen, setAñadirImagen] = useState(false);
     const [formKey, setFormKey] = useState(0);
 
+    const [errores, setErrores] = useState("");
+
+    const validarImagenes = () => {
+        const nuevosErrores = {};
+    
+        if(imagenes.length === 0){
+            nuevosErrores.imagenes = "Debes de seleccionar al menos una imagen";
+        } else {
+            const formatoInvalido = imagenes.some(
+                img => !/\.(jpg|jpeg|png)$/i.test(img.name)
+            );
+            if(formatoInvalido){
+                nuevosErrores.imagenes = "Formato de imagenes permitidos jpg jpeg png";
+            }
+        }
+    
+        return nuevosErrores;
+    }
+
+    const validar = () => {
+        
+        const nuevosErrores = {}
+        
+        if(!nombre.trim()){
+            nuevosErrores.nombre = "El nombre no puede estar en blanco"
+        }else if(!/^[a-zA-Z]+$/.test(nombre)){
+            nuevosErrores.nombre = "El nombre no puede contener caracteres ni numeros"
+        }
+
+        if(coste <= 0){
+            nuevosErrores.coste = "El coste no puede ser negativo ni 0"
+        }
+
+        if(!localizacion.trim()){
+            nuevosErrores.localizacion = "La localizacion es obligatorio"
+        }
+
+        if(!Categoria.trim()){
+            nuevosErrores.Categoria = "Debe de eleguir una categoria"
+        }
+
+        if(Imagen && typeof Imagen === 'string'){
+             nuevosErrores.Imagen = "Debe de elegir una imagen"
+        }else if(!/\.(jpg|jpeg|png)$/i.test(Imagen.name)){
+            nuevosErrores.Imagen = "Formato de imagen valido jpg png jpeg"
+        }
+
+        return nuevosErrores;
+    }
+
     const subir = ()=>{
         window.scrollTo({top:0, behavior: "smooth"})
     }
@@ -35,10 +86,18 @@ export default function ProyectoPersonalAdmin() {
         setCategoria("");
         router.get('/proyectoPersonalAdm', {}, { replace: true });
         setFormKey(prev => prev + 1);
+        setErrores({})
     }
 
     const handleSubir = (e) => {
         e.preventDefault();
+
+        const erroresValidacion = validarImagenes(); 
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
 
         const formData = new FormData();
         imagenes.forEach(img => formData.append('imagenes[]', img));
@@ -79,6 +138,7 @@ export default function ProyectoPersonalAdmin() {
         setCategorias("");
         setImagen("");
         setId("");
+        setErrores({});
         setEditar(false);
     }
 
@@ -88,6 +148,16 @@ export default function ProyectoPersonalAdmin() {
 
     const handleEditar = (e)=>{
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
 
         router.put(`editproyecto/${id}`,{
             nombre: nombre,
@@ -129,17 +199,23 @@ export default function ProyectoPersonalAdmin() {
                         onChange={(e)=>setNombre(e.target.value)}
                     />
 
+                    {errores.nombre && <span className="mensajeError">{errores.nombre}</span>}
+
                     <label htmlFor="">Coste</label>
                     <input type="number" 
                             value={coste}
                             onChange={(e)=>setCoste(e.target.value)}
                     />
 
+                    {errores.coste && <span className="mensajeError">{errores.coste}</span>}
+
                     <label htmlFor="">Localizacion</label>
                     <input type="text"
                             value={localizacion}
                             onChange={(e)=>setLocalizacion(e.target.value)}
                     />
+
+                    {errores.localizacion && <span className="mensajeError">{errores.localizacion}</span>}
 
                     {
                         Categoria !== 'personal' &&
@@ -153,6 +229,8 @@ export default function ProyectoPersonalAdmin() {
                                     <option value="restauracion">Obra civíl</option>
                                     <option value="adecuacion">Obra Pública</option>
                                 </select>
+
+                            {errores.Categoria && <span className="mensajeError">{errores.Categoria}</span>}
                         </>
                     }
 
@@ -160,6 +238,8 @@ export default function ProyectoPersonalAdmin() {
                     <input type="file" 
                             onChange={(e)=>setImagen(e.target.files[0])}
                     />
+                    
+                    {errores.Imagen && <span className="mensajeError">{errores.Imagen}</span>}
 
                     <button>Aceptar</button>
                     <button type="button"
@@ -178,6 +258,8 @@ export default function ProyectoPersonalAdmin() {
                                 multiple
                                 onChange={(e) => setImagenes(Array.from(e.target.files))}
                             />
+
+                        {errores.imagenes && <span className="mensajeError">{errores.imagenes}</span>}
 
                             <button>Aceptar</button>
                             <button type="button" onClick={handleLimpiar}>Cancelar</button>

@@ -1,6 +1,7 @@
 import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react"
 import "../Styles/EditUsuarioAdmin.css";
+import "../Styles/Errores.css";
 import { useAuth } from "../Hooks/useAuth";
 
 export default function EditUsuario() {
@@ -11,6 +12,7 @@ export default function EditUsuario() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
+    const [errores, setErrores] = useState({});
     
     
     const [users, setUsers] = useState([]);
@@ -24,6 +26,25 @@ export default function EditUsuario() {
 
         setUsers(handleFiltrar);
     }, [usuarios, user.id]); 
+
+    const validar = () =>{
+
+        const nuevosErrores = {}
+
+        if(!name.trim()){
+            nuevosErrores.name = "El nombre es obligatorio"
+        }else if(!/^[a-zA-Z]+$/.test(name)){
+            nuevosErrores.name = "El nombre no puede contener caracteres ni numeros"
+        }
+
+        if(!email.trim()){
+            nuevosErrores.email = "El email no puede estar vacio"
+        }else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            nuevosErrores.email = "El formato del email no es correcto"
+        }
+
+        return nuevosErrores;
+    }
     
 
     const clickEditar = (usuario) => {
@@ -33,10 +54,21 @@ export default function EditUsuario() {
         setName(usuario.name);
         setEmail(usuario.email);
         setRole(usuario.role);
+        setErrores({});
     }
 
     const handleEditar = (e) => {
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
 
         router.put(`/editarUsuario/${id}`, {
             name: name,
@@ -118,9 +150,13 @@ export default function EditUsuario() {
                             value={name}
                             onChange={(e) => setName(e.target.value)} />
 
+                        {errores.name && <span className="mensajeError">{errores.name}</span>}
+
                         <input type="text"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)} />
+
+                        {errores.email && <span className="mensajeError">{errores.email}</span>}
 
                         <select value={role} onChange={(e) => setRole(e.target.value)}>
                             <option value="usuario">Usuario</option>

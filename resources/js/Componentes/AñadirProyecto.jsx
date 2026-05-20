@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../Styles/AñadirProyecto.css";
-import { router, usePage } from "@inertiajs/react";
+import "../Styles/Errores.css";
+import { router } from "@inertiajs/react";
 
 export default function AñadirProyecto(){
     const [nombre, setNombre] = useState("");
@@ -9,9 +10,53 @@ export default function AñadirProyecto(){
     const [categoria, setCategoria] = useState("");
     const [imagen, setImagen] = useState("");
     const [formKey, setFormKey] = useState(0);
+    const [errores, setErrores] = useState("");
+
+    const validar = () =>{
+
+        const nuevosErrores = {};
+
+        if(!nombre.trim()){
+            nuevosErrores.nombre = "El nombre del proyecto es obligatorio"
+        }else if(/^[a-zA-Z]$/.test(nombre)){
+            nuevosErrores.nombre = "El nombre no puede contener caracteres ni numeros"
+        }
+
+        if(coste <= 0){
+            nuevosErrores.coste = "El coste no puede ser negativo ni 0"
+        }
+
+        if(!localizacion.trim()){
+            nuevosErrores.localizacion = "La localizacion es obligatoria"
+        }else if(/^[a-zA-Z]$/.test(localizacion)){
+            nuevosErrores.localizacion = "La localizacion no puede contener caracteres ni numeros"
+        }
+
+        if(!categoria.trim()){
+            nuevosErrores.categoria = "Selecciona una categoria"
+        }
+
+        if(!imagen){
+            nuevosErrores.imagen = "Debe de incluir una imagen"
+        }else if(!/\.(jpg|jpeg|png)$/i.test(imagen.name)){
+            nuevosErrores.imagen = "Formatos permitidos jpg, png, jpeg"
+        }
+
+        return nuevosErrores;
+    }
 
     const handleEnviar = (e) =>{
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            
+            return;
+        }
+
+        setErrores({});
 
         router.post('/añadirproyecto',{
             nombre: nombre,
@@ -30,6 +75,7 @@ export default function AñadirProyecto(){
         setLocalizacion("");
         setCategoria("");
         setImagen("");
+        setErrores({});
         setFormKey(prev => prev + 1);
     }
         
@@ -44,17 +90,23 @@ export default function AñadirProyecto(){
                             value={nombre}
                             onChange={(e)=>setNombre(e.target.value)} />
 
+                    {errores.nombre && <span className="mensajeError">{errores.nombre}</span>}
+
                     <label htmlFor="coste">Coste</label>
 
                     <input type="number" 
                             value={coste}
                             onChange={(e)=>setCoste(e.target.value)}/>
 
+                    {errores.coste && <span className="mensajeError">{errores.coste}</span>}
+
                     <label htmlFor="localizacion">Localización</label>
 
                     <input type="text"
                             value={localizacion}
                             onChange={(e)=>setLocalizacion(e.target.value)} />
+
+                    {errores.localizacion && <span className="mensajeError">{errores.localizacion}</span>}
 
                     <label htmlFor="categoria">Categoria</label>
 
@@ -64,13 +116,22 @@ export default function AñadirProyecto(){
                         <option value="adecuacion">Obra pública</option>
                     </select>
 
+                    {errores.categoria && <span className="mensajeError">{errores.categoria}</span>}
+
                     <label htmlFor="imagen">Imagen</label>
 
                     <input type="file" onChange={(e)=>setImagen(e.target.files[0])}/>
 
+                    {errores.imagen && <span className="mensajeError">{errores.imagen}</span>}
+
                     <div className="botonAñadirProyecto">
                         <button type="submit">Aceptar</button>
-                        <button type="reset">Cancelar</button>
+                        
+                        <button type="button"
+                                onClick={handleLimpiarCampos}
+                            >Cancelar
+                        </button>
+                    
                     </div>
                 </form>
             </div>

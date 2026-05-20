@@ -1,4 +1,5 @@
 import "../Styles/FacturaProyecto.css";
+import "../Styles/Errores.css";
 import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
@@ -13,6 +14,46 @@ export default function FacturacionProyecto() {
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
 
+    const [errores, setErrores] = useState({});
+
+    const validarBuscador = () => {
+        const nuevosErrores = {};
+    
+        if(!fechaInicio){
+            nuevosErrores.fechaInicio = "Debe seleccionar una fecha de inicio";
+        }
+    
+        if(!fechaFin){
+            nuevosErrores.fechaFin = "Debe seleccionar una fecha de fin";
+        }
+    
+        if(fechaInicio && fechaFin && fechaInicio > fechaFin){
+            nuevosErrores.fechaFin = "La fecha fin no puede ser anterior a la fecha inicio";
+        }
+    
+        return nuevosErrores;
+    }
+    
+    const validarFactura = () => {
+        const nuevosErrores = {};
+    
+        if(!proyecto_id){
+            nuevosErrores.proyecto_id = "Debe seleccionar un proyecto";
+        }
+    
+        if(!fecha_facturacion){
+            nuevosErrores.fecha_facturacion = "Debe seleccionar una fecha";
+        }
+    
+        if(!factura){
+            nuevosErrores.factura = "Debe seleccionar un archivo";
+        }else if(!/\.(pdf)$/i.test(factura.name)){
+            nuevosErrores.factura = "Solo se admite formato pdf";
+        }
+    
+        return nuevosErrores;
+    }
+
     const handleLimpiarCampos = () =>{
         setFechaFacturacion("");
         setFactura("");
@@ -25,6 +66,15 @@ export default function FacturacionProyecto() {
     const handleFactura = (e)=> {
 
         e.preventDefault();
+
+        const erroresValidacion = validarFactura();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
 
         const formData = new FormData();
 
@@ -47,6 +97,15 @@ export default function FacturacionProyecto() {
     const handleFacturacion = (e) =>{
 
         e.preventDefault();
+
+        const erroresValidacion = validarBuscador();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
         
         router.get('/facturacionproyecto',{
             fecha_inicio: fechaInicio,
@@ -65,12 +124,16 @@ export default function FacturacionProyecto() {
                         value={fechaInicio}
                         onChange={(e)=>setFechaInicio(e.target.value)}
                     />
-
+                    
+                    {errores.fechaInicio && <span className="mensajeError">{errores.fechaInicio}</span>}
+                    
                     <label>Fecha Fin</label>
                     <input type="date"
                         value={fechaFin}
                         onChange={(e)=>setFechaFin(e.target.value)}
                     />
+
+                    {errores.fechaFin && <span className="mensajeError">{errores.fechaFin}</span>}
 
                     <button>Buscar</button>
 
@@ -128,6 +191,9 @@ export default function FacturacionProyecto() {
                             ))
                         }
                     </select>
+
+                    {errores.proyecto_id && <span className="mensajeError">{errores.proyecto_id}</span>}
+
                     </label>
 
 
@@ -137,6 +203,9 @@ export default function FacturacionProyecto() {
                             onChange={(e)=>setFechaFacturacion(e.target.value)}
                     />
                     </label>
+
+                    {errores.fecha_facturacion && <span className="mensajeError">{errores.fecha_facturacion}</span>}
+
                     
                     <label>Factura
                         <input type="file"
@@ -144,6 +213,7 @@ export default function FacturacionProyecto() {
                                 onChange={(e) => setFactura(e.target.files[0])}
                                 />
                         </label>
+                        {errores.factura && <span className="mensajeError">{errores.factura}</span>}
 
                     <button type="submit">Crear</button>
                 </form>

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "../Styles/AñadirMaquina.css";
+import "../Styles/Errores.css";
 import { router, usePage } from "@inertiajs/react";
 
 export default function AñadirMaquinaria(){
@@ -11,10 +12,53 @@ export default function AñadirMaquinaria(){
     const [caracteristicas, setCaracteristicas] = useState("");
     const [imagen, setImagen] = useState("");
     const [categoriaid, setCategoriaId] = useState(null);
+    const [formKey, setFormKey] = useState(0);
+    const [errores, setErrores] = useState({});
 
     const [nuevaCategoria, setNuevaCategoria] = useState(false);
 
     const {Categoria, cat} = usePage().props;
+
+    const validar = () =>{
+        
+        const nuevosErrores = {}
+
+        if(!nombre.trim()){
+            nuevosErrores.nombre = "El nombre de la maquina es obligatorio"
+        }else if(!/^[a-zA-Z]+[0-9]*$/.test(nombre)){
+            nuevosErrores.nombre = "El nombre no puede contener caracteres"
+        }
+
+        if(!categoria.trim()){
+            nuevosErrores.categoria = "La categoria no puede estar vacia"
+        }else if(!/^[a-zA-Z]+$/.test(categoria)){
+            nuevosErrores.categoria = "La categoria no puede contener caracteres ni numeros"
+        }
+
+        if(precio <= 0){
+            nuevosErrores.precio = "El precio no puede ser negativo ni 0"
+        }
+
+        if(stock <= 0){
+            nuevosErrores.stock = "El stock no puede ser negativo ni 0"
+        }
+
+        if(!caracteristicas.trim()){
+            nuevosErrores.caracteristicas = "Las caracteristicas son obligatorias"
+        }
+
+        if(!imagen){
+            nuevosErrores.imagen = "Debes de seleccionar una imagen"
+        }else if(!/\.(jpg|jpeg|png)$/i.test(imagen.name)){
+            nuevosErrores.imagen = "El formato permitido es jpg png jpeg"
+        }
+
+        if(categoriaid === null){
+            nuevosErrores.categoriaid = "Debes de eleguir una categoria"
+        }
+
+        return nuevosErrores;
+    }
 
     const handleNuevaCategoria = ()=>{
         setNuevaCategoria(true);
@@ -31,10 +75,22 @@ export default function AñadirMaquinaria(){
         setCategoriaId(null);
         setNuevaCategoria(false);
         setVer(false);
+        setErrores({});
+        setFormKey(prev => prev + 1);
     }
     
     const handleEnviar = (e)=>{
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
        
         router.post('añadirMaquina',{
             nombre: nombre,
@@ -56,6 +112,16 @@ export default function AñadirMaquinaria(){
     const handleCategoria = (e)=>{
 
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
 
         router.post('/categorias', {
             categoria: categoria,
@@ -87,6 +153,8 @@ export default function AñadirMaquinaria(){
                                                 id="nuevaCategoria"
                                                 onChange={(e)=>setCategoria(e.target.value)}
                                         />
+
+                                        {errores.categoria && <span className="mensajeError">{errores.categoria}</span>}
                                     </>
 
                                     <button>Aceptar</button>
@@ -99,7 +167,7 @@ export default function AñadirMaquinaria(){
                 {
                     !nuevaCategoria &&
 
-                <form onSubmit={handleEnviar}>
+                <form key={formKey} onSubmit={handleEnviar}>
                     
                     <label htmlFor="nombre">Nombre Maquina</label>
                     
@@ -108,19 +176,20 @@ export default function AñadirMaquinaria(){
                             value={nombre}
                             onChange={(e)=>setNombre(e.target.value)}/>
 
+                    {errores.nombre && <span className="mensajeError">{errores.nombre}</span>}
+                    
+                    <label htmlFor="categoria">Categoria</label>
+                    <select id="categoria" onChange={(e)=>setCategoriaId(e.target.value)}>
+                        <option value="">Seleccione una categoria</option>
+                        {
+                            Categoria.map((dato)=>(
+                            <option value={dato.id}>{dato.categoria}</option>
+                            ))
+                        }
+                    </select>
 
-                        <>
-                            <label htmlFor="categoria">Categoria</label>
-                            <select id="categoria" onChange={(e)=>setCategoriaId(e.target.value)}>
-                                <option value="">Seleccione una categoria</option>
-                                {
-                                   Categoria.map((dato)=>(
-                                    <option value={dato.id}>{dato.categoria}</option>
-                                   ))
-                                }
-                            </select>
-                        </>
-
+                    {errores.categoriaid && <span className="mensajeError">{errores.categoriaid}</span>}
+                        
                     <label htmlFor="precio">Precio (€)</label>
 
                     <input type="number" 
@@ -128,11 +197,15 @@ export default function AñadirMaquinaria(){
                             onChange={(e)=>setPrecio(e.target.value)}
                             />
 
+                    {errores.precio && <span className="mensajeError">{errores.precio}</span>}
+
                     <label htmlFor="stock">Stock</label>
 
                     <input type="number"
                             value={stock}
                             onChange={(e)=>setStock(e.target.value)} />
+
+                    {errores.stock && <span className="mensajeError">{errores.stock}</span>}
 
                     <label htmlFor="caracteristicas">Características</label>
 
@@ -142,16 +215,20 @@ export default function AñadirMaquinaria(){
                             rows={4}
                             placeholder="Describe las caraterísticas de la máquina"
                             />
+
+                    {errores.caracteristicas && <span className="mensajeError">{errores.caracteristicas}</span>}
                     
                     <label htmlFor="imagen">Imagen</label>
 
                     <input type="file" 
                             onChange={(e)=>setImagen(e.target.files[0])}/>
 
+                    {errores.imagen && <span className="mensajeError">{errores.imagen}</span>}
+
                     <div className="botonAñadirMaquina">
                         
                         <button>Añadir</button>
-                        <button onClick={handleLimpiarCampos}>Cancelar</button>
+                        <button type="button" onClick={handleLimpiarCampos}>Cancelar</button>
                     </div>
 
                 </form>

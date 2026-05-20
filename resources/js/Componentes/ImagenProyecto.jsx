@@ -1,5 +1,6 @@
 import { router, usePage } from "@inertiajs/react";
 import "../Styles/ImagenProyecto.css";
+import "../Styles/Errores.css";
 import { useAuth } from "../Hooks/useAuth";
 import { useState } from "react";
 export default function ImagenProyecto() {
@@ -16,10 +17,52 @@ export default function ImagenProyecto() {
     const [fechaCertificado, setFechaCertificado] = useState("");
     const [formKey, setFormKey] = useState(0);
 
+    const [errores, setErrores] = useState("");
+
     const [id, setId] = useState("");
 
+    const validarDescripcion = () => {
+        const nuevosErrores = {};
+    
+        if(!descripcion.trim()){
+            nuevosErrores.descripcion = "La descripcion no puede estar vacia";
+        }
+    
+        return nuevosErrores;
+    }
+
+    const validarNuevaDescripcion = () => {
+        const nuevosErrores = {};
+    
+        if(!nuevadescripcion.trim()){
+            nuevosErrores.descripcion = "La descripcion no puede estar vacia";
+        }
+    
+        return nuevosErrores;
+    }
+    
+    const validarCertificado = () => {
+        const nuevosErrores = {};
+    
+        if(!fechaCertificado){
+            nuevosErrores.fechaCertificado = "Debe de seleccionar una fecha";
+        }
+    
+        if(!certificado){
+            nuevosErrores.certificado = "Seleccione un certificado";
+        }else if(!/\.(pdf)$/i.test(certificado.name)){
+            nuevosErrores.certificado = "Formato valido pdf";
+        }
+    
+        return nuevosErrores;
+    }
+
     const handleEliminar = (id) => {
-        router.delete(`/eliminarImagen/${id}`)
+        let confirmar = confirm("Desea eliminar la imagen");
+
+        if(confirmar){
+            router.delete(`/eliminarImagen/${id}`)
+        }
     }
 
     const handleLimpiarCampos = () => {
@@ -29,6 +72,7 @@ export default function ImagenProyecto() {
         setEditarDescripcion(false);
         setVer(false);
         setFechaCertificado("");
+        setErrores({});
         setFormKey(prev => prev + 1);
     }
 
@@ -52,6 +96,16 @@ export default function ImagenProyecto() {
 
         e.preventDefault();
 
+        const erroresValidacion = validarDescripcion();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
+
         router.put(`/editarimagen/${id}`, {
             descripcion: descripcion,
         });
@@ -69,6 +123,16 @@ export default function ImagenProyecto() {
 
         e.preventDefault();
 
+        const erroresValidacion = validarNuevaDescripcion();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
+
         router.put(`/editarimagen/${id}`, {
             descripcion: nuevadescripcion,
         });
@@ -83,6 +147,16 @@ export default function ImagenProyecto() {
     const handleCertificado = (e) => {
 
         e.preventDefault();
+
+        const erroresValidacion = validarCertificado();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+
+            return
+        }
+
+        setErrores({});
 
         router.post(`/crearcertificado`, {
             fecha_certificado: fechaCertificado,
@@ -118,10 +192,14 @@ export default function ImagenProyecto() {
                                     onChange={(e) => setFechaCertificado(e.target.value)}
                                 />
 
+                                {errores.fechaCertificado && <span className="mensajeError">{errores.fechaCertificado}</span>}
+
                                 <label>Archivo</label>
                                 <input type="file"
                                     onChange={(e) => setCertificado(e.target.files[0])}
                                 />
+
+                                {errores.certificado && <span className="mensajeError">{errores.certificado}</span>}
 
                                 <div className="botonesFormImagen">
                                     <button type="submit">
@@ -146,9 +224,9 @@ export default function ImagenProyecto() {
                     <textarea id="descripcion"
                         value={descripcion}
                         onChange={(e) => setDescripcion(e.target.value)}
-                    >
+                    />
 
-                    </textarea>
+                    {errores.descripcion && <span className="mensajeError">{errores.descripcion}</span>}
 
                     <div className="botonesDescripcion">
                         <button type="submit">
@@ -172,9 +250,9 @@ export default function ImagenProyecto() {
                     <textarea id="descripcion"
                         value={nuevadescripcion}
                         onChange={(e) => setNuevaDescripcion(e.target.value)}
-                    >
+                    />
 
-                    </textarea>
+                    {errores.descripcion && <span className="mensajeError">{errores.descripcion}</span>}
 
                     <div className="botonesDescripcion">
                         <button type="submit">

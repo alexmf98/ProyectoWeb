@@ -1,5 +1,6 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/FacturaMaquina.css";
+import "../Styles/Errores.css";
 import { useState } from "react";
 
 export default function FacturacionMaquinaria() {
@@ -7,7 +8,21 @@ export default function FacturacionMaquinaria() {
     const { historial } = usePage().props;
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
+    const [errores, setErrores] = useState({});
 
+    const validarBuscador = () => {
+        const nuevosErrores = {};
+    
+        if(!fechaInicio){
+            nuevosErrores.fechaInicio = "Debe seleccionar una fecha de inicio";
+        }
+    
+        if(!fechaFin){
+            nuevosErrores.fechaFin = "Debe seleccionar una fecha de fin";
+        }
+
+        return nuevosErrores;
+    }
 
     function handleSumaCoste() {
 
@@ -23,6 +38,15 @@ export default function FacturacionMaquinaria() {
     const handleFacturacion = (e)=>{
 
         e.preventDefault();
+
+        const erroresValidacion = validarBuscador();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
         
         router.get('/facturamaquinaria',{
             fecha_inicio: fechaInicio,
@@ -43,11 +67,15 @@ export default function FacturacionMaquinaria() {
                         onChange={(e) => setFechaInicio(e.target.value)}
                     />
 
+                {errores.fechaInicio && <span className="mensajeError">{errores.fechaInicio}</span>}
+
                     <label>Fecha Fin</label>
                     <input type="date"
                         value={fechaFin}
                         onChange={(e) => setFechaFin(e.target.value)}
                     />
+                
+                {errores.fechaFin && <span className="mensajeError">{errores.fechaFin}</span>}
 
 
                     <button>Buscar</button>

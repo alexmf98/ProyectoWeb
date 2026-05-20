@@ -1,6 +1,7 @@
 import { router, usePage } from "@inertiajs/react";
 import { useState } from "react"
 import { useInfoEmpresa } from "../Hooks/useInfoEmpresa";
+import "../Styles/Errores.css";
 
 
 export default function InformacionEmpresa(){
@@ -15,6 +16,35 @@ export default function InformacionEmpresa(){
     const [emai, setEmail] = useState("" || email);
     const [localiza, setLocalizacion] = useState("" || localizacion);
 
+    const [errores, setErrores] = useState({});
+
+
+    const validar = () => {
+        const nuevosErrores = {};
+    
+        if(!tele.trim()){
+            nuevosErrores.tele = "El teléfono es obligatorio";
+        }else if(!/^[0-9]{9}$/.test(tele)){
+            nuevosErrores.tele = "El teléfono debe tener 9 dígitos";
+        }
+    
+        if(!emai.trim()){
+            nuevosErrores.emai = "El email es obligatorio";
+        }else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emai)){
+            nuevosErrores.emai = "El formato del email no es válido";
+        }
+    
+        if(!localiza.trim()){
+            nuevosErrores.localiza = "La localización es obligatoria";
+        }
+    
+        if(!descrip.trim()){
+            nuevosErrores.descrip = "La descripción es obligatoria";
+        }
+    
+        return nuevosErrores;
+    }
+
     const handleVer = () => {
         setVer(true);
     }
@@ -27,6 +57,15 @@ export default function InformacionEmpresa(){
     const handleEnviar = (e) => {
 
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
 
         const formData = new FormData();
 
@@ -47,6 +86,15 @@ export default function InformacionEmpresa(){
 
     const handleEdit = (e)=>{
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
 
         const formData = new FormData();
 
@@ -119,11 +167,15 @@ export default function InformacionEmpresa(){
                                     onChange={(e)=>setTelefono(e.target.value)}
                             />
 
+                        {errores.tele && <span className="mensajeError">{errores.tele}</span>}
+
+
                             <label>Email</label>
                             <input type="email" 
                                     value={emai}
                                     onChange={(e)=>setEmail(e.target.value)}
                             />
+                        {errores.emai && <span className="mensajeError">{errores.emai}</span>}
 
                             <label>Localizacion</label>
                             <input type="text" 
@@ -131,14 +183,18 @@ export default function InformacionEmpresa(){
                                     onChange={(e)=>setLocalizacion(e.target.value)}
                             />
 
+                        {errores.localiza && <span className="mensajeError">{errores.localiza}</span>}
+
+
                             <label>Descripcion</label>
 
                             <textarea
                                 value={descrip}
                                 onChange={(e)=>setDescripcion(e.target.value)}
-                            >
+                            />
 
-                            </textarea>
+                        {errores.descrip && <span className="mensajeError">{errores.descrip}</span>}
+
 
                             <button className="btnAceptar" type="submit">Aceptar</button>
                             <button className="btnCancelar" type="reset" onClick={()=>setVerEdicion(false)}>Cancelar</button>
@@ -153,23 +209,29 @@ export default function InformacionEmpresa(){
                                     onChange={(e)=>setTelefono(e.target.value)}
                             />
 
+                            {errores.tele && <span className="mensajeError">{errores.tele}</span>}
+
                             <label>Email</label>
                             <input type="email" 
                                     onChange={(e)=>setEmail(e.target.value)}
                             />
-
+                            
+                            {errores.emai && <span className="mensajeError">{errores.emai}</span>}
+                            
                             <label>Localizacion</label>
                             <input type="text" 
                                     onChange={(e)=>setLocalizacion(e.target.value)}
                             />
 
+                            {errores.localiza && <span className="mensajeError">{errores.localiza}</span>}  
+
                             <label>Descripcion</label>
 
                             <textarea
                                 onChange={(e)=>setDescripcion(e.target.value)}
-                            >
+                           />
 
-                            </textarea>
+                            {errores.descrip && <span className="mensajeError">{errores.descrip}</span>}
 
                             <button type="submit">Aceptar</button>
                         </form>

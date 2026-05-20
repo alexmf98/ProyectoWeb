@@ -1,5 +1,6 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/Nomina.css";
+import "../Styles/Errores.css";
 import { useState } from "react";
 
 export default function Nomina(){

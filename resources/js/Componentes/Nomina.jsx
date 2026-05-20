@@ -8,10 +8,35 @@ export default function Nomina(){
 
     const [fecha_inicio, setFechaInicio] = useState("");
     const [fecha_fin, setFechaFin] = useState("")
+    const [errores, setErrores] = useState("");
+
+    const validar = () =>{
+
+        const nuevosErrores = {}
+
+        if(!fecha_inicio.trim()){
+            nuevosErrores.fecha_inicio = "Debe seleccionar una fecha de inicio";
+        }
+
+        if(!fecha_fin.trim()){
+            nuevosErrores.fecha_fin = "Debe seleccionar una fecha de fin";
+        }
+
+        return nuevosErrores;
+    }
 
     const handleBuscar = (e) =>{
 
         e.preventDefault();
+
+        const erroresValidacion = validar();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
 
         router.get('/nomina', {
             fecha_inicio: fecha_inicio,
@@ -33,11 +58,15 @@ export default function Nomina(){
                             onChange={(e)=>setFechaInicio(e.target.value)}
                             />
 
+                    {errores.fecha_inicio && <span className="mensajeError">{errores.fecha_inicio}</span>}
+
                     <label htmlFor="fechaFin">Fecha Fin</label>
                     <input type="date" 
                             id="fechaFin"
                             onChange={(e)=>setFechaFin(e.target.value)}
                             />
+                    
+                    {errores.fecha_fin && <span className="mensajeError">{errores.fecha_fin}</span>}
 
                     <button type="submit">Buscar</button>
 

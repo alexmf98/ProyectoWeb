@@ -89,7 +89,7 @@ export default function Cabecera() {
                                     <>
                                         <Link href={'/historialProyectos'} >Historial Proyectos</Link>
 
-                                        <Link href={'proyectoSolicitado'}>Mis proyectos solicitados</Link>
+                                        <Link href={'/proyectoSolicitado'}>Mis proyectos solicitados</Link>
                                     
                                         <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
                                     </>

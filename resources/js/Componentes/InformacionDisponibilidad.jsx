@@ -290,7 +290,7 @@ export default function InformacionDisponibilidad() {
 
                         <div className="form-field">
                         
-                            <label>Coste</label>
+                            <label>Coste Total</label>
                             <input type="text" value={precio_maq + " €"} /> 
                         
                         </div>

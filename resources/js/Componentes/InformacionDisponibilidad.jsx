@@ -1,5 +1,5 @@
 import "../Styles/Informacion.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../Hooks/useAuth";
 import Calendario from "./Calendario.jsx";
 import { router, usePage } from "@inertiajs/react";
@@ -72,7 +72,7 @@ export default function InformacionDisponibilidad() {
         }
 
         setErrores({});
-        setPrueba(!prueba);
+        // setPrueba(!prueba);
         precio();
     }
 
@@ -99,21 +99,90 @@ export default function InformacionDisponibilidad() {
             pin: pin,
         });
     }
-    
-    const precio = ()=>{
-        const fInicio = new Date(fecha_inicio).getTime();
-        const fFin = new Date(fecha_fin).getTime();
 
-        
-        const diferencia = Math.floor((fFin - fInicio) / (1000*60*60*24));
-        
-        if(diferencia < 0) setPrueba(false);
+    useEffect(() => {
+
+        if (!fecha_inicio || !fecha_fin) {
+            setPrueba(false);
+            return;
+        }
+    
+        const hoy = new Date();
+        hoy.setHours(0,0,0,0);
+    
+        const fInicio = new Date(fecha_inicio);
+        fInicio.setHours(0,0,0,0);
+    
+        const fFin = new Date(fecha_fin);
+        fFin.setHours(0,0,0,0);
+    
+        // Fecha fin menor que inicio
+        if (fFin < fInicio) {
+            setPrueba(false);
+            return;
+        }
+    
+        // Inicio en pasado
+        if (fInicio < hoy) {
+            setPrueba(false);
+            return;
+        }
+    
+        // Todo correcto
+        setPrueba(true);
+
+        const diferencia = Math.floor(
+            (fFin - fInicio) / (1000 * 60 * 60 * 24)
+        );
 
         const precio_maquina = maquina.precio;
-        
-        if(diferencia === 0){
-            setPrecioMaq(precio_maquina)
-        }else{
+    
+        if (diferencia === 0) {
+            setPrecioMaq(precio_maquina);
+        } else {
+            setPrecioMaq(diferencia * precio_maquina);
+        }
+    
+    }, [fecha_inicio, fecha_fin]);
+    
+    const precio = () => {
+
+        // const hoy = new Date();
+        // hoy.setHours(0,0,0,0);
+    
+        const fInicio = new Date(fecha_inicio);
+        fInicio.setHours(0,0,0,0);
+    
+        const fFin = new Date(fecha_fin);
+        fFin.setHours(0,0,0,0);
+    
+        const diferencia = Math.floor(
+            (fFin - fInicio) / (1000 * 60 * 60 * 24)
+        );
+    
+        // const pasado =
+        //     fFin < hoy ||
+        //     (fInicio < hoy && fInicio < fFin && fFin >= hoy);
+    
+        // if (diferencia < 0) {
+        //     setPrueba(false);
+        //     return;
+        // }
+    
+        // if (pasado) {
+        //     setPrueba(false);
+        //     return;
+        // }
+    
+        // if (fInicio >= hoy) {
+        //     setPrueba(true);
+        // }
+    
+        const precio_maquina = maquina.precio;
+    
+        if (diferencia === 0) {
+            setPrecioMaq(precio_maquina);
+        } else {
             setPrecioMaq(diferencia * precio_maquina);
         }
     }

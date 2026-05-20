@@ -73,7 +73,8 @@ export default function InformacionDisponibilidad() {
 
         setErrores({});
         // setPrueba(!prueba);
-        precio();
+        // precio();
+        handleLimpiar();
     }
 
     const handleAlquiler = (e) => {
@@ -98,6 +99,8 @@ export default function InformacionDisponibilidad() {
             cvv: cvv,
             pin: pin,
         });
+
+        handleLimpiar();
     }
 
     useEffect(() => {
@@ -145,47 +148,47 @@ export default function InformacionDisponibilidad() {
     
     }, [fecha_inicio, fecha_fin]);
     
-    const precio = () => {
+    // const precio = () => {
 
-        // const hoy = new Date();
-        // hoy.setHours(0,0,0,0);
+    //     // const hoy = new Date();
+    //     // hoy.setHours(0,0,0,0);
     
-        const fInicio = new Date(fecha_inicio);
-        fInicio.setHours(0,0,0,0);
+    //     // const fInicio = new Date(fecha_inicio);
+    //     // fInicio.setHours(0,0,0,0);
     
-        const fFin = new Date(fecha_fin);
-        fFin.setHours(0,0,0,0);
+    //     // const fFin = new Date(fecha_fin);
+    //     // fFin.setHours(0,0,0,0);
     
-        const diferencia = Math.floor(
-            (fFin - fInicio) / (1000 * 60 * 60 * 24)
-        );
+    //     // const diferencia = Math.floor(
+    //     //     (fFin - fInicio) / (1000 * 60 * 60 * 24)
+    //     // );
     
-        // const pasado =
-        //     fFin < hoy ||
-        //     (fInicio < hoy && fInicio < fFin && fFin >= hoy);
+    //     // const pasado =
+    //     //     fFin < hoy ||
+    //     //     (fInicio < hoy && fInicio < fFin && fFin >= hoy);
     
-        // if (diferencia < 0) {
-        //     setPrueba(false);
-        //     return;
-        // }
+    //     // if (diferencia < 0) {
+    //     //     setPrueba(false);
+    //     //     return;
+    //     // }
     
-        // if (pasado) {
-        //     setPrueba(false);
-        //     return;
-        // }
+    //     // if (pasado) {
+    //     //     setPrueba(false);
+    //     //     return;
+    //     // }
     
-        // if (fInicio >= hoy) {
-        //     setPrueba(true);
-        // }
+    //     // if (fInicio >= hoy) {
+    //     //     setPrueba(true);
+    //     // }
     
-        const precio_maquina = maquina.precio;
+    //     // const precio_maquina = maquina.precio;
     
-        if (diferencia === 0) {
-            setPrecioMaq(precio_maquina);
-        } else {
-            setPrecioMaq(diferencia * precio_maquina);
-        }
-    }
+    //     // if (diferencia === 0) {
+    //     //     setPrecioMaq(precio_maquina);
+    //     // } else {
+    //     //     setPrecioMaq(diferencia * precio_maquina);
+    //     // }
+    // }
 
     const handleLimpiar = ()=>{
         setPrueba(false);
@@ -195,6 +198,7 @@ export default function InformacionDisponibilidad() {
         setCvv("")
         setPin("")
         setPrecioMaq(0)
+        setErrores({})
     }
 
     return (
@@ -261,7 +265,7 @@ export default function InformacionDisponibilidad() {
 
                     <div className="form-field">
                         <label>Número de tarjeta</label>
-                        <input type="text" value={numTarjeta}
+                        <input type="text" value={numTarjeta} maxLength={16}
                             placeholder="1234 5678 9012 3456"
                             onChange={(e) => setNumTarjeta(e.target.value)} />
                     </div>

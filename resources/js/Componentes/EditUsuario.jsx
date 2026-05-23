@@ -107,19 +107,17 @@ export default function EditUsuario() {
                         {
                             users.map((dato) => (
                                 <tr key={dato.id}>
-                                    <td>
-                                        {dato.name}
-                                    </td>
-                                    <td>
+                                    <td data-label="Nombre">{dato.name}</td>
+                                    <td data-label="Apellido">
                                         {dato.apellido}
                                     </td>
-                                    <td>
+                                    <td data-label="Email">
                                         {dato.email}
                                     </td>
-                                    <td>
+                                    <td data-label="Role">
                                         {dato.role}
                                     </td>
-                                    <td>
+                                    <td data-label="Status">
                                         {dato.is_active ? 'activo' : 'desactivada'}
                                     </td>
                                     <td>

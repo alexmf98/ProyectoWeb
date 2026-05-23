@@ -89,9 +89,9 @@ export default function Nomina(){
                         {
                             nomina.map((dato)=>(
                                 <tr>
-                                    <td>{dato.fecha_nomina}</td>
+                                    <td data-label="Fecha Nomina">{dato.fecha_nomina}</td>
 
-                                    <td><a href={dato.nomina} download>Descargar</a></td>
+                                    <td data-label="Descargar"><a href={dato.nomina} download>Descargar</a></td>
                                 </tr>
                             ))
                         }

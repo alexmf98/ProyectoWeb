@@ -44,8 +44,8 @@ export default function Edicion() {
                         <tbody>
                             {proyecto.map((dato) => (
                                 <tr key={dato.id}>
-                                    <td>{dato.nombre}</td>
-                                    <td>{dato.localizacion}</td>
+                                    <td data-label="Nombre">{dato.nombre}</td>
+                                    <td data-label="Localización">{dato.localizacion}</td>
                                     <td>
                                         <button className="btnMostrar" onClick={(e) => handleShowImagen(e, dato.id)}>
                                             Mostrar

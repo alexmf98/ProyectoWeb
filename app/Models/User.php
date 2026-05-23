@@ -57,4 +57,8 @@ class User extends Authenticatable
     // public function proyectosSolicitados(){
     //     return $this->hasMany(ProyectoSolicitado::class);
     // }
+
+    public function nominas(){
+        return $this->hasMany(Trabajador::class);
+    }
 }

@@ -16,6 +16,10 @@ export default function ImagenProyecto() {
     const [certificado, setCertificado] = useState("");
     const [fechaCertificado, setFechaCertificado] = useState("");
     const [formKey, setFormKey] = useState(0);
+    const [fechaCertificadoEditar, setFechaCertificadoEditar] = useState("");
+    const [certificadoEditar, setCertificadoEditar] = useState("");
+    const [idcertificado, setIdCertificado] = useState("");
+    const [editarCertificado, setEditarCertificado] = useState(false);
 
     const [errores, setErrores] = useState("");
 
@@ -172,6 +176,70 @@ export default function ImagenProyecto() {
         (img) => img.certificados.length > 0
     );
     
+    const handleEditarCertificado = (idcerificado, fechacertificado, certificado)=>{
+
+        setIdCertificado(idcerificado);
+        const [dia, mes, año] = fechacertificado.split('/');
+        setFechaCertificadoEditar(`${año}-${mes}-${dia}`);
+        setCertificadoEditar(certificado);
+        setEditarCertificado(true);
+    }
+
+    const validarEditarCertificado = () => {
+        const nuevosErrores = {};
+    
+        if(!fechaCertificadoEditar){
+            nuevosErrores.fechaCertificadoEditar = "Debe de seleccionar una fecha";
+        }
+    
+        // solo valida si selecciona un archivo nuevo
+        if(certificadoEditar instanceof File && !/\.(pdf)$/i.test(certificadoEditar.name)){
+            nuevosErrores.certificadoEditar = "Formato valido pdf";
+        }
+    
+        return nuevosErrores;
+    }
+
+    const handleGuardarCertificado = (e) => {
+        e.preventDefault();
+    
+        const erroresValidacion = validarEditarCertificado();
+    
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+    
+        setErrores({});
+    
+        const formData = new FormData();
+        formData.append("fecha_certificado", fechaCertificadoEditar);
+    
+        if(certificadoEditar instanceof File){
+            formData.append("certificado", certificadoEditar);
+        }
+       
+        router.put(`/editarcertificado/${idcertificado}`, formData, {
+            onSuccess: () => {
+                setEditarCertificado(false);
+                setFechaCertificadoEditar("");
+                setCertificadoEditar("");
+                setErrores({});
+            }
+        });
+    }
+
+    const handleEliminarCertificado = (e, id)=>{
+
+        e.preventDefault();
+
+        let confirmar = confirm("Desea eliminar el certificado");
+
+        if(confirmar){
+            router.delete(`/eliminarcertificado/${id}`);
+        }
+    }
+
     return (
         <>
             <h1>{proyecto.nombre}</h1>
@@ -317,6 +385,35 @@ export default function ImagenProyecto() {
                     </div>
                 ))}
             </div>
+
+        {
+            editarCertificado &&
+            <form className="formularioImagenProyecto"
+                    onSubmit={handleGuardarCertificado}
+            >
+                        <label>Fecha</label>
+                        <input type="date"
+                            value={fechaCertificadoEditar}
+                            onChange={(e) => setFechaCertificadoEditar(e.target.value)}
+                        />
+                        
+                        {errores.fechaCertificadoEditar && <span className="mensajeError">{errores.fechaCertificadoEditar}</span>}
+                        
+                        <label>Archivo</label>
+                        <input type="file"
+                            onChange={(e) => setCertificadoEditar(e.target.files[0])}
+                        />
+
+                        {errores.certificadoEditar && <span className="mensajeError">{errores.certificadoEditar}</span>}
+                        
+                        <div className="botonesFormImagen">
+                            <button type="submit">Aceptar</button>
+                            <button type="button" onClick={() => setEditarCertificado(false)}>Cancelar</button>
+                        </div>
+                        
+                    </form>
+                
+        }
         
         {
             hayCertificados &&
@@ -326,6 +423,7 @@ export default function ImagenProyecto() {
                         <tr>
                             <th>Fecha de certificacion</th>
                             <th>Certificado</th>
+                            <th colSpan={2}>Accion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -335,7 +433,7 @@ export default function ImagenProyecto() {
                                 img.certificados.map((cert, index) => (
 
                                     <tr key={index}>
-                                        <td>
+                                        <td data-label="Fecha de certificación">
                                             {cert.fecha_certificado}
                                         </td>
 
@@ -344,6 +442,29 @@ export default function ImagenProyecto() {
                                                 Descargar
                                             </a>
                                         </td>
+                                {
+                                    isAdmin && 
+                                        <>
+                                            <td>
+                                                
+
+                                                <button className="btnEditar"
+                                                    onClick={()=>handleEditarCertificado(cert.id, cert.fecha_certificado, cert.certificado)}
+                                                >
+                                                    Editar
+                                                </button>
+
+                                                
+                                            </td>
+                                            <td>
+                                                <button className="btnEliminar"
+                                                    onClick={(e)=>handleEliminarCertificado(e, cert.id)}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                        </>
+                                }
                                     </tr>
 
                                 ))

@@ -64,25 +64,25 @@ export default function MaquinariaAlquiladaAdmin() {
                         {
                             alquileres.map((dato)=>(
                                 <tr>
-                                    <td>
+                                    <td data-label="Nombre maquina">
                                         {dato.maquinaria.nombre}
                                     </td>
-                                    <td>
+                                    <td data-label="Fecha inicio">
                                         {transformarFecha(dato.fecha_inicio)}
                                     </td>
-                                    <td>
+                                    <td data-label="Fecha fin">
                                         {transformarFecha(dato.fecha_fin)}
                                     </td>
-                                    <td>
+                                    <td data-label="Coste">
                                         {dato.coste} €
                                     </td>
-                                    <td>
+                                    <td data-label="Estado">
                                         {dato.is_cancelled ? 'Cancelado' : 'Alquilado'}
                                     </td>
-                                    <td>
+                                    <td data-label="Nombre">
                                         {dato.user.name}
                                     </td>
-                                    <td>
+                                    <td data-label="Apellido">
                                         {dato.user.apellido}
                                     </td>
                                     {

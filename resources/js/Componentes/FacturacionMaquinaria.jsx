@@ -99,11 +99,11 @@ export default function FacturacionMaquinaria() {
                             historial.map((dato) => (
 
                                 <tr>
-                                    <td>{dato.maquinaria.nombre}</td>
+                                    <td data-label="Nombre maquina">{dato.maquinaria.nombre}</td>
 
-                                    <td>{dato.coste} €</td>
+                                    <td data-label="Coste">{dato.coste} €</td>
 
-                                    <td>
+                                    <td data-label="Fecha">
                                         {dato.fecha_inicio} / {dato.fecha_fin}
                                     </td>
                                 </tr>

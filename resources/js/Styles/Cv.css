@@ -13,3 +13,16 @@
     background-color: white;
     border: none;
 }
+
+.tablaCv button{
+    background: white;
+    border: none;
+    border-radius: 8px;
+    background-color: #E3543B;
+    color: white;
+    padding: 10px 20px;
+} 
+
+.tablaCv button:hover{
+    background-color: #E94435;
+}

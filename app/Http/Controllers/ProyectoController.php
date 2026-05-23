@@ -24,18 +24,63 @@ class ProyectoController extends Controller
 
     }
 
+    // public function indexAdm(Request $request){
+
+    //     $categoria = $request->input('categoria');
+    //     $query = Proyecto::query();
+
+    //     if($categoria){
+    //         $query->where('categoria', $categoria);
+    //     }
+
+
+    //     $proyecto = $query->get()->map(function($dato){
+    //         return[
+    //             'id'=>$dato->id,
+    //             'nombre'=>$dato->nombre,
+    //             'localizacion'=>$dato->localizacion,
+    //             'coste'=>$dato->coste,
+    //             'categoria'=>$dato->categoria,
+    //             'imagen'=>$dato->categoria === 'personal' 
+    //                         ? Storage::url('proyectos' . '/' . $dato->imagen)             
+    //                         : Storage::url('proyectos/' . $dato->categoria . '/' . $dato->imagen) ,
+    //         ];
+    //     });
+
+    //     return Inertia::render('ProyectoPersonalAdm',[
+    //         'proyectos'=>$proyecto,
+    //     ]);
+    // }
+
     public function indexAdm(Request $request){
 
         $categoria = $request->input('categoria');
+        $proyecto_id = $request->input('proyecto_id');
+        
         $query = Proyecto::query();
-
+    
         if($categoria){
             $query->where('categoria', $categoria);
         }
-
-
-        $proyecto = $query->get();
-
+    
+        // si viene proyecto_id filtra por ese proyecto
+        if($proyecto_id){
+            $query->where('id', $proyecto_id);
+        }
+    
+        $proyecto = $query->get()->map(function($dato){
+            return[
+                'id'=>$dato->id,
+                'nombre'=>$dato->nombre,
+                'localizacion'=>$dato->localizacion,
+                'coste'=>$dato->coste,
+                'categoria'=>$dato->categoria,
+                'imagen'=>$dato->categoria === 'personal' 
+                            ? Storage::url('proyectos' . '/' . $dato->imagen)             
+                            : Storage::url('proyectos/' . $dato->categoria . '/' . $dato->imagen),
+            ];
+        });
+    
         return Inertia::render('ProyectoPersonalAdm',[
             'proyectos'=>$proyecto,
         ]);
@@ -70,6 +115,7 @@ class ProyectoController extends Controller
                 'certificados' => $img->certificados->map(function($cert){
 
                 return [
+                    'id'=>  $cert->id,
                     'certificado' => Storage::url('certificados/' . $cert->certificado),
                     'fecha_certificado' => Carbon::parse($cert->fecha_certificado)->format('d/m/Y'),
                 ];
@@ -145,6 +191,7 @@ class ProyectoController extends Controller
 
            $actualizar_estado->update([
             'estado'=>'realizado',
+            'proyecto_id' => $id_proyecto->id,
            ]);
             
         }else{

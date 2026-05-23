@@ -24,3 +24,92 @@
     max-width: 800px;
     margin: 0 auto;
 }
+
+/*Movil*/
+
+@media (max-width: 768px) {
+
+    .fechaMaquinaria {
+        padding: 10px;
+    }
+
+    .fechaMaquinaria form {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tablafacturamaquinaria {
+        padding: 0 12px;
+    }
+
+    .tablafacturamaquinaria table {
+        max-width: 100%;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .fechaMaquinaria {
+        padding: 8px;
+    }
+
+    .fechaMaquinaria form {
+        flex-direction: column;
+        width: 100%;
+        gap: 6px;
+    }
+
+    .fechaMaquinaria label {
+        padding: 4px 0;
+        font-size: 0.9rem;
+    }
+
+    .fechaMaquinaria button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .tablafacturamaquinaria {
+        padding: 0 8px;
+    }
+
+    /* Tabla en tarjetas */
+    .tablafacturamaquinaria table thead {
+        display: none;
+    }
+
+    .tablafacturamaquinaria table tbody tr {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .tablafacturamaquinaria table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.9rem;
+    }
+
+    .tablafacturamaquinaria table tbody td:last-child {
+        border-bottom: none;
+    }
+
+    .tablafacturamaquinaria table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-right: 8px;
+        white-space: nowrap;
+    }
+}

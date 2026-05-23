@@ -41,4 +41,12 @@ class CurriculumVitaeController extends Controller
         return redirect()->back();
     }
 
+    public function destroy(CurriculumVitae $id) {
+        
+        if($id){
+            Storage::disk('public')->delete('cvitaes/'.$id->cv);
+        }
+
+        $id->delete();
+    }
 }

@@ -48,3 +48,57 @@ a:hover{
 .proyectos:hover .subProyectos{
     display: flex;
 }
+
+/*Tablet*/
+
+@media (max-width: 768px) {
+
+    .cabeceraHome {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px;
+        justify-content: space-between;
+    }
+
+    .cabeceraHome img {
+        height: 50px;
+    }
+
+    .cabeceraHome a {
+        font-size: 16px;
+    }
+}
+
+/*Movil*/
+
+@media (max-width: 480px) {
+
+    .cabeceraHome {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .cabeceraHome img {
+        height: 40px;
+    }
+
+    .cabeceraHome a {
+        font-size: 15px;
+        width: 100%;
+        padding: 6px 0;
+    }
+
+    .subProyectos {
+        position: static;  
+        display: none;
+        width: 100%;
+        border-radius: 6px;
+        margin-top: 4px;
+    }
+
+    .proyectos:hover .subProyectos {
+        display: flex;
+    }
+}

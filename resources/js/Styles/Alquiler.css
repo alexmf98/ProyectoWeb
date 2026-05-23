@@ -1,4 +1,4 @@
-.contenedorAlquiler{
+/* .contenedorAlquiler{
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -84,4 +84,129 @@
 
 .imagenMaquina button:hover {
     background-color: #e5e7eb;
+} */
+
+.contenedorAlquiler{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+.contenedorAlquiler input{
+    width: 300px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.contenedorAlquiler input:focus{
+    border-color: #185FA5;
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+}
+
+.contenedorAlquiler button{
+    height: 40px;
+    padding: 0 20px;
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.contenedorAlquiler button:hover {
+    background: #0c447c;
+}
+
+.imagenesMaquinaria{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.imagenMaquina{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.2s;
+}
+
+.imagenMaquina:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.imagenMaquina img {
+    height: 140px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.imagenMaquina button {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.imagenMaquinaBoton{
+    display: flex;
+    gap: 10px;
+}
+
+.imagenMaquina button:hover {
+    background-color: #e5e7eb;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .contenedorAlquiler {
+        padding: 12px;
+    }
+
+    .contenedorAlquiler input {
+        width: 100%;
+    }
+
+    .imagenesMaquinaria {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+        margin-top: 8px;
+    }
+
+    .imagenMaquina {
+        padding: 14px;
+        width: 100%;
+    }
+
+    .imagenMaquina img {
+        height: 160px;
+    }
+
+    .imagenMaquinaBoton {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .imagenMaquina button {
+        width: 100%;
+        text-align: center;
+    }
 }

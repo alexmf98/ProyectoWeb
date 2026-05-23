@@ -34,7 +34,7 @@ export default function EditMaquinaria() {
             nuevosErrores.precio = "No puede contener numeros negativos"
         }
 
-        if(!/\.(jpg|jpeg|png)$/i.test(imagen.name)){
+        if(imagen instanceof File && !/\.(jpg|jpeg|png)$/i.test(imagen.name)){
             nuevosErrores.imagen = "El formato permitido es jpg png jpeg"
         }
 
@@ -73,7 +73,11 @@ export default function EditMaquinaria() {
 
         newFormdData.append("nombre", nombre);
         newFormdData.append("precio", precio);
-        newFormdData.append("imagen", imagen);
+        
+        if(imagen instanceof File){
+            newFormdData.append("imagen", imagen);
+        }
+
         newFormdData.append("categoria_id", categoria);
         newFormdData.append("stock", stock);
         newFormdData.append("caracteristicas", caracteristicas);
@@ -86,7 +90,6 @@ export default function EditMaquinaria() {
     }
 
 
-    console.log(errors);
     return (
         <>
           

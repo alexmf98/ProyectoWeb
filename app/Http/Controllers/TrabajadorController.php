@@ -21,10 +21,22 @@ class TrabajadorController extends Controller
 
         $proyectos = Proyecto::all();
         $trabajador = User::where('role', 'trabajador')->get();
+        $nominas = Trabajador::with('user')->get()->map(function($dato){
+            return[
+                'id' => $dato->id,
+                'fecha_nomina' => $dato->fecha_nomina,
+                'nomina' => Storage::url($dato->nomina),
+                'user_id'=>$dato->user_id,
+                'proyecto_id'=>$dato->proyecto_id,
+                'nombre' => $dato->user->name,
+                'apellido' => $dato->user->apellido,
+            ];
+        });
 
         return Inertia::render('TrabajadorAdmin',[
             'proyectos'=>$proyectos,
             'trabajador'=>$trabajador,
+            'nominas' => $nominas,
         ]);
     }
 
@@ -78,7 +90,24 @@ class TrabajadorController extends Controller
      */
     public function update(Request $request, Trabajador $trabajador)
     {
-        //
+        $validate = $request->validate([
+            'fecha_nomina'=>'required',
+            'proyecto_id'=>'required|exists:proyectos,id',
+            'user_id'=>'required|exists:users,id',
+            'nomina'=>'nullable|mimes:pdf',
+        ]);
+
+
+        if($request->hasFile('nomina')){
+
+            Storage::disk('public')->delete($trabajador->nomina);
+            
+            $path = Storage::disk('public')->put('nominas', $request->file('nomina'));
+            $validate['nomina'] = $path;
+        }
+
+        $trabajador->update($validate);
+        
     }
 
     /**
@@ -86,7 +115,9 @@ class TrabajadorController extends Controller
      */
     public function destroy(Trabajador $trabajador)
     {
-        //
+        Storage::disk('public')->delete($trabajador->nomina);
+
+        $trabajador->delete();
     }
 
     public function nomina(Request $request){

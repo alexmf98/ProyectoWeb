@@ -5,6 +5,17 @@ export default function CV(){
 
     const {cv} = usePage().props;
 
+    const handleEliminar = (e, id) =>{
+
+        e.preventDefault();
+
+        let confirmar = confirm("Desea eliminar el curriculum vitae de este usuario");
+
+        if(confirmar){
+            router.delete(`/eliminarcv/${id}`);
+        }
+    }
+
     return(
         <>
             
@@ -18,16 +29,31 @@ export default function CV(){
                             <th>
                                 CVitae
                             </th>
+
+                            <th>
+                                Accion
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                             {
                                 cv.map((dato)=>(
                                     <tr>
-                                        <td>{dato.email}</td>
+                                        <td data-label="Email">{dato.email}</td>
+
+                                        <td data-label="CVitae">
+                                            <a href={dato.cv} download>Descargar</a>
+                                        </td>
 
                                         <td>
-                                            <a href={dato.cv} download>Descargar</a>
+                                            <button
+                                                type="button"
+                                                onClick={(e)=>handleEliminar(e, dato.id)}
+                                            >   
+                                            
+                                                Eliminar
+
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

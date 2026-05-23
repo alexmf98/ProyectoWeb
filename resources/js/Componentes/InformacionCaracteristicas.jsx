@@ -9,7 +9,7 @@ export default function InformacionCaracteristicas() {
     return (
         <>
 
-            <div className="tarjetaImagen">
+            <div className="tarjetaImagenMaquina">
 
                 <img className="imagenMaquinaInformacion" 
                     src={imagen} 

@@ -49,3 +49,32 @@
 .imagenMaquina button:hover {
     background-color: #e5e7eb;
 }
+
+@media (max-width: 900px) {
+
+    .imagenesMaquinaria {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+        margin-top: 8px;
+    }
+
+    .imagenMaquina {
+        padding: 14px;
+        width: 100%;
+    }
+
+    .imagenMaquina img {
+        height: 160px;
+    }
+
+    .imagenMaquinaBoton {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .imagenMaquina button {
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -7,7 +7,8 @@ import "../Styles/Errores.css";
 
 export default function InformacionDisponibilidad() {
     const { user } = useAuth();
-    const { maquina } = usePage().props;
+    // const { maquina } = usePage().props;
+    const { maquina, alquileres, stock } = usePage().props;
 
 
     const [prueba, setPrueba] = useState(false);
@@ -20,6 +21,23 @@ export default function InformacionDisponibilidad() {
     const [precio_maq, setPrecioMaq] = useState(0);
 
     const [errores, setErrores] = useState({});
+
+    const conteoFechas = {};
+    alquileres.forEach(alquiler => {
+        let inicio = new Date(alquiler.fecha_inicio);
+        let fin    = new Date(alquiler.fecha_fin);
+
+        while(inicio <= fin){
+            const clave = inicio.toDateString();
+            conteoFechas[clave] = (conteoFechas[clave] || 0) + 1;
+            inicio.setDate(inicio.getDate() + 1);
+        }
+    });
+
+    const fechaDisponible = (fecha) => {
+        const conteo = conteoFechas[new Date(fecha).toDateString()] || 0;
+        return conteo < stock;
+    }
 
     const validarFechas = () => {
         const nuevosErrores = {};
@@ -103,9 +121,53 @@ export default function InformacionDisponibilidad() {
         handleLimpiar();
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!fecha_inicio || !fecha_fin) {
+    //     if (!fecha_inicio || !fecha_fin) {
+    //         setPrueba(false);
+    //         return;
+    //     }
+    
+    //     const hoy = new Date();
+    //     hoy.setHours(0,0,0,0);
+    
+    //     const fInicio = new Date(fecha_inicio);
+    //     fInicio.setHours(0,0,0,0);
+    
+    //     const fFin = new Date(fecha_fin);
+    //     fFin.setHours(0,0,0,0);
+    
+    //     // Fecha fin menor que inicio
+    //     if (fFin < fInicio) {
+    //         setPrueba(false);
+    //         return;
+    //     }
+    
+    //     // Inicio en pasado
+    //     if (fInicio < hoy) {
+    //         setPrueba(false);
+    //         return;
+    //     }
+    
+    //     // Todo correcto
+    //     setPrueba(true);
+
+    //     const diferencia = Math.floor(
+    //         (fFin - fInicio) / (1000 * 60 * 60 * 24)
+    //     );
+
+    //     const precio_maquina = maquina.precio;
+    
+    //     if (diferencia === 0) {
+    //         setPrecioMaq(precio_maquina);
+    //     } else {
+    //         setPrecioMaq(diferencia * precio_maquina);
+    //     }
+    
+    // }, [fecha_inicio, fecha_fin]);
+
+    useEffect(() => {
+        if(!fecha_inicio || !fecha_fin){
             setPrueba(false);
             return;
         }
@@ -119,32 +181,27 @@ export default function InformacionDisponibilidad() {
         const fFin = new Date(fecha_fin);
         fFin.setHours(0,0,0,0);
     
-        // Fecha fin menor que inicio
-        if (fFin < fInicio) {
+        if(fFin < fInicio || fInicio < hoy){
             setPrueba(false);
             return;
         }
     
-        // Inicio en pasado
-        if (fInicio < hoy) {
-            setPrueba(false);
-            return;
+        // comprueba disponibilidad en todo el rango de fechas
+        let cursor = new Date(fInicio);
+        while(cursor <= fFin){
+            if(!fechaDisponible(cursor)){
+                setPrueba(false);
+                setErrores({ fecha_fin: "No hay stock disponible en las fechas seleccionadas" });
+                return;
+            }
+            cursor.setDate(cursor.getDate() + 1);
         }
     
-        // Todo correcto
+        setErrores({});
         setPrueba(true);
-
-        const diferencia = Math.floor(
-            (fFin - fInicio) / (1000 * 60 * 60 * 24)
-        );
-
-        const precio_maquina = maquina.precio;
     
-        if (diferencia === 0) {
-            setPrecioMaq(precio_maquina);
-        } else {
-            setPrecioMaq(diferencia * precio_maquina);
-        }
+        const diferencia = Math.floor((fFin - fInicio) / (1000*60*60*24));
+        setPrecioMaq(diferencia === 0 ? maquina.precio : diferencia * maquina.precio);
     
     }, [fecha_inicio, fecha_fin]);
     
@@ -209,7 +266,8 @@ export default function InformacionDisponibilidad() {
                     <h2>Disponibilidad</h2>
 
                     <div className="calendario-wrapper">
-                        <Calendario />
+                        {/* <Calendario /> */}
+                        <Calendario conteoFechas={conteoFechas} stock={stock} />
                     </div>
 
                     <div className="tarjetaFormulario2">
@@ -226,7 +284,7 @@ export default function InformacionDisponibilidad() {
                         <input type="date" value={fecha_fin}
                             onChange={(e) => setFechaFin(e.target.value)}
                         />
-
+                        {errores.fecha_fin && <span className="mensajeError">{errores.fecha_fin}</span>}
 
                     {
                         fecha_inicio && fecha_fin &&

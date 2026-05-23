@@ -56,19 +56,19 @@ export default function ProyectosSolicitados(){
                             proyecto.map((dato)=>(
                                 <tr className={ dato.estado === "rechazado" ? "fila-deshabilitada" : ""}>
                                     
-                                    <td>
+                                    <td data-label="Email">
                                         {dato.email}
                                     </td>
 
-                                    <td>
+                                    <td data-label="Tipo">
                                         {dato.tipo}
                                     </td>
 
-                                    <td>
+                                    <td data-label="Estado">
                                         {dato.estado === 'enviado' ? 'aceptado' : dato.estado}
                                     </td>
 
-                                    <td>
+                                    <td data-label="Presupuesto">
                                         {
                                             dato.estado !== 'pendiente' &&
                                                 <a href={dato.presupuesto} download>Descargar</a>
@@ -78,7 +78,7 @@ export default function ProyectosSolicitados(){
                                     {
                                         dato.estado !== "realizado" &&
                                         <>
-                                            <td>
+                                            <td data-label="Aceptar">
                                                 {
                                                     dato.estado !== 'pendiente' &&
                                                         <form onSubmit={handleAceptar}>
@@ -93,7 +93,7 @@ export default function ProyectosSolicitados(){
 
                                             </td>
 
-                                            <td>
+                                            <td data-label="Cancelar">
                                                 <form onSubmit={handleCancelar}>
 
                                                     <button

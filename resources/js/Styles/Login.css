@@ -151,3 +151,20 @@
     border: 1px solid #e74c3c;
     outline-color: #e74c3c;
 }
+
+/*Movil*/
+
+@media (max-width: 480px) {
+    .tarjetaFormulario {
+        padding: 1.5rem 1.5rem; 
+        border-radius: 12px;
+    }
+    
+    .submenus {
+        position: fixed; 
+        top: 60px;
+        right: 15px;
+        left: 15px; 
+        min-width: auto;
+    }
+}

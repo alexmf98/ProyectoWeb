@@ -19,44 +19,49 @@ export default function AñadirMaquinaria(){
 
     const {Categoria, cat} = usePage().props;
 
-    const validar = () =>{
-        
-        const nuevosErrores = {}
-
-        if(!nombre.trim()){
-            nuevosErrores.nombre = "El nombre de la maquina es obligatorio"
-        }else if(!/^[a-zA-Z]+[0-9]*$/.test(nombre)){
-            nuevosErrores.nombre = "El nombre no puede contener caracteres"
-        }
-
+    const validarCategoria = () => {
+        const nuevosErrores = {};
+    
         if(!categoria.trim()){
-            nuevosErrores.categoria = "La categoria no puede estar vacia"
-        }else if(!/^[a-zA-Z]+$/.test(categoria)){
-            nuevosErrores.categoria = "La categoria no puede contener caracteres ni numeros"
+            nuevosErrores.categoria = "La categoria no puede estar vacia";
+        }else if(!/^[a-zA-Z\s]+$/.test(categoria)){
+            nuevosErrores.categoria = "La categoria no puede contener caracteres ni numeros";
         }
-
+    
+        return nuevosErrores;
+    }
+    
+    const validarMaquina = () => {
+        const nuevosErrores = {};
+    
+        if(!nombre.trim()){
+            nuevosErrores.nombre = "El nombre de la maquina es obligatorio";
+        }else if(!/^[a-zA-Z]+[0-9]*$/.test(nombre)){
+            nuevosErrores.nombre = "El nombre no puede contener caracteres";
+        }
+    
         if(precio <= 0){
-            nuevosErrores.precio = "El precio no puede ser negativo ni 0"
+            nuevosErrores.precio = "El precio no puede ser negativo ni 0";
         }
-
+    
         if(stock <= 0){
-            nuevosErrores.stock = "El stock no puede ser negativo ni 0"
+            nuevosErrores.stock = "El stock no puede ser negativo ni 0";
         }
-
+    
         if(!caracteristicas.trim()){
-            nuevosErrores.caracteristicas = "Las caracteristicas son obligatorias"
+            nuevosErrores.caracteristicas = "Las caracteristicas son obligatorias";
         }
-
+    
         if(!imagen){
-            nuevosErrores.imagen = "Debes de seleccionar una imagen"
+            nuevosErrores.imagen = "Debes de seleccionar una imagen";
         }else if(!/\.(jpg|jpeg|png)$/i.test(imagen.name)){
-            nuevosErrores.imagen = "El formato permitido es jpg png jpeg"
+            nuevosErrores.imagen = "El formato permitido es jpg png jpeg";
         }
-
+    
         if(categoriaid === null){
-            nuevosErrores.categoriaid = "Debes de eleguir una categoria"
+            nuevosErrores.categoriaid = "Debes de elegir una categoria";
         }
-
+    
         return nuevosErrores;
     }
 
@@ -82,7 +87,7 @@ export default function AñadirMaquinaria(){
     const handleEnviar = (e)=>{
         e.preventDefault();
 
-        const erroresValidacion = validar();
+        const erroresValidacion = validarMaquina();
 
         if(Object.keys(erroresValidacion).length > 0){
             setErrores(erroresValidacion);
@@ -113,7 +118,7 @@ export default function AñadirMaquinaria(){
 
         e.preventDefault();
 
-        const erroresValidacion = validar();
+        const erroresValidacion = validarCategoria();
 
         if(Object.keys(erroresValidacion).length > 0){
             setErrores(erroresValidacion);

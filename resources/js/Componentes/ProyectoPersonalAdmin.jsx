@@ -24,7 +24,7 @@ export default function ProyectoPersonalAdmin() {
 
     const validarImagenes = () => {
         const nuevosErrores = {};
-    
+        
         if(imagenes.length === 0){
             nuevosErrores.imagenes = "Debes de seleccionar al menos una imagen";
         } else {
@@ -45,7 +45,7 @@ export default function ProyectoPersonalAdmin() {
         
         if(!nombre.trim()){
             nuevosErrores.nombre = "El nombre no puede estar en blanco"
-        }else if(!/^[a-zA-Z]+$/.test(nombre)){
+        }else if(!/^[a-zA-Z\s]+$/.test(nombre)){
             nuevosErrores.nombre = "El nombre no puede contener caracteres ni numeros"
         }
 
@@ -60,13 +60,10 @@ export default function ProyectoPersonalAdmin() {
         if(!Categoria.trim()){
             nuevosErrores.Categoria = "Debe de eleguir una categoria"
         }
-
-        if(Imagen && typeof Imagen === 'string'){
-             nuevosErrores.Imagen = "Debe de elegir una imagen"
-        }else if(!/\.(jpg|jpeg|png)$/i.test(Imagen.name)){
+        
+        if(Imagen instanceof File && !/\.(jpg|jpeg|png)$/i.test(Imagen.name)){
             nuevosErrores.Imagen = "Formato de imagen valido jpg png jpeg"
         }
-
         return nuevosErrores;
     }
 
@@ -159,16 +156,24 @@ export default function ProyectoPersonalAdmin() {
 
         setErrores({});
 
-        router.put(`editproyecto/${id}`,{
-            nombre: nombre,
-            coste: coste,
-            localizacion: localizacion,
-            categoria: Categoria,
-            imagen: Imagen,
+        const formData = new FormData();
+        formData.append("nombre", nombre);
+        formData.append("coste", coste);
+        formData.append("localizacion", localizacion);
+        formData.append("categoria", Categoria);
+
+        // solo añade imagen si es un archivo nuevo
+        if(Imagen instanceof File){
+            formData.append("imagen", Imagen);
+        }
+
+        router.put(`editproyecto/${id}`,formData, {
+            onSuccess: () => handleLimpiarCampos()
         });
 
-        handleLimpiarCampos();
     }
+
+    console.log(proyectos)
     
     return (
         <>
@@ -271,7 +276,9 @@ export default function ProyectoPersonalAdmin() {
                 {
                     proyectos.map((dato) => (
                         <div className="tarjeta-personal-card" key={dato.id}>
-                            
+                          
+                            <img src={dato.imagen} alt="No disponible" className="imagenTarjeta" />
+
                             <div className="tarjeta-personal-fila">
                                 <label>Nombre</label>
                                 <p>{dato.nombre}</p>

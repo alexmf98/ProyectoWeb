@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistorialProyecto;
 use App\Models\ProyectoSolicitado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,13 +39,34 @@ class ProyectoSolicitadoController extends Controller
 
     public function indexAdmin(){
 
-        $pSolicitado = ProyectoSolicitado::with('user')->get();
-
+        // $pSolicitado = ProyectoSolicitado::with('user')->get();
+        $pSolicitado = ProyectoSolicitado::with('user')->get()->map(function($dato){
+            return [
+                'id' => $dato->id,
+                'email' => $dato->email,
+                'tipo' => $dato->tipo,
+                'estado' => $dato->estado,
+                'proyecto_id' => $dato->proyecto_id,
+                'presupuesto_url' => $dato->presupuesto_url,
+                'user' => $dato->user,
+            ];
+        });
         $proyecto_personal = ProyectoSolicitado::with('user')->where('estado', '=', 'aceptado')->get();
+
+        // $proyectos_personales = HistorialProyecto::with('proyecto')
+        //                     ->get()
+        //                     ->map(function($dato){
+        //                         return [
+        //                             'id' => $dato->proyecto->id,
+        //                             'nombre' => $dato->proyecto->nombre,
+        //                             'user_id' => $dato->user_id,
+        //                         ];
+        //                     });
 
         return Inertia::render('ProyectoSolicitadoAdm',[
             'proyectoSolicitado' => $pSolicitado,
             'usuario_aceptado' => $proyecto_personal,
+            // 'proyectos'=>$proyectos_personales,
         ]);
     }
 

@@ -152,13 +152,22 @@
         padding: 24px 16px;
     }
 
-    .historial-card {
+    .historial-card,
+    .historial-card_cancelado {
         grid-template-columns: 1fr;
     }
 
     .historial-card-imagen {
         width: 100%;
-        height: 180px;
+        height: 200px;
+        background: #f9fafb;   
+    }
+
+    .historial-card-imagen img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;   
+        padding: 12px;
     }
 
     .historial-fechas {

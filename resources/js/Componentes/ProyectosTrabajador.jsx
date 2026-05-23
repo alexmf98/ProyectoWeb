@@ -22,7 +22,7 @@ export default function ProyectosTrabajador(){
                         {
                             proyectos.map((dato)=>(
                                 <tr>
-                                    <td>{dato.proyecto.nombre}</td>
+                                    <td data-label="Proyecto participante">{dato.proyecto.nombre}</td>
                                 </tr>
                             ))
                         }

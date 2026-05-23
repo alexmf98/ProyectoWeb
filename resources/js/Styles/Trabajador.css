@@ -1,6 +1,13 @@
+/* .tarjetaTrabajador{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+} */
 .tarjetaTrabajador{
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); /* 80px es la altura aprox de la cabecera */
 }
 
 .tarjetaTrabajador form{
@@ -32,4 +39,114 @@
 .tarjetaTrabajador select{
     padding: 10px;
     
+}
+
+.btnNominaMandada .btnVerNominas{
+    padding: 10px 20px;
+    background: white;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    background-color: #185FA5;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.btnNominaMandada .btnOcultarNominas{
+    padding: 10px 20px;
+    background: white;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    background-color: #185FA5;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.tablaNominas {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 2rem 0;
+}
+
+.tablaNominas table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tablaNominas thead {
+    background-color: #185FA5;
+}
+
+.tablaNominas thead th {
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tablaNominas tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+
+.tablaNominas tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tablaNominas tbody tr:hover {
+    background-color: #eaf2fc;
+}
+
+.tablaNominas tbody td {
+    padding: 12px 16px;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.tablaNominas tbody td a {
+    color: #185FA5;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: 1.5px solid #185FA5;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    display: inline-block;
+}
+
+.tablaNominas tbody td a:hover {
+    background-color: #eaf2fc;
+}
+
+.tablaNominas .btnEditarNomina{
+    background-color: white;
+    color: #185FA5;
+    border-radius: 8px;
+    font-weight: 600;
+    border-color: #185FA5;
+    padding: 5px 20px;
+    border-style: solid;
+    border: 0.5px solid ;
+}
+
+.tablaNominas .btnEliminarNomina{
+    background-color: white;
+    color: #D42B25;
+    border-radius: 8px;
+    font-weight: 600;
+    border-color: #FA001D;
+    padding: 5px 20px;
+    border-style: solid;
+    border: 0.5px solid ;
 }

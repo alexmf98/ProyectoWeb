@@ -7,8 +7,7 @@ export default function ProyectoSolicitadoAdmin() {
 
     const { proyectoSolicitado } = usePage().props;
     // const {usuarios } = usePage().props;
-
-
+    
     const [ver, setVer] = useState(false);
     const [id, setId] = useState(null);
     const [file, setFile] = useState("");
@@ -109,7 +108,7 @@ export default function ProyectoSolicitadoAdmin() {
 
         handlelimpiarCampos();
     }
-
+    
     return (
         <>
             <div className="tabla-container">
@@ -123,15 +122,12 @@ export default function ProyectoSolicitadoAdmin() {
                                 Tipo de obra
                             </th>
                             <th>
-                                Presupuesto
-                            </th>
-                            <th>
                                 Estado
                             </th>
                             <th>
                                 Usuario
                             </th>
-                            <th colSpan={2}>
+                            <th colSpan={4}>
                                 Accion
                             </th>
                         </tr>
@@ -142,23 +138,29 @@ export default function ProyectoSolicitadoAdmin() {
 
                                 <tr>
                                     
-                                    <td>
+                                    <td data-label="Email">
                                         {dato.email}
                                     </td>
-                                    <td>
+                                    <td data-label="Tipo">
                                         {dato.tipo}
                                     </td>
-                                    <td>
-                                        <a href={dato.presupuesto_url} download>Descargar</a>
-                                    </td>
-                                    <td>
+                                    <td data-label="Estado">
                                         {dato.estado === 'enviado' ? dato.estado : dato.estado}
                                     </td>
-                                    <td>
+                                    <td data-label="Nombre Apellido">
                                         {dato.user.name + " " + dato.user.apellido}
                                     </td>
+
+                                    <td data-label="Ver proyecto">
+                                        {
+                                            dato.estado === 'realizado' && dato.proyecto_id &&
+                                            <button onClick={() => router.get(`/proyectoPersonalAdm`, { proyecto_id: dato.proyecto_id })}>
+                                                Ver proyecto
+                                            </button>
+                                        }
+                                    </td>
                                     
-                                    <td>
+                                    <td data-label="Añadir">
 
                                         {
                                             dato.estado === 'aceptado' &&
@@ -176,9 +178,23 @@ export default function ProyectoSolicitadoAdmin() {
                                                 </button>
                                         }
 
+
+                                    </td>
+                                    <td data-label="Descarga">
+                                        {
+                                            
+                                            dato.presupuesto_url  &&
+                                                <a 
+                                                    className="btnDescargar"
+                                                    href={dato.presupuesto_url} 
+                                                    download>
+                                                        Descargar
+                                                </a>
+                                            
+                                        }
                                     </td>
                                     
-                                    <td>
+                                    <td data-label="Cancelar">
                                         <form onSubmit={handleCancelar}>
 
                                             {

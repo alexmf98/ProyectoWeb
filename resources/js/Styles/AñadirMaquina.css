@@ -195,3 +195,117 @@
 .tablaCategoria tbody td button:hover {
     background-color: #0f4278;
 }
+
+/*Movil*/
+
+@media (max-width: 768px) {
+
+    .tarjetaAñadirMaquina {
+        padding: 1rem;
+        flex-direction: column;
+    }
+
+    .tarjetaAñadirMaquina form {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
+    .botonAñadirCategoria {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .botonAñadirCategoria button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .tablaCategoria {
+        padding: 0.5rem;
+    }
+
+    .tablaCategoria table {
+        max-width: 100%;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .tarjetaAñadirMaquina {
+        padding: 0.5rem;
+    }
+
+    .tarjetaAñadirMaquina form {
+        padding: 1rem;
+        gap: 4px;
+    }
+
+    .botonAñadirMaquina {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .botonAñadirMaquina button:first-child,
+    .botonAñadirMaquina button:last-child {
+        width: 100%;
+        text-align: center;
+    }
+
+    .botonAñadirCategoria {
+        padding: 0.5rem;
+        width: 100%;
+    }
+
+    .botonAñadirCategoria button {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Tabla categoría en tarjetas */
+    .tablaCategoria {
+        padding: 0.5rem;
+    }
+
+    .tablaCategoria thead {
+        display: none;
+    }
+
+    .tablaCategoria tbody tr {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .tablaCategoria tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.9rem;
+    }
+
+    .tablaCategoria tbody td:last-child {
+        border-bottom: none;
+    }
+
+    .tablaCategoria tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-right: 8px;
+    }
+
+    .tablaCategoria tbody td button {
+        width: 100%;
+        padding: 8px;
+    }
+}

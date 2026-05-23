@@ -124,9 +124,12 @@ Route::middleware('auth')->group(function(){
     Route::get('/verimagenes/{proyecto}', [ProyectoController::class, 'verImagenes']);
     Route::delete('/eliminarImagen/{proyectoImagen}', [ProyectoController::class, 'eliminarImagen']);
     Route::put('/editarimagen/{imagen}', [ProyectoController::class, 'editImagen']);
-    Route::post('/crearcertificado', [CertificadoController::class, 'store']);
-
     Route::put('/editproyecto/{proyecto}', [ProyectoController::class, 'update']);
+    
+    Route::post('/crearcertificado', [CertificadoController::class, 'store']);
+    Route::put('/editarcertificado/{id}', [CertificadoController::class, 'update']);
+    Route::delete('/eliminarcertificado/{id}', [CertificadoController::class, 'destroy']);
+
 
     Route::get('/proyectosSolicitados', [ProyectoSolicitadoController::class, 'indexAdmin']);
     Route::put('/proyectosSolicitados/{proyectoSolicitado}', [ProyectoSolicitadoController::class, 'update']);
@@ -138,11 +141,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/facturamaquinaria', [FacturacionMaquinariaController::class, 'index']);
 
     Route::get('/edicion', [EdicionController::class, 'index']);
-   
 
     Route::put('/mostrarimagen/{proyecto}', [EdicionController::class, 'show_imagen']);
-
-    Route::put('editarmaquina/{maquinaria}', [MaquinariaController::class, 'update']);
 
     Route::post('/empresacolaboradora', [EdicionController::class, 'empresa']);
     Route::delete('/empresacolaboradora/{empresa}', [EdicionController::class, 'eliminar']);
@@ -152,22 +152,31 @@ Route::middleware('auth')->group(function(){
     Route::put('/informacionempresa/{empresa}', [EdicionController::class, 'update']);
 
     Route::delete('/informacionempresa/{empresa}', [EdicionController::class, 'destroy']);
-
+    
+    
+    
+    
     Route::post('/categorias', [CategoriaController::class, 'store']);
     Route::put('/categoria/{categoria}', [CategoriaController::class, 'update']);
+
+    Route::put('editarmaquina/{maquinaria}', [MaquinariaController::class, 'update']);
 
     Route::get('/maquinaria', [MaquinariaController::class, 'ocultar']);
     Route::put('/ocultarmaquina/{maquinaria}', [MaquinariaController::class, 'updateocultar']);
 
     Route::get('/cv', [CurriculumVitaeController::class, 'index']);
     Route::post('/mandarcv', [CurriculumVitaeController::class, 'store']);
-    
+    Route::delete('/eliminarcv/{id}', [CurriculumVitaeController::class, 'destroy']);
+
+    Route::put('/editnomina/{trabajador}', [TrabajadorController::class,'update']);
+    Route::delete('/eliminarnomina/{trabajador}', [TrabajadorController::class, 'destroy']);
 
     //Trabajador
     Route::get('/trabajador', [TrabajadorController::class, 'index']);
     Route::post('/trabajador', [TrabajadorController::class, 'store']);
 
     Route::get('/nomina', [TrabajadorController::class, 'nomina']);
+    
 
     Route::get('/proyectotrabajador', [TrabajadorController::class, 'proyectos']);
 });

@@ -12,6 +12,7 @@ class ProyectoSolicitado extends Model
         'presupuesto',
         'estado',
         'user_id',
+        'proyecto_id',
     ];
 
     protected $appends = ['presupuesto_url'];

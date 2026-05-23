@@ -193,3 +193,94 @@
     overflow: hidden; 
     height: 150px;  
 }
+
+/* tablet*/
+
+   @media (max-width: 768px) {
+
+    .historiaEmpresa {
+        height: 40vh;
+    }
+
+    .overlayHistoria {
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    .proyectosRealizados {
+        height: auto;
+        padding: 20px;
+    }
+
+    .imagenesProyectos {
+        grid-template-columns: 1fr 1fr;
+        height: auto;
+    }
+
+    .imagenesProyectos img {
+        height: 180px;
+    }
+
+    .fotosColaboradoras {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .slider img {
+        height: 160px;
+        margin: 0 16px;
+    }
+
+    .imagen1Colaboradora,
+    .imagen2Colaboradora,
+    .imagen3Colaboradora {
+        height: 100px;
+    }
+}
+
+/* movil */
+
+@media (max-width: 480px) {
+
+    .tituloEmpresa {
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .historiaEmpresa {
+        height: 35vh;
+    }
+
+    .overlayHistoria {
+        padding: 16px;
+        font-size: 13px;
+    }
+
+    .imagenesProyectos {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .imagenesProyectos img {
+        height: 200px;
+    }
+
+    .fotosColaboradoras {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    .fotosColaboradoras img {
+        height: 70px;
+    }
+
+    .slider img {
+        height: 100px;
+        margin: 0 10px;
+    }
+
+    .imagen1Colaboradora,
+    .imagen2Colaboradora,
+    .imagen3Colaboradora {
+        height: 80px;
+    }
+}

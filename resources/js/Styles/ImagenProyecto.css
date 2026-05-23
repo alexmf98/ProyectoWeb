@@ -213,7 +213,7 @@
 
 .tablaCertificados {
     width: 100%;
-    max-width: 380px;
+    max-width: 500px;
     overflow-x: auto;
     margin: 0 auto;
 }
@@ -279,10 +279,24 @@
 }
 
 /* Tarjetas */
-.tarjetaImagen {
-    width: 280px;
-    height: 200px;
+.galeria-imagenes .tarjetaImagen {
+    width: 450px;
+    height: 320px;
     perspective: 1000px;
+    position: relative;
+    top: auto;
+}
+
+.galeria-imagenes .tarjetaImagen-back {
+    overflow: hidden;  
+}
+
+.galeria-imagenes .tarjetaImagen-back p {
+    overflow-y: auto;      
+    max-height: 120px;     
+    width: 100%;
+    word-break: break-word;
+    font-size: 0.8rem;
 }
 
 .tarjetaImagen-inner {
@@ -349,6 +363,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
     overflow-y: auto;
+    
 }
 
 .tarjetaImagen-back p {

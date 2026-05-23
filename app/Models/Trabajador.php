@@ -18,4 +18,8 @@ class Trabajador extends Model
     public function proyecto(){
         return $this->belongsTo(Proyecto::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

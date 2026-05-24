@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -41,7 +42,9 @@ class HistorialMaquinariaController extends Controller
     }
 
     public function alquileres(){
-
+        
+        Gate::authorize('view', User::class);
+        
         $alquileres = HistorialMaquinaria::with('maquinaria', 'user')->get();
 
         return Inertia::render('MaquinariaAlquiladaAdm',[

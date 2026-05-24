@@ -50,7 +50,7 @@ Route::get('/personal', function(){
 
 Route::get('/login', function(){
     return Inertia::render('Login');
-});
+})->name('login');
 
 Route::post('/login', [UserController::class, 'login']);
 

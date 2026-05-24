@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
@@ -53,6 +54,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view', User::class);
+
         return Inertia::render('EditarUsuario',[
             
             'usuarios'=>User::all()
@@ -148,6 +151,9 @@ class UserController extends Controller
 
     public function updateAdmin(Request $request, $id)
     {
+        
+        Gate::authorize('update', User::class);
+
         $user = User::findOrFail($id);
 
         $validated = $request->validate([

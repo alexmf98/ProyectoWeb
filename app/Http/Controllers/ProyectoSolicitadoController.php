@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\HistorialProyecto;
 use App\Models\ProyectoSolicitado;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -38,7 +40,9 @@ class ProyectoSolicitadoController extends Controller
     }
 
     public function indexAdmin(){
-
+        
+        Gate::authorize('view', User::class);
+        
         // $pSolicitado = ProyectoSolicitado::with('user')->get();
         $pSolicitado = ProyectoSolicitado::with('user')->get()->map(function($dato){
             return [

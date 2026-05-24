@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -18,7 +19,8 @@ class TrabajadorController extends Controller
      */
     public function index()
     {
-
+        Gate::authorize('view', User::class);
+        
         $proyectos = Proyecto::all();
         $trabajador = User::where('role', 'trabajador')->get();
         $nominas = Trabajador::with('user')->get()->map(function($dato){
@@ -122,6 +124,8 @@ class TrabajadorController extends Controller
 
     public function nomina(Request $request){
 
+        Gate::authorize('nomina', Trabajador::class);
+
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
 
@@ -147,8 +151,20 @@ class TrabajadorController extends Controller
 
     public function proyectos(){
 
+        Gate::authorize('proyectos', Trabajador::class);
+
         // $proyectos = Trabajador::where('user_id', Auth::user()->id)->get();
-        $proyectos = Trabajador::with('proyecto')->get()->map(function($dato){
+        // $proyectos = Trabajador::with('proyecto')->get()->map(function($dato){
+        //     return[
+        //         'proyecto'=>[
+        //             'nombre'=>$dato->proyecto->nombre,
+        //         ]
+        //     ];
+        // });
+        $proyectos = Trabajador::with('proyecto')
+        ->where('user_id', Auth::user()->id)
+        ->get()
+        ->map(function($dato){
             return[
                 'proyecto'=>[
                     'nombre'=>$dato->proyecto->nombre,

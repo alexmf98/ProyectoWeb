@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\FacturacionProyecto;
 use App\Models\Proyecto;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -17,6 +19,8 @@ class FacturacionProyectoController extends Controller
     public function index(Request $request)
     {
 
+        Gate::authorize('view', User::class);
+        
         $proyectos = Proyecto::whereDoesntHave('facturas')->get();
 
         $fecha_inicio = $request->input('fecha_inicio');

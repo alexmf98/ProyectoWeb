@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\CurriculumVitae;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CurriculumVitaeController extends Controller
 {
     public function index(){
+
+        Gate::authorize('view', User::class);
 
         $cv = CurriculumVitae::all()->map(function($dato){
             return [

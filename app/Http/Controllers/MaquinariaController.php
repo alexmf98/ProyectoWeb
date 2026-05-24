@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\HistorialMaquinaria;
 use App\Models\Maquinaria;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -47,6 +49,8 @@ class MaquinariaController extends Controller
     }
 
     public function añadirMaquinaria(){
+        
+        Gate::authorize('view', User::class);
 
         $categoria = Categoria::where('is_active', true)->get();
         $c = Categoria::all();
@@ -140,6 +144,9 @@ class MaquinariaController extends Controller
     }
 
     public function detalleMaquina(Maquinaria $maquinaria){
+
+        Gate::authorize('view', User::class);
+
         $categorias = Categoria::all();
         return Inertia::render('EditarMaquina',[
             'maquina'=>$maquinaria,
@@ -187,6 +194,8 @@ class MaquinariaController extends Controller
     }
 
     public function ocultar(){
+
+        Gate::authorize('view', User::class);
 
         $maquinas = Maquinaria::all()->map(function ($dato) {
             return [

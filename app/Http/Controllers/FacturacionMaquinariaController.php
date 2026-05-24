@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\FacturacionMaquinaria;
 use App\Models\HistorialMaquinaria;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class FacturacionMaquinariaController extends Controller
@@ -16,6 +18,7 @@ class FacturacionMaquinariaController extends Controller
     public function index(Request $request)
     {
 
+        Gate::authorize('view', User::class);
         // $historial = HistorialMaquinaria::with('facturas')
         //                                     ->where('is_cancelled', false)
         //                                     ->get();

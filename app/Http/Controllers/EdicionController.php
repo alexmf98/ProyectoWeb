@@ -6,12 +6,15 @@ use App\Models\EmpresaColaboradora;
 use App\Models\InformacionEmpresa;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class EdicionController extends Controller
 {
     public function index(){
+
+        Gate::authorize('edicion');
 
         $proyecto = Proyecto::where('categoria', '!=', 'personal')->get();
 

@@ -9,6 +9,7 @@ use App\Models\ProyectoSolicitado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +20,8 @@ class ProyectoController extends Controller
      */
     public function index()
     {
-
+        Gate::authorize('view', User::class);
+        
         return Inertia::render('ProyectoAdmin');
 
     }
@@ -53,6 +55,8 @@ class ProyectoController extends Controller
     // }
 
     public function indexAdm(Request $request){
+
+        Gate::authorize('view', User::class);
 
         $categoria = $request->input('categoria');
         $proyecto_id = $request->input('proyecto_id');

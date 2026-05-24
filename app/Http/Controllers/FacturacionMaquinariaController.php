@@ -30,7 +30,7 @@ class FacturacionMaquinariaController extends Controller
         }
 
 
-        $historial = $query->with('maquinaria')
+        $historial = $query->with(['maquinaria','user'])
                                         ->where('is_cancelled', false)
                                         ->get()
                                         ->map(function($dato){
@@ -42,6 +42,10 @@ class FacturacionMaquinariaController extends Controller
                                                 'maquinaria'=>[
                                                     'id'=>$dato->maquinaria->id,
                                                     'nombre'=>$dato->maquinaria->nombre,
+                                                ],
+                                                'user'=>[
+                                                    'name'=>$dato->user->name,
+                                                    'apellido'=>$dato->user->apellido,
                                                 ]
                                             ];
                                         });

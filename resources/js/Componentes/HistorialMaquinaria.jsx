@@ -20,6 +20,24 @@ export default function HistorialMaquinaria(){
             is_cancelled: true,
         });
     }
+
+    const editarFecha = (fecha)=>{
+        const f = new Date(fecha);
+
+        const dia = f.getDate();
+        const mes = f.getMonth() + 1;
+        const año = f.getFullYear();
+
+        return dia + "-" + mes + "-" + año
+    }
+
+    const esFechaPasada = (fecha) => {
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const fechaFin = new Date(fecha);
+        fechaFin.setHours(0, 0, 0, 0);
+        return fechaFin < hoy;
+    }
    
     return(
         <div className="historial-container">
@@ -39,12 +57,12 @@ export default function HistorialMaquinaria(){
                             <div className="historial-fechas">
                                 <div className="historial-fecha">
                                     <span className="historial-fecha-label">Fecha inicio</span>
-                                    <span className="historial-fecha-valor">{dato.fecha_inicio}</span>
+                                    <span className="historial-fecha-valor">{editarFecha(dato.fecha_inicio)}</span>
                                 </div>
                                 <div className="historial-fecha-separador">→</div>
                                 <div className="historial-fecha">
                                     <span className="historial-fecha-label">Fecha fin</span>
-                                    <span className="historial-fecha-valor">{dato.fecha_fin}</span>
+                                    <span className="historial-fecha-valor">{editarFecha(dato.fecha_fin)}</span>
                                 </div>
                             </div>
 
@@ -56,7 +74,11 @@ export default function HistorialMaquinaria(){
 
                                 <div>
                                     <form onSubmit={handleCancelar}>
-                                        <button onClick={()=>botonCancelar(dato.id)}>
+                                        <button
+                                            className="btnCancelarAlquiler" 
+                                            onClick={()=>botonCancelar(dato.id)}
+                                            disabled={esFechaPasada(dato.fecha_fin) || dato.is_cancelled}
+                                            >
                                             Cancelar
                                         </button>
 

@@ -146,6 +146,25 @@
     border-radius: 20px;
 }
 
+.historial-grid .btnCancelarAlquiler{
+    background-color: #9C9A9A;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.historial-grid .btnCancelarAlquiler:hover{
+    background-color: #94A4A0;
+}
+
+.historial-grid .btnCancelarAlquiler:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
     .historial-container {

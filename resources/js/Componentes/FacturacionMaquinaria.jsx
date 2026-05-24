@@ -57,6 +57,7 @@ export default function FacturacionMaquinaria() {
     const handleLimpiarCampos = () =>{
         router.get('/facturamaquinaria', {}, {replace: true})
     }
+
     return (
         <>
             <div className="fechaMaquinaria">
@@ -91,6 +92,7 @@ export default function FacturacionMaquinaria() {
                             <th>Nombre maquina</th>
                             <th>Coste</th>
                             <th>Fecha Alquiler</th>
+                            <th>Cliente</th>
                         </tr>
                     </thead>
 
@@ -104,7 +106,10 @@ export default function FacturacionMaquinaria() {
                                     <td data-label="Coste">{dato.coste} €</td>
 
                                     <td data-label="Fecha">
-                                        {dato.fecha_inicio} / {dato.fecha_fin}
+                                        {dato.fecha_inicio} - {dato.fecha_fin}
+                                    </td>
+                                    <td>
+                                        {dato.user.name} {dato.user.apellido}
                                     </td>
                                 </tr>
                             ))

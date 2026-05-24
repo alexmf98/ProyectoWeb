@@ -209,7 +209,64 @@ table tbody tr:last-child td {
    
 }
 
+.filtrosProyectoSolicitado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 15px;
+    margin: 15px auto;
+    max-width: 800px;
+    background-color: #f9f8f7;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+}
+
+.filtrosProyectoSolicitado input,
+.filtrosProyectoSolicitado select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    color: #6E6363;
+    font-weight: 600;
+    background-color: white;
+    outline: none;
+}
+
+.filtrosProyectoSolicitado input:focus,
+.filtrosProyectoSolicitado select:focus {
+    border: 2px solid #6E6363;
+}
+
+.filtrosProyectoSolicitado button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    background-color: white;
+    color: #6E6363;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filtrosProyectoSolicitado button:hover {
+    background-color: #C4C1BE;
+    border: 2px solid transparent;
+}
+
 /*Movil*/
+
+@media (max-width: 480px) {
+    .filtrosProyectoSolicitado {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtrosProyectoSolicitado input,
+    .filtrosProyectoSolicitado select,
+    .filtrosProyectoSolicitado button {
+        width: 100%;
+    }
+}
 
 @media (max-width: 768px) {
 

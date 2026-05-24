@@ -70,6 +70,8 @@ Route::get('informacion/{maquinaria}', [MaquinariaController::class, 'show']);
 
 Route::get('/home', [EdicionController::class, 'mostrarImagen'])->name('home');
 
+Route::post('/mandarcv', [CurriculumVitaeController::class, 'store']);
+
 Route::middleware('auth')->group(function(){
 
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
@@ -165,7 +167,7 @@ Route::middleware('auth')->group(function(){
     Route::put('/ocultarmaquina/{maquinaria}', [MaquinariaController::class, 'updateocultar']);
 
     Route::get('/cv', [CurriculumVitaeController::class, 'index']);
-    Route::post('/mandarcv', [CurriculumVitaeController::class, 'store']);
+    
     Route::delete('/eliminarcv/{id}', [CurriculumVitaeController::class, 'destroy']);
 
     Route::put('/editnomina/{trabajador}', [TrabajadorController::class,'update']);

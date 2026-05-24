@@ -1,13 +1,13 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/ProyectoSolicitado.css";
 import "../Styles/Errores.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function ProyectoSolicitadoAdmin() {
 
     const { proyectoSolicitado } = usePage().props;
     // const {usuarios } = usePage().props;
-    
+
     const [ver, setVer] = useState(false);
     const [id, setId] = useState(null);
     const [file, setFile] = useState("");
@@ -18,22 +18,38 @@ export default function ProyectoSolicitadoAdmin() {
     const [localizacion, setLocalizacion] = useState("");
     const [imagen, setImagen] = useState("");
     const [errores, setErrores] = useState({});
+    const [filtroNombre, setFiltroNombre] = useState("");
+    const [filtroEstado, setFiltroEstado] = useState("");
+
+    const proyectosFiltrados = useMemo(() => {
+        return proyectoSolicitado.filter((dato) => {
+            const nombreCompleto = `${dato.user.name} ${dato.user.apellido}`.toLowerCase();
+            const coincideNombre = filtroNombre === "" || nombreCompleto.includes(filtroNombre.toLowerCase());
+            const coincideEstado = filtroEstado === "" || dato.estado === filtroEstado;
+            return coincideNombre && coincideEstado;
+        });
+    }, [proyectoSolicitado, filtroNombre, filtroEstado]);
+
+    const handleLimpiarFiltros = () => {
+        setFiltroNombre("");
+        setFiltroEstado("");
+    };
 
     const [nombreUsuario, setNombreUsuario] = useState("");
 
     const validarPresupuesto = () => {
         const nuevosErrores = {};
-    
-        if(!file){
+
+        if (!file) {
             nuevosErrores.file = "Debe seleccionar un archivo";
-        }else if(!/\.(pdf)$/i.test(file.name)){
+        } else if (!/\.(pdf)$/i.test(file.name)) {
             nuevosErrores.file = "Solo se admite formato pdf";
         }
-    
+
         return nuevosErrores;
     }
 
-    const handlelimpiarCampos = () =>{
+    const handlelimpiarCampos = () => {
         setNombre("");
         setCoste(0);
         setLocalizacion("");
@@ -49,7 +65,7 @@ export default function ProyectoSolicitadoAdmin() {
         setId(id);
     }
 
-    const handleAceptarProyecto = (nombreusuario, id)=>{
+    const handleAceptarProyecto = (nombreusuario, id) => {
         setVerProyecto(true);
         setNombreUsuario(nombreusuario)
         setUserId(id);
@@ -66,7 +82,7 @@ export default function ProyectoSolicitadoAdmin() {
 
         const erroresValidacion = validarPresupuesto();
 
-        if(Object.keys(erroresValidacion).length > 0){
+        if (Object.keys(erroresValidacion).length > 0) {
             setErrores(erroresValidacion);
             return;
         }
@@ -90,8 +106,8 @@ export default function ProyectoSolicitadoAdmin() {
         });
     }
 
-    const handleAñadirProyecto = (e)=>{
-        
+    const handleAñadirProyecto = (e) => {
+
         e.preventDefault();
 
         const newFormData = new FormData();
@@ -108,9 +124,31 @@ export default function ProyectoSolicitadoAdmin() {
 
         handlelimpiarCampos();
     }
-    
+
     return (
         <>
+            <div className="filtrosProyectoSolicitado">
+                <input
+                    type="text"
+                    placeholder="Buscar por usuario..."
+                    value={filtroNombre}
+                    onChange={(e) => setFiltroNombre(e.target.value)}
+                />
+                <select
+                    value={filtroEstado}
+                    onChange={(e) => setFiltroEstado(e.target.value)}
+                >
+                    <option value="">Todos los estados</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="aceptado">Aceptado</option>
+                    <option value="rechazado">Rechazado</option>
+                    <option value="realizado">Realizado</option>
+                </select>
+                <button type="button" onClick={handleLimpiarFiltros}>
+                    Limpiar filtros
+                </button>
+            </div>
+
             <div className="tabla-container">
                 <table>
                     <thead>
@@ -133,82 +171,58 @@ export default function ProyectoSolicitadoAdmin() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            proyectoSolicitado.map((dato) => (
-
-                                <tr>
-                                    
-                                    <td data-label="Email">
-                                        {dato.email}
-                                    </td>
-                                    <td data-label="Tipo">
-                                        {dato.tipo}
-                                    </td>
-                                    <td data-label="Estado">
-                                        {dato.estado === 'enviado' ? dato.estado : dato.estado}
-                                    </td>
-                                    <td data-label="Nombre Apellido">
-                                        {dato.user.name + " " + dato.user.apellido}
-                                    </td>
+                        {proyectosFiltrados.length > 0
+                            ? proyectosFiltrados.map((dato, index) => (
+                                <tr key={index}>
+                                    <td data-label="Email">{dato.email}</td>
+                                    <td data-label="Tipo">{dato.tipo}</td>
+                                    <td data-label="Estado">{dato.estado}</td>
+                                    <td data-label="Nombre Apellido">{dato.user.name + " " + dato.user.apellido}</td>
 
                                     <td data-label="Ver proyecto">
-                                        {
-                                            dato.estado === 'realizado' && dato.proyecto_id &&
+                                        {dato.estado === 'realizado' && dato.proyecto_id &&
                                             <button onClick={() => router.get(`/proyectoPersonalAdm`, { proyecto_id: dato.proyecto_id })}>
                                                 Ver proyecto
                                             </button>
                                         }
                                     </td>
-                                    
+
                                     <td data-label="Añadir">
-
-                                        {
-                                            dato.estado === 'aceptado' &&
-                                                <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
-                                                onClick={() => handleAceptarProyecto(dato.user.name, dato.user.id)}>
-                                                    Añadir Proyecto
-                                                </button>
+                                        {dato.estado === 'aceptado' &&
+                                            <button onClick={() => handleAceptarProyecto(dato.user.name, dato.user.id)}>
+                                                Añadir Proyecto
+                                            </button>
                                         }
-
-                                        {
-                                            dato.estado === 'pendiente' &&
-                                                <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
-                                                onClick={() => handleAceptar(dato.id)}>
-                                                    Añadir Presupuesto
-                                                </button>
+                                        {dato.estado === 'pendiente' &&
+                                            <button onClick={() => handleAceptar(dato.id)}>
+                                                Añadir Presupuesto
+                                            </button>
                                         }
-
-
                                     </td>
+
                                     <td data-label="Descarga">
-                                        {
-                                            
-                                            dato.presupuesto_url  &&
-                                                <a 
-                                                    className="btnDescargar"
-                                                    href={dato.presupuesto_url} 
-                                                    download>
-                                                        Descargar
-                                                </a>
-                                            
+                                        {dato.presupuesto_url &&
+                                            <a className="btnDescargar" href={dato.presupuesto_url} download>
+                                                Descargar
+                                            </a>
                                         }
                                     </td>
-                                    
+
                                     <td data-label="Cancelar">
                                         <form onSubmit={handleCancelar}>
-
-                                            {
-                                                dato.estado !== 'realizado' &&
-                                                    <button className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""} 
-                                                        onClick={() => setId(dato.id)}>
-                                                            Cancelar
-                                                    </button>
+                                            {dato.estado !== 'realizado' &&
+                                                <button
+                                                    className={dato.estado === 'rechazado' ? 'boton-desabilitado' : ""}
+                                                    onClick={() => setId(dato.id)}
+                                                >
+                                                    Cancelar
+                                                </button>
                                             }
                                         </form>
                                     </td>
-
                                 </tr>
                             ))
+                            : <tr><td colSpan={8}>No se encontraron resultados</td></tr>
                         }
                     </tbody>
                 </table>
@@ -233,55 +247,55 @@ export default function ProyectoSolicitadoAdmin() {
                 }
             </div>
 
-           <div className="formularioProyecto">
+            <div className="formularioProyecto">
                 {
-                    verProyecto && 
-                        <form onSubmit={handleAñadirProyecto}>
+                    verProyecto &&
+                    <form onSubmit={handleAñadirProyecto}>
 
-                            <h3>Proyecto para {nombreUsuario}</h3>
+                        <h3>Proyecto para {nombreUsuario}</h3>
 
-                            <label htmlFor="nombre">Nombre Proyecto</label>
-                            <input type="text" 
-                                    value={nombre}
-                                    onChange={(e)=>setNombre(e.target.value)}
-                                    id="nombre" />
+                        <label htmlFor="nombre">Nombre Proyecto</label>
+                        <input type="text"
+                            value={nombre}
+                            onChange={(e) => setNombre(e.target.value)}
+                            id="nombre" />
 
-                            <label htmlFor="coste">Coste</label>
-                            <input type="number" 
-                                    id="coste"
-                                    value={coste}
-                                    onChange={(e)=>setCoste(e.target.value)}
-                                    />
+                        <label htmlFor="coste">Coste</label>
+                        <input type="number"
+                            id="coste"
+                            value={coste}
+                            onChange={(e) => setCoste(e.target.value)}
+                        />
 
-                            <label htmlFor="localizacion">Localización</label>
-                            <input type="text"
-                                    id="localizacion"
-                                    value={localizacion}
-                                    onChange={(e)=>setLocalizacion(e.target.value)}
-                                />
+                        <label htmlFor="localizacion">Localización</label>
+                        <input type="text"
+                            id="localizacion"
+                            value={localizacion}
+                            onChange={(e) => setLocalizacion(e.target.value)}
+                        />
 
-                            <label htmlFor="imagen">Imagen</label>
-                            <input type="file" 
-                                    id="imagen"
-                                    onChange={(e)=>setImagen(e.target.files[0])}
-                                    />
+                        <label htmlFor="imagen">Imagen</label>
+                        <input type="file"
+                            id="imagen"
+                            onChange={(e) => setImagen(e.target.files[0])}
+                        />
 
-                            <button className="btnAceptarProyecto" 
-                                    type="submit">
-                                        Aceptar
-                            </button>
-                           
-                            <button className="btnCancelarProyecto"
-                                    onClick={handlelimpiarCampos}
-                            >
-                            
-                                Cancelar
+                        <button className="btnAceptarProyecto"
+                            type="submit">
+                            Aceptar
+                        </button>
 
-                            </button>
-                        
-                        </form>
+                        <button className="btnCancelarProyecto"
+                            onClick={handlelimpiarCampos}
+                        >
+
+                            Cancelar
+
+                        </button>
+
+                    </form>
                 }
-           </div>
+            </div>
         </>
     )
 }

@@ -64,7 +64,7 @@ export default function AñadirMaquinaria(){
     
         if(!nombre.trim()){
             nuevosErrores.nombre = "El nombre de la maquina es obligatorio";
-        }else if(!/^[a-zA-Z]+[0-9]*$/.test(nombre)){
+        }else if(!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+[0-9]*$/.test(nombre)){
             nuevosErrores.nombre = "El nombre no puede contener caracteres";
         }
     
@@ -133,6 +133,8 @@ export default function AñadirMaquinaria(){
             imagen: imagen,
             categoria_id: categoriaid,
         });
+
+        handleLimpiarCampos();
     }
 
     const [ver, setVer] = useState(false);

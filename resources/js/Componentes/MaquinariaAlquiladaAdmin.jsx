@@ -8,6 +8,9 @@ export default function MaquinariaAlquiladaAdmin() {
 
     const [historial_id, setHistorialId] = useState("");
 
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
     const transformarFecha = (fecha)=>{
         const f = new Date(fecha);
 
@@ -85,20 +88,16 @@ export default function MaquinariaAlquiladaAdmin() {
                                     <td data-label="Apellido">
                                         {dato.user.apellido}
                                     </td>
-                                    {
-                                        !dato.is_cancelled &&
-                                        <td>
-                                            <form onSubmit={handleCancelar}>
-
-                                                <button type="submit"
-                                                    onClick={()=>setHistorialId(dato.id)}
-                                                >
-                                                    Cancelar
-                                                
-                                                </button>
-                                            </form>
-                                        </td>
-                                    }
+                                    {!dato.is_cancelled && new Date(dato.fecha_fin) >= hoy
+                                    ? <td>
+                                        <form onSubmit={handleCancelar}>
+                                            <button type="submit" onClick={() => setHistorialId(dato.id)}>
+                                                Cancelar
+                                            </button>
+                                        </form>
+                                    </td>
+                                    : <td></td> 
+                                }
                                 </tr>
                             ))
                         }

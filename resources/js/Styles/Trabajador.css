@@ -150,3 +150,46 @@
     border-style: solid;
     border: 0.5px solid ;
 }
+
+.filtrosNominas {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 15px;
+    margin: 15px 0;
+    background-color: #f9f8f7;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.filtrosNominas input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    color: #6E6363;
+    font-weight: 600;
+    background-color: white;
+    outline: none;
+}
+
+.filtrosNominas input:focus {
+    border: 2px solid #6E6363;
+}
+
+.filtrosNominas button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    background-color: white;
+    color: #6E6363;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filtrosNominas button:hover {
+    background-color: #C4C1BE;
+    border: 2px solid transparent;
+}

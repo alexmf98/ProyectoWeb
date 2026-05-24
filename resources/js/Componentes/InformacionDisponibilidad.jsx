@@ -286,13 +286,13 @@ export default function InformacionDisponibilidad() {
                         />
                         {errores.fecha_fin && <span className="mensajeError">{errores.fecha_fin}</span>}
 
-                    {
+                    {/* {
                         fecha_inicio && fecha_fin &&
                             <button type="button"
                                 onClick={handlePrueba}>
                                 Alquilar
                             </button>
-                    }
+                    } */}
 
                     </div>
                 </>

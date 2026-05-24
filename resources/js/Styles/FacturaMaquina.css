@@ -1,3 +1,13 @@
+.inputFiltroCliente {
+    margin-left: 20px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    color: #6E6363;
+    font-weight: 600;
+    outline: none;
+}
+
 .fechaMaquinaria{
     display: flex;
     padding: 10px 20px;   

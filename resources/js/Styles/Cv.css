@@ -21,8 +21,26 @@
     background-color: #E3543B;
     color: white;
     padding: 10px 20px;
+    cursor: pointer;
 } 
 
 .tablaCv button:hover{
     background-color: #E94435;
+}
+
+.tablaCv a{
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none; 
+    color: #6E6363;
+    font-weight: 600;
+    border: #9C9191 2px solid;
+}
+
+.tablaCv a:hover{
+    background-color: #C4C1BE; 
+    border-radius: 8px;
+    border: 2px solid transparent;;
 }

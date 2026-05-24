@@ -1,7 +1,7 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/FacturaMaquina.css";
 import "../Styles/Errores.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function FacturacionMaquinaria() {
 
@@ -9,6 +9,18 @@ export default function FacturacionMaquinaria() {
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
     const [errores, setErrores] = useState({});
+    const [filtroCliente, setFiltroCliente] = useState("");
+
+    const historialFiltrado = useMemo(() => {
+        if(filtroCliente === ""){
+            return historial;  
+        } 
+
+        return historial.filter((dato) => {
+            const nombreCompleto = `${dato.user.name} ${dato.user.apellido}`.toLowerCase();
+            return nombreCompleto.includes(filtroCliente.toLowerCase());
+        });
+    }, [historial, filtroCliente]);
 
     const validarBuscador = () => {
         const nuevosErrores = {};
@@ -26,13 +38,14 @@ export default function FacturacionMaquinaria() {
 
     function handleSumaCoste() {
 
-        let total = 0;
+        // let total = 0;
 
-        historial.map((dato) => (
-            total += Number(dato.coste)
-        ))
+        // historial.map((dato) => (
+        //     total += Number(dato.coste)
+        // ))
 
-        return total;
+        // return total;
+        return historialFiltrado.reduce((total, dato) => total + Number(dato.coste), 0);
     }
 
     const handleFacturacion = (e)=>{
@@ -55,6 +68,7 @@ export default function FacturacionMaquinaria() {
     }
 
     const handleLimpiarCampos = () =>{
+        setFiltroCliente("");
         router.get('/facturamaquinaria', {}, {replace: true})
     }
 
@@ -83,6 +97,14 @@ export default function FacturacionMaquinaria() {
 
                     <button type="button" onClick={handleLimpiarCampos}>Cancelar</button>
                 </form>
+
+                <input
+                    className="inputFiltroCliente"
+                    type="text"
+                    placeholder="Buscar por cliente..."
+                    value={filtroCliente}
+                    onChange={(e) => setFiltroCliente(e.target.value)}
+                />
             </div>
 
             <div className="tablafacturamaquinaria">
@@ -97,22 +119,16 @@ export default function FacturacionMaquinaria() {
                     </thead>
 
                     <tbody>
-                        {
-                            historial.map((dato) => (
-
-                                <tr>
+                        {historialFiltrado.length > 0
+                            ? historialFiltrado.map((dato, index) => (
+                                <tr key={index}>
                                     <td data-label="Nombre maquina">{dato.maquinaria.nombre}</td>
-
                                     <td data-label="Coste">{dato.coste} €</td>
-
-                                    <td data-label="Fecha">
-                                        {dato.fecha_inicio} - {dato.fecha_fin}
-                                    </td>
-                                    <td>
-                                        {dato.user.name} {dato.user.apellido}
-                                    </td>
+                                    <td data-label="Fecha">{dato.fecha_inicio} - {dato.fecha_fin}</td>
+                                    <td>{dato.user.name} {dato.user.apellido}</td>
                                 </tr>
                             ))
+                            : <tr><td colSpan={4}>No se encontraron resultados</td></tr>
                         }
                         <tr>
                             <td></td>

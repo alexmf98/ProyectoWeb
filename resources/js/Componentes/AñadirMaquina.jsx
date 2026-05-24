@@ -19,6 +19,34 @@ export default function AñadirMaquinaria(){
 
     const {Categoria, cat} = usePage().props;
 
+    const [idEditarCategoria, setIdEditarCategoria] = useState(null);
+    const [nombreEditarCategoria, setNombreEditarCategoria] = useState("");
+
+    const handleEditarCategoria = (dato) => {
+        setIdEditarCategoria(dato.id);
+        setNombreEditarCategoria(dato.categoria);
+    }
+
+    const handleGuardarCategoria = (e) => {
+        e.preventDefault();
+
+        if(!nombreEditarCategoria.trim()) return;
+
+        router.put(`/categoria/${idEditarCategoria}`, {
+            categoria: nombreEditarCategoria,
+        }, {
+            onSuccess: () => {
+                setIdEditarCategoria(null);
+                setNombreEditarCategoria("");
+            }
+        });
+    }
+
+    const handleCancelarEditarCategoria = () => {
+        setIdEditarCategoria(null);
+        setNombreEditarCategoria("");
+    }
+
     const validarCategoria = () => {
         const nuevosErrores = {};
     
@@ -247,48 +275,53 @@ export default function AñadirMaquinaria(){
 
             </div>
                  
-            {
-                ver &&
+            {ver &&
                 <div className="tablaCategoria">
                     <table>
                         <thead>
                             <tr>
-                                <th>
-                                    Nombre Categoria
-                                </th>
-                                <th>
-                                    Estado
-                                </th>
-                                <th colSpan={2}>
-                                    Accion
-                                </th>
+                                <th>Nombre Categoria</th>
+                                <th>Estado</th>
+                                <th colSpan={3}>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                cat.map((dato)=>(
-                                    <tr>
-                                        <td>
-                                            {dato.categoria}
-                                        </td>
-                                        <td>
-                                            {dato.is_active ? 'Activo' : 'Desactivado'}
-                                        </td>
-
-                                        <td>
-                                            <button onClick={()=>handleActivar(dato.id)}>Activar</button>
-                                        </td>
-
-                                        <td>
-                                            <button onClick={()=>handleDesactivar(dato.id)}>Desactivar</button>
-                                        </td>
-
-                                    </tr>
-                                ))
-                            }
+                            {cat.map((dato, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        
+                                        {idEditarCategoria === dato.id
+                                            ? <form onSubmit={handleGuardarCategoria} className="formEditarCategoria">
+                                                <input
+                                                    type="text"
+                                                    value={nombreEditarCategoria}
+                                                    onChange={(e) => setNombreEditarCategoria(e.target.value)}
+                                                    autoFocus
+                                                />
+                                                <button type="submit">Guardar</button>
+                                                <button type="button" onClick={handleCancelarEditarCategoria}>Cancelar</button>
+                                              </form>
+                                            : dato.categoria
+                                        }
+                                    </td>
+                                    <td>{dato.is_active ? 'Activo' : 'Desactivado'}</td>
+                                    <td>
+                                        <button onClick={() => handleActivar(dato.id)}>Activar</button>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => handleDesactivar(dato.id)}>Desactivar</button>
+                                    </td>
+                                    <td>
+                                        
+                                        {idEditarCategoria !== dato.id &&
+                                            <button onClick={() => handleEditarCategoria(dato)}>Editar</button>
+                                        }
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
-                </div> 
+                </div>
             }
         </>
     )

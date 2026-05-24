@@ -63,6 +63,7 @@ export default function ProyectoSolicitadoAdmin() {
     const handleAceptar = (id) => {
         setVer(true);
         setId(id);
+        handleSubir();
     }
 
     const handleAceptarProyecto = (nombreusuario, id) => {
@@ -125,6 +126,10 @@ export default function ProyectoSolicitadoAdmin() {
         handlelimpiarCampos();
     }
 
+    const handleSubir = ()=>{
+        window.scrollTo({top: 0, behavior: "smooth"});
+    }
+
     return (
         <>
             <div className="filtrosProyectoSolicitado">
@@ -147,6 +152,25 @@ export default function ProyectoSolicitadoAdmin() {
                 <button type="button" onClick={handleLimpiarFiltros}>
                     Limpiar filtros
                 </button>
+            </div>
+
+            <div>
+                {
+                    ver &&
+
+                    <div className="formularioPresupuesto">
+                        <form onSubmit={handlePresupuesto}>
+
+                            <label htmlFor="presupuesto">Presupuesto</label>
+                            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+
+                            {errores.file && <span className="mensajeError">{errores.file}</span>}
+
+                            <button type="submit">Enviar</button>
+                            <button onClick={handleCancelarPresupuesto}>Cancelar</button>
+                        </form>
+                    </div>
+                }
             </div>
 
             <div className="tabla-container">
@@ -226,25 +250,6 @@ export default function ProyectoSolicitadoAdmin() {
                         }
                     </tbody>
                 </table>
-            </div>
-
-            <div>
-                {
-                    ver &&
-
-                    <div className="formularioPresupuesto">
-                        <form onSubmit={handlePresupuesto}>
-
-                            <label htmlFor="presupuesto">Presupuesto</label>
-                            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-
-                            {errores.file && <span className="mensajeError">{errores.file}</span>}
-
-                            <button type="submit">Enviar</button>
-                            <button onClick={handleCancelarPresupuesto}>Cancelar</button>
-                        </form>
-                    </div>
-                }
             </div>
 
             <div className="formularioProyecto">

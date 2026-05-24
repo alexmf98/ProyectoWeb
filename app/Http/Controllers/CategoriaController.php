@@ -23,8 +23,11 @@ class CategoriaController extends Controller
 
     public function update(Request $request, Categoria $categoria){
 
-        $categoria->update([
-            'is_active'=>$request->input('is_active'),
+        $validate = $request->validate([
+            'categoria' => 'string',
+            'is_active' => 'boolean',
         ]);
+    
+        $categoria->update($validate);
     }
 }

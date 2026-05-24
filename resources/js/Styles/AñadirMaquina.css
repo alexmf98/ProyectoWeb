@@ -196,6 +196,40 @@
     background-color: #0f4278;
 }
 
+.formEditarCategoria {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.formEditarCategoria input {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    color: #6E6363;
+    font-weight: 600;
+    outline: none;
+}
+
+.formEditarCategoria input:focus {
+    border: 2px solid #6E6363;
+}
+
+.formEditarCategoria button {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: #9C9191 2px solid;
+    background-color: white;
+    color: #6E6363;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.formEditarCategoria button:hover {
+    background-color: #C4C1BE;
+    border: 2px solid transparent;
+}
+
 /*Movil*/
 
 @media (max-width: 768px) {

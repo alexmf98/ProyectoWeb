@@ -6,6 +6,7 @@ use App\Models\CurriculumVitae;
 use App\Models\FacturacionMaquinaria;
 use App\Models\FacturacionProyecto;
 use App\Models\HistorialMaquinaria;
+use App\Models\HistorialProyecto;
 use App\Models\Maquinaria;
 use App\Models\Proyecto;
 use App\Models\ProyectoSolicitado;
@@ -15,6 +16,7 @@ use App\Policies\CurriculumVitaePolicy;
 use App\Policies\FacturacionMaquinariaPolicy;
 use App\Policies\FacturacionProyectoPolicy;
 use App\Policies\HistorialMaquinariaPolicy;
+use App\Policies\HistorialProyectoPolicy;
 use App\Policies\MaquinariaPolicy;
 use App\Policies\ProyectoPolicy;
 use App\Policies\ProyectoSolicitadoPolicy;
@@ -52,5 +54,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::policy(CurriculumVitae::class, CurriculumVitaePolicy::class);
+        Gate::policy(HistorialProyecto::class, HistorialProyectoPolicy::class);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\HistorialMaquinaria;
+use App\Models\HistorialProyecto;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class HistorialMaquinariaPolicy
+class HistorialProyectoPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -21,10 +21,6 @@ class HistorialMaquinariaPolicy
      */
     public function view(User $user): bool
     {
-        return $user->role === 'administrador';
-    }
-
-    public function historialMaquinaria(User $user){
         return $user->role === 'usuario';
     }
 
@@ -39,7 +35,7 @@ class HistorialMaquinariaPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, HistorialMaquinaria $historialMaquinaria): bool
+    public function update(User $user, HistorialProyecto $historialProyecto): bool
     {
         return false;
     }
@@ -47,7 +43,7 @@ class HistorialMaquinariaPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, HistorialMaquinaria $historialMaquinaria): bool
+    public function delete(User $user, HistorialProyecto $historialProyecto): bool
     {
         return false;
     }
@@ -55,7 +51,7 @@ class HistorialMaquinariaPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, HistorialMaquinaria $historialMaquinaria): bool
+    public function restore(User $user, HistorialProyecto $historialProyecto): bool
     {
         return false;
     }
@@ -63,7 +59,7 @@ class HistorialMaquinariaPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, HistorialMaquinaria $historialMaquinaria): bool
+    public function forceDelete(User $user, HistorialProyecto $historialProyecto): bool
     {
         return false;
     }

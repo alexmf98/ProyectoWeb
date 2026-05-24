@@ -19,6 +19,9 @@ class HistorialMaquinariaController extends Controller
      */
     public function index()
     {
+
+        Gate::authorize('historialMaquinaria', HistorialMaquinaria::class);
+
         $historial = HistorialMaquinaria::with('maquinaria')->where('user_id', Auth::user()->id)->get()->map(function($h) {
             return [
                 'id' => $h->id,

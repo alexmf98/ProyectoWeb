@@ -24,6 +24,10 @@ class ProyectoSolicitadoPolicy
         return $user->role === 'administrador';
     }
 
+    public function proyectoSolicitado(User $user){
+        return $user->role === 'usuario';
+    }
+
     /**
      * Determine whether the user can create models.
      */

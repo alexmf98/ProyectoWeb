@@ -18,7 +18,8 @@ class ProyectoSolicitadoController extends Controller
      */
     public function index()
     {
-        
+        Gate::authorize('proyectoSolicitado', ProyectoSolicitado::class);
+
         // $pSolicitado = ProyectoSolicitado::where('user_id', '=', Auth::user()->id)->get();
         $pSolicitado = ProyectoSolicitado::where('user_id', '=', Auth::user()->id)->get()->map(function($dato){
             return [

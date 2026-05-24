@@ -145,6 +145,7 @@ export default function ProyectoSolicitadoAdmin() {
                 >
                     <option value="">Todos los estados</option>
                     <option value="pendiente">Pendiente</option>
+                    <option value="enviado">Enviado</option>
                     <option value="aceptado">Aceptado</option>
                     <option value="rechazado">Rechazado</option>
                     <option value="realizado">Realizado</option>

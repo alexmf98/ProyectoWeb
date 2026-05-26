@@ -75,6 +75,7 @@ export default function HistorialMaquinaria(){
                                 <div>
                                     <form onSubmit={handleCancelar}>
                                         <button
+                                          
                                             className="btnCancelarAlquiler" 
                                             onClick={()=>botonCancelar(dato.id)}
                                             disabled={esFechaPasada(dato.fecha_fin) || dato.is_cancelled}

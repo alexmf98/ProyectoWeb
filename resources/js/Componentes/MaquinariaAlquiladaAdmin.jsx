@@ -1,12 +1,14 @@
 import { router, usePage } from "@inertiajs/react"
 import "../Styles/AlquiladaAdmin.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function MaquinariaAlquiladaAdmin() {
 
     const { alquileres } = usePage().props;
 
     const [historial_id, setHistorialId] = useState("");
+
+    const [filtro, setFiltro] = useState("");
 
     const hoy = new Date();
     hoy.setHours(0,0,0,0);
@@ -29,9 +31,30 @@ export default function MaquinariaAlquiladaAdmin() {
         });
     }
 
+    const alquileresFiltrados = useMemo(() => {
+        if(!filtro) return alquileres;
+
+        return alquileres.filter(dato =>
+            dato.maquinaria.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+            dato.user.name.toLowerCase().includes(filtro.toLowerCase()) ||
+            dato.user.apellido.toLowerCase().includes(filtro.toLowerCase()) ||
+            (dato.is_cancelled ? 'cancelado' : 'alquilado').includes(filtro.toLowerCase()) ||
+            transformarFecha(dato.fecha_inicio).includes(filtro) ||
+            transformarFecha(dato.fecha_fin).includes(filtro)
+        );
+    }, [alquileres, filtro]);
+
 
     return (
         <>
+            <div className="buscadorAlquiladaAdmin">
+                <input
+                    type="text"
+                    placeholder="Buscar por máquina, usuario, estado o fecha"
+                    value={filtro}
+                    onChange={(e) => setFiltro(e.target.value)}
+                />
+            </div>
             <div className="tablaEditAlquiladaAdmin">
                 <table>
                     <thead>
@@ -65,8 +88,8 @@ export default function MaquinariaAlquiladaAdmin() {
                     </thead>
                     <tbody>
                         {
-                            alquileres.map((dato)=>(
-                                <tr>
+                            alquileresFiltrados.map((dato)=>(
+                                <tr key={dato.id}>
                                     <td data-label="Nombre maquina">
                                         {dato.maquinaria.nombre}
                                     </td>

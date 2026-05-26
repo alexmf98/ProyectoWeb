@@ -1,7 +1,7 @@
 import "../Styles/FacturaProyecto.css";
 import "../Styles/Errores.css";
 import { router, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function FacturacionProyecto() {
 
@@ -13,8 +13,21 @@ export default function FacturacionProyecto() {
     const [añadirFactura, setAñadirFactura] = useState(false); 
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
+    const [nuevaFactura, setNuevaFactura] = useState(false);
+    const [nombreProyecto, setNombreProyecto] = useState("");
+    const [nuevaFechaFactura, setNuevaFechaFactura] = useState("");
+    const [filtroNombre, setFiltroNombre] = useState("");
+    const [editar, setEditar] = useState(false);
+    const [facturaEditar, setFacturaEditar] = useState("");
 
     const [errores, setErrores] = useState({});
+
+    const facturacionFiltrada = useMemo(() => {
+        if(!filtroNombre) return facturacion;
+        return facturacion.filter(dato => 
+            dato.proyecto_id.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
+        );
+    }, [facturacion, filtroNombre]);
 
     const validarBuscador = () => {
         const nuevosErrores = {};
@@ -54,11 +67,40 @@ export default function FacturacionProyecto() {
         return nuevosErrores;
     }
 
+    const validarNuevaFactura = () =>{
+        const nuevosErrores = {};
+
+        if(!nuevaFechaFactura){
+            nuevosErrores.nuevaFechaFactura = "Debe seleccionar una fecha";
+        }
+
+        if(!factura){
+            nuevosErrores.factura = "Debe seleccionar un archivo";
+        }else if(!/\.(pdf)$/i.test(factura.name)){
+            nuevosErrores.factura = "Solo se admite formato pdf";
+        }
+    
+        return nuevosErrores;
+    }
+
+    const validarFacturaEditada = () =>{
+        const nuevosErrores = {};
+
+        if(!nuevaFechaFactura){
+            nuevosErrores.nuevaFechaFactura = "Debe seleccionar una fecha";
+        }
+    
+        return nuevosErrores;
+    }
+
     const handleLimpiarCampos = () =>{
         setFechaFacturacion("");
         setFactura("");
         setProyectoId(null);
         setAñadirFactura(false);
+        setNuevaFactura(false);
+        setNuevaFechaFactura("");
+        setEditar(false)
 
         router.get('facturacionproyecto', {}, {replace: true})
     }
@@ -82,9 +124,6 @@ export default function FacturacionProyecto() {
         formData.append('factura', factura);
         formData.append('proyecto_id', proyecto_id);
 
-        // router.post('/facturacionproyecto', formData,{
-        //     forceFormData: true,
-        // });
         router.post('/facturacionproyecto', formData);
 
         handleLimpiarCampos();
@@ -113,9 +152,92 @@ export default function FacturacionProyecto() {
         });
     }
 
+    const handlesubir = () =>{
+
+        window.scrollTo({top: 0, behavior: "smooth"});
+    }
+    const handleNuevaFactura = (id, nombreProyecto, factura)=>{
+        setNuevaFactura(true);
+        setProyectoId(id);
+        setNombreProyecto(nombreProyecto);
+        setFactura(factura);
+        setEditar(false); 
+        handlesubir()
+    }
+
+    const handleEnviarNuevaFactura = (e)=>{
+        e.preventDefault();
+
+        const erroresValidacion = validarNuevaFactura();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
+
+        const formData = new FormData();
+
+        formData.append('fecha_facturacion', nuevaFechaFactura);
+        formData.append('factura', factura);
+        formData.append('proyecto_id', proyecto_id);
+
+        router.post('/facturacionproyecto', formData);
+
+        handleLimpiarCampos();
+    }
+   
+    const handleEditarNuevaFactura = (id, nombre,fecha_factura, factura) =>{
+        setProyectoId(id);
+        setNombreProyecto(nombre)
+        const [dia, mes, año] = fecha_factura.split('/');
+        setNuevaFechaFactura(`${año}-${mes}-${dia}`);
+        setFacturaEditar(factura);
+        setEditar(true);
+        setNuevaFactura(false);
+        handlesubir();
+        setErrores({});
+    }
+    
+    const handleEnviarEditarNuevaFactura = (e) =>{
+
+        e.preventDefault();
+
+        const erroresValidacion = validarFacturaEditada();
+
+        if(Object.keys(erroresValidacion).length > 0){
+            setErrores(erroresValidacion);
+            return;
+        }
+
+        setErrores({});
+
+        const formData = new FormData();
+
+        if(facturaEditar instanceof File){
+            formData.append('factura', facturaEditar);  
+        }
+
+        formData.append('fecha_facturacion', nuevaFechaFactura);
+        formData.append('factura', facturaEditar);
+
+        router.put(`/editarfactura/${proyecto_id}`, formData);
+
+        handleLimpiarCampos();
+    }
+
+    const handleEliminar = (id) =>{
+        const confirmar = confirm("Desea eliminar esta factura");
+
+        if(confirmar){
+            router.delete(`/eliminarfactura/${id}`);
+        }
+    }
+
     return (
         <>
-
+            
             <div className="buscardorFecha">
                 <form onSubmit={handleFacturacion}>
 
@@ -139,7 +261,101 @@ export default function FacturacionProyecto() {
 
                     <button type="button" onClick={handleLimpiarCampos}>Cancelar</button>
                 </form>
+
+                <input 
+                    type="text"
+                    placeholder="Buscar por proyecto..."
+                    value={filtroNombre}
+                    onChange={(e) => setFiltroNombre(e.target.value)}
+                />
             </div>
+
+            {
+                nuevaFactura && 
+                    <div  className="contenedorNuevaFactura">
+                        <form
+                            className="nuevafacturaProyecto" 
+                            onSubmit={handleEnviarNuevaFactura}>
+                            <label htmlFor="nombre">Nombre Proyecto</label>
+                            <input type="text"
+                                    value={nombreProyecto}
+                            />
+
+                            <label htmlFor="fecha">Fecha facturación</label>
+                            <input type="date" 
+                                    onChange={(e)=>setNuevaFechaFactura(e.target.value)}
+                            />
+
+                            {errores.nuevaFechaFactura && <span className="mensajeError">{errores.nuevaFechaFactura}</span>}
+
+
+                            <label htmlFor="proyecto">Factura</label>
+                            <input type="file" 
+                                    onChange={(e)=>setFactura(e.target.files[0])}
+                            />
+
+                            {errores.factura && <span className="mensajeError">{errores.factura}</span>}
+
+
+                            <button
+                                type="submit"
+                            >
+                                Aceptar
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={handleLimpiarCampos}
+                            >
+                                Cancelar
+                            </button>
+                        </form>
+                    </div>
+            }
+
+            {
+                editar && 
+
+                    <div  className="contenedorNuevaFactura">
+                        <form
+                            className="nuevafacturaProyecto" 
+                            onSubmit={handleEnviarEditarNuevaFactura}>
+                            <label htmlFor="nombre">Nombre Proyecto a editar</label>
+                            <input type="text"
+                                    value={nombreProyecto}
+                            />
+
+                            <label htmlFor="fecha">Fecha facturación</label>
+                            <input type="date" 
+                                    value={nuevaFechaFactura}
+                                    onChange={(e)=>setNuevaFechaFactura(e.target.value)}
+                            />
+
+                            {errores.nuevaFechaFactura && <span className="mensajeError">{errores.nuevaFechaFactura}</span>}
+
+
+                            <label htmlFor="proyecto">Factura</label>
+                            <input type="file" 
+                                    
+                                    onChange={(e)=>setFacturaEditar(e.target.files[0])}
+                            />
+
+
+                            <button
+                                type="submit"
+                            >
+                                Aceptar
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={handleLimpiarCampos}
+                            >
+                                Cancelar
+                            </button>
+                        </form>
+                </div>
+            }
 
             <div className="tablafacturaproyecto">
                 
@@ -149,25 +365,71 @@ export default function FacturacionProyecto() {
                                 <th>Proyecto</th>
                                 <th>Fecha Facturación</th>
                                 <th>Factura</th>
+                                <th colSpan={3}>Accion</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {
-                                facturacion.map((dato)=>(
-                                    <tr>
-                                        <td>
-                                            {dato.proyecto_id.nombre}
-                                        </td>
-                                        <td>
-                                            {dato.fecha_facturacion}
-                                        </td>
-                                        <td>
-                                            <a href={dato.factura} download>Descargar</a>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
+                        {facturacionFiltrada.map((dato, index) => {
+                            const esPrimeroDelProyecto = facturacionFiltrada.findIndex(
+                                d => d.proyecto_id.id === dato.proyecto_id.id
+                            ) === index;
+
+                            return (
+                                <tr key={index}>
+                                    <td>{dato.proyecto_id.nombre}</td>
+                                    <td>{dato.fecha_facturacion}</td>
+                                    <td>
+                                        <a 
+                                            className="btndescargarFactura"
+                                            href={dato.factura} 
+                                            download>
+                                                Descargar
+                                        </a>
+                                    </td>
+                                    
+                                    <td>
+                                        {esPrimeroDelProyecto &&
+                                            <button
+                                                className="btnAñadirNuevaFactura"
+                                                type="button"
+                                                onClick={() => handleNuevaFactura(
+                                                    dato.proyecto_id.id,
+                                                    dato.proyecto_id.nombre
+                                                )}
+                                            >
+                                                Añadir nueva factura
+                                            </button>
+                                        }
+                                    </td>
+
+                                    <td>
+                                       
+                                        <button 
+                                            type="button"
+                                            className="btnEditarNuevaFactura"
+                                            onClick={()=>handleEditarNuevaFactura(
+                                                dato.id,
+                                                dato.proyecto_id.nombre,
+                                                dato.fecha_facturacion,
+                                                dato.factura_nombre,
+                                            )}
+                                            >
+                                                Editar
+                                        </button>
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            className="btnEliminarNuevaFactura"
+                                            onClick={()=>handleEliminar(dato.id)}
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                         </tbody>
                     </table>
             </div>
@@ -221,123 +483,3 @@ export default function FacturacionProyecto() {
         </>
     );
 }
-
-// import "../Styles/FacturaProyecto.css";
-// import { router, usePage } from "@inertiajs/react";
-// import { useState } from "react";
-
-// export default function FacturacionProyecto() {
-
-//     const { proyectos, facturacion } = usePage().props;
-
-//     const [fecha_facturacion, setFechaFacturacion] = useState("");
-//     const [factura, setFactura] = useState("");
-//     const [proyecto_id, setProyectoId] = useState(null);
-//     const [añadirFactura, setAñadirFactura] = useState(false);
-//     const [paginaActual, setPaginaActual] = useState(1);
-
-//     const porPagina = 3;
-//     const totalPaginas = Math.ceil(facturacion.length / porPagina);
-
-//     // Calculamos los índices
-//     const indiceInicio = (paginaActual - 1) * porPagina;
-//     const indiceFin    = indiceInicio + porPagina;
-//     const datosPagina  = facturacion.slice(indiceInicio, indiceFin);
-
-//     const handleFactura = (e) => {
-//         e.preventDefault();
-//         const formData = new FormData();
-//         formData.append('fecha_facturacion', fecha_facturacion);
-//         formData.append('factura', factura);
-//         formData.append('proyecto_id', proyecto_id);
-//         router.post('/facturacionproyecto', formData);
-//     }
-
-//     return (
-//         <>
-//             <div className="tablafacturaproyecto">
-//                 <table>
-//                     <thead>
-//                         <tr>
-//                             <th>Proyecto</th>
-//                             <th>Fecha Facturación</th>
-//                             <th>Factura</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody>
-//                         {datosPagina.map((dato) => (
-//                             <tr key={dato.id}>
-//                                 <td>{dato.proyecto_id.nombre}</td>
-//                                 <td>{dato.fecha_facturacion}</td>
-//                                 <td><a href={dato.factura} download>Descargar</a></td>
-//                             </tr>
-//                         ))}
-//                     </tbody>
-//                 </table>
-
-//                 {/* Paginación */}
-//                 <div className="paginacion">
-//                     <button
-//                         onClick={() => setPaginaActual(p => p - 1)}
-//                         disabled={paginaActual === 1}
-//                     >
-//                         ‹
-//                     </button>
-
-//                     {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((num) => (
-//                         <button
-//                             key={num}
-//                             onClick={() => setPaginaActual(num)}
-//                             className={paginaActual === num ? 'activo' : ''}
-//                         >
-//                             {num}
-//                         </button>
-//                     ))}
-
-//                     <button
-//                         onClick={() => setPaginaActual(p => p + 1)}
-//                         disabled={paginaActual === totalPaginas}
-//                     >
-//                         ›
-//                     </button>
-//                 </div>
-//             </div>
-
-//             {
-//                 añadirFactura &&
-//                 <div className="tarjetaproyectofactura">
-                
-//                 <form onSubmit={handleFactura}>
-//                     <label>Nombre Proyecto
-
-//                     <select onChange={(e)=>setProyectoId(e.target.value)}>
-//                         <option value="">Seleccione una opción </option>
-//                         {
-//                             proyectos.map((dato)=>(
-//                                 <option value={dato.id}>{dato.nombre}</option>
-//                             ))
-//                         }
-//                     </select>
-//                     </label>
-
-
-//                     <label>Fecha facturación
-//                     <input type="date"
-//                             value={fecha_facturacion}
-//                             onChange={(e)=>setFechaFacturacion(e.target.value)}
-//                     />
-//                     </label>
-                    
-//                     <label>Factura
-//                         <input type="file"
-                            
-//                                 onChange={(e) => setFactura(e.target.files[0])}
-//                                 />
-//                         </label>
-
-//                     <button type="submit">Crear</button>
-//                 </form>
-//             </div>}
-//         </>
-//     );
-// }

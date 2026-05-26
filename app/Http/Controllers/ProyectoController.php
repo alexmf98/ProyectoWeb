@@ -128,9 +128,18 @@ class ProyectoController extends Controller
             ];
         });
 
+        $facturas = $proyecto->facturas->map(function($factura){
+            return [
+                'id' => $factura->id,
+                'fecha_facturacion' => Carbon::parse($factura->fecha_facturacion)->format('d/m/Y'),
+                'factura' => Storage::url('facturacionProyecto/' . $factura->factura),
+            ];
+        });
+
         return Inertia::render('ImagenesProyecto', [
             'proyecto' => $proyecto,
             'imagenes' => $imagenes,
+            'facturas' => $facturas,
         ]);
     }
 

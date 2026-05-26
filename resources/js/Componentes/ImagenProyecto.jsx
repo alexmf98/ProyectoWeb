@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function ImagenProyecto() {
 
 
-    const { proyecto, imagenes } = usePage().props;
+    const { proyecto, imagenes, facturas } = usePage().props;
     const { isAdmin } = useAuth();
     const [ver, setVer] = useState(false);
     const [verDescripcion, setVerDescripcion] = useState(false);
@@ -20,6 +20,7 @@ export default function ImagenProyecto() {
     const [certificadoEditar, setCertificadoEditar] = useState("");
     const [idcertificado, setIdCertificado] = useState("");
     const [editarCertificado, setEditarCertificado] = useState(false);
+    const [verFacturas, setVerFacturas] = useState(false);
 
     const [errores, setErrores] = useState("");
 
@@ -243,6 +244,37 @@ export default function ImagenProyecto() {
     return (
         <>
             <h1>{proyecto.nombre}</h1>
+            {
+                facturas.length > 0 &&
+                    <button
+                        className="btnVerFacturas" 
+                        onClick={() => setVerFacturas(!verFacturas)}>
+                        {verFacturas ? 'Ocultar facturas' : 'Ver facturas'}
+                    </button>
+            }
+
+            {verFacturas &&
+                <div className="tablaFacturasProyecto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha facturación</th>
+                                <th>Factura</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {facturas.map((factura) => (
+                                <tr key={factura.id}>
+                                    <td>{factura.fecha_facturacion}</td>
+                                    <td>
+                                        <a href={factura.factura} download>Descargar</a>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            }
        
             {
                 isAdmin && 
@@ -423,7 +455,7 @@ export default function ImagenProyecto() {
                         <tr>
                             <th>Fecha de certificacion</th>
                             <th>Certificado</th>
-                            <th colSpan={2}>Accion</th>
+                            {isAdmin && <th colSpan={2}>Accion</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -438,7 +470,9 @@ export default function ImagenProyecto() {
                                         </td>
 
                                         <td>
-                                            <a href={cert.certificado} download>
+                                            <a 
+                                                className="btndescargarCertificado"
+                                                href={cert.certificado} download>
                                                 Descargar
                                             </a>
                                         </td>

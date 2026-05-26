@@ -56,6 +56,22 @@ export default function InformacionDisponibilidad() {
     
         return nuevosErrores;
     }
+
+    const validarLuhn = (numero) => {
+        const digits = numero.replace(/\s/g, '').split('').reverse();
+        let suma = 0;
+    
+        digits.forEach((digit, index) => {
+            let n = parseInt(digit);
+            if(index % 2 !== 0){
+                n *= 2;
+                if(n > 9) n -= 9;
+            }
+            suma += n;
+        });
+    
+        return suma % 10 === 0;
+    }
     
     const validarPago = () => {
         const nuevosErrores = {};
@@ -64,6 +80,8 @@ export default function InformacionDisponibilidad() {
             nuevosErrores.numTarjeta = "El número de tarjeta es obligatorio";
         }else if(!/^[0-9]{16}$/.test(numTarjeta.replace(/\s/g, ""))){
             nuevosErrores.numTarjeta = "El número de tarjeta debe tener 16 dígitos";
+        }else if(!validarLuhn(numTarjeta)){
+            nuevosErrores.numTarjeta = "El número de tarjeta no es válido"; 
         }
     
         if(!cvv.trim()){

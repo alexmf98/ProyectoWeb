@@ -45,8 +45,6 @@ export default function ProyectoPersonalAdmin() {
         
         if(!nombre.trim()){
             nuevosErrores.nombre = "El nombre no puede estar en blanco"
-        }else if(!/^[a-zA-Z\s]+$/.test(nombre)){
-            nuevosErrores.nombre = "El nombre no puede contener caracteres ni numeros"
         }
 
         if(coste <= 0){

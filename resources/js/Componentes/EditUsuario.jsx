@@ -1,5 +1,5 @@
 import { router, usePage } from "@inertiajs/react";
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import "../Styles/EditUsuarioAdmin.css";
 import "../Styles/Errores.css";
 import { useAuth } from "../Hooks/useAuth";
@@ -14,18 +14,23 @@ export default function EditUsuario() {
     const [role, setRole] = useState("");
     const [errores, setErrores] = useState({});
     
-    
-    const [users, setUsers] = useState([]);
     const {user} = useAuth();
     
     const { usuarios } = usePage().props;
+
+    const [filtro, setFiltro] = useState("");
+
+    const usuariosFiltrados = useMemo(() => {
+        const base = usuarios.filter(usuario => usuario.id !== user.id);
+        
+        if(!filtro) return base;
+        
+        return base.filter(usuario =>
+            usuario.name.toLowerCase().includes(filtro.toLowerCase()) ||
+            usuario.role.toLowerCase().includes(filtro.toLowerCase())
+        );
+    }, [usuarios, user.id, filtro]);
     
-
-    useEffect(()=>{
-        const handleFiltrar = usuarios.filter((usuario) => usuario.id !== user.id);
-
-        setUsers(handleFiltrar);
-    }, [usuarios, user.id]); 
 
     const validar = () =>{
 
@@ -91,6 +96,14 @@ export default function EditUsuario() {
     }
     return (
         <>
+            <div className="buscadorUsuario">
+                <input
+                    type="text"
+                    placeholder="Buscar por nombre o rol..."
+                    value={filtro}
+                    onChange={(e) => setFiltro(e.target.value)}
+                />
+            </div>
             <div className="tablaEditUsuarioAdmin">
                 <table>
                     <thead>
@@ -105,7 +118,7 @@ export default function EditUsuario() {
                     </thead>
                     <tbody>
                         {
-                            users.map((dato) => (
+                            usuariosFiltrados.map((dato) => (
                                 <tr key={dato.id}>
                                     <td data-label="Nombre">{dato.name}</td>
                                     <td data-label="Apellido">

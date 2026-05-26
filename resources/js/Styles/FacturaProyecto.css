@@ -142,7 +142,130 @@
     margin: 10px;
 }
 
+.contenedorNuevaFactura {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
 
+.nuevafacturaProyecto {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 440px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.nuevafacturaProyecto label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.nuevafacturaProyecto input[type="text"],
+.nuevafacturaProyecto input[type="date"],
+.nuevafacturaProyecto input[type="file"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #111827;
+    background-color: white;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.nuevafacturaProyecto input[type="text"]:focus,
+.nuevafacturaProyecto input[type="date"]:focus {
+    border-color: #6b7280;
+}
+
+.nuevafacturaProyecto button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #111827;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+}
+
+.nuevafacturaProyecto button[type="submit"]:hover {
+    background-color: #374151;
+}
+
+.nuevafacturaProyecto button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: #374151;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.nuevafacturaProyecto button[type="button"]:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.tablafacturaproyecto .btnAñadirNuevaFactura{
+    background-color: white;
+    padding: 10px 20px;
+    color: #374151;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tablafacturaproyecto .btnEditarNuevaFactura{
+    background-color: white;
+    padding: 10px 20px;
+    color: #374151;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tablafacturaproyecto .btnEliminarNuevaFactura{
+    background-color: white;
+    padding: 10px 20px;
+    color: #FF0055;
+    border-radius: 8px;
+    cursor: pointer;
+    border: #FF2B00 2px solid;
+}
+
+.tablafacturaproyecto .btndescargarFactura {
+    background-color: white;
+    padding: 10px 20px;
+    color: #374151;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px #374151 solid;
+    display: inline-block;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.tablafacturaproyecto .btndescargarFactura:hover {
+    background-color: #f3f4f6;
+    border-color: #374151;
+    border-style: solid;
+    border-width: 2px;
+}
 
 /* Paginacion */
 

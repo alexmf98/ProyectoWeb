@@ -138,7 +138,8 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/facturacionproyecto', [FacturacionProyectoController::class, 'index']);
     Route::post('/facturacionproyecto', [FacturacionProyectoController::class, 'store']);
-
+    Route::put('/editarfactura/{facturacionProyecto}', [FacturacionProyectoController::class, 'update']);
+    Route::delete('/eliminarfactura/{facturacionProyecto}', [FacturacionProyectoController::class, 'destroy']);
 
     Route::get('/facturamaquinaria', [FacturacionMaquinariaController::class, 'index']);
 

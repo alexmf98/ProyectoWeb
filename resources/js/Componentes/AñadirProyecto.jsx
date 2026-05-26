@@ -18,8 +18,6 @@ export default function AñadirProyecto(){
 
         if(!nombre.trim()){
             nuevosErrores.nombre = "El nombre del proyecto es obligatorio"
-        }else if(/^[a-zA-Z]$/.test(nombre)){
-            nuevosErrores.nombre = "El nombre no puede contener caracteres ni numeros"
         }
 
         if(coste <= 0){

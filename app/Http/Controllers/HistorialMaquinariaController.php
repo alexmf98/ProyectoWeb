@@ -105,7 +105,7 @@ class HistorialMaquinariaController extends Controller
 
         HistorialMaquinaria::create($validated);
 
-        return redirect()->route('alquiler');
+        return redirect()->route('historialMaquinaria');
     }
 
     /**

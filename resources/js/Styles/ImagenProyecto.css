@@ -1,3 +1,85 @@
+.tablaFacturasProyecto {
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem auto;
+    overflow-x: auto;
+}
+
+.tablaFacturasProyecto table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tablaFacturasProyecto thead {
+    background-color: #185FA5;
+}
+
+.tablaFacturasProyecto thead th {
+    color: white;
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.tablaFacturasProyecto tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+
+.tablaFacturasProyecto tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tablaFacturasProyecto tbody tr:hover {
+    background-color: #f5f9ff;
+}
+
+.tablaFacturasProyecto tbody td {
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    color: #374151;
+}
+
+.tablaFacturasProyecto tbody td a {
+    color: #185FA5;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid #185FA5;
+    padding: 5px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.tablaFacturasProyecto tbody td a:hover {
+    background-color: #eaf2fc;
+    border: 1.5px solid #185FA5 !important;
+    border-radius: 6px !important;
+}
+
+.btnVerFacturas {
+    display: block;
+    margin: 1rem auto;
+    padding: 9px 20px;
+    background-color: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btnVerFacturas:hover {
+    background-color: #0f4278;
+}
+
 .galeria-imagenes {
     display: flex;
     flex-wrap: wrap;
@@ -23,7 +105,7 @@
 
 .galeria-imagen-card button {
     padding: 8px 20px;
-    background-color: #ef4444;  /* rojo porque es eliminar */
+    background-color: #ef4444;  
     color: white;
     border: none;
     border-radius: 6px;
@@ -213,7 +295,7 @@
 
 .tablaCertificados {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     overflow-x: auto;
     margin: 0 auto;
 }
@@ -276,6 +358,26 @@
     border: none;
     text-decoration: none;
     color: inherit;
+}
+
+.tablaCertificados .btndescargarCertificado{
+    background-color: white;
+    padding: 10px 20px;
+    color: #374151;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px #374151 solid;
+    display: inline-block;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.tablaCertificados .btndescargarCertificado:hover {
+    background-color: #f3f4f6;
+    border-color: #374151;
+    border-style: solid;
+    border-width: 2px;
 }
 
 /* Tarjetas */

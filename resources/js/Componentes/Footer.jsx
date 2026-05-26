@@ -17,7 +17,7 @@ export default function Footer(){
             </div>
             
             <div className="localizacion">
-                <h3>Localizacion</h3>
+                <h3>Localización</h3>
                 <p>{localizacion}</p>
             </div>
         </div>

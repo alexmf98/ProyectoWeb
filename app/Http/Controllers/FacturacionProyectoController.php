@@ -38,6 +38,7 @@ class FacturacionProyectoController extends Controller
                 'id'=> $dato->id,
                 'fecha_facturacion' => Carbon::parse($dato->fecha_facturacion)->format('d/m/Y'),
                 'factura'=>Storage::url('facturacionProyecto/' . $dato->factura),
+                'factura_nombre' => $dato->factura,
                 'proyecto_id'=>[
                     'id' => $dato->proyecto->id,
                     'nombre' => $dato->proyecto->nombre,
@@ -103,7 +104,23 @@ class FacturacionProyectoController extends Controller
      */
     public function update(Request $request, FacturacionProyecto $facturacionProyecto)
     {
-        //
+
+        $validate = $request->validate([
+            'fecha_facturacion'=>'required',
+            'factura'=>'nullable',
+        ]);
+        
+        if($request->hasFile('factura')){
+           
+            Storage::disk('public')->delete('facturacionProyecto/' . $facturacionProyecto->factura);
+            
+            $path = Storage::disk('public')->put('facturacionProyecto/', $request->file('factura'));
+            $validate['factura'] = basename($path);
+           
+        }
+
+        $facturacionProyecto->update($validate);
+
     }
 
     /**
@@ -111,6 +128,6 @@ class FacturacionProyectoController extends Controller
      */
     public function destroy(FacturacionProyecto $facturacionProyecto)
     {
-        //
+        $facturacionProyecto->delete();
     }
 }

@@ -20,7 +20,6 @@ class ProyectoSolicitadoController extends Controller
     {
         Gate::authorize('proyectoSolicitado', ProyectoSolicitado::class);
 
-        // $pSolicitado = ProyectoSolicitado::where('user_id', '=', Auth::user()->id)->get();
         $pSolicitado = ProyectoSolicitado::where('user_id', '=', Auth::user()->id)->get()->map(function($dato){
             return [
                 'id' => $dato->id,
@@ -44,7 +43,6 @@ class ProyectoSolicitadoController extends Controller
         
         Gate::authorize('view', User::class);
         
-        // $pSolicitado = ProyectoSolicitado::with('user')->get();
         $pSolicitado = ProyectoSolicitado::with('user')->get()->map(function($dato){
             return [
                 'id' => $dato->id,
@@ -58,31 +56,15 @@ class ProyectoSolicitadoController extends Controller
         });
         $proyecto_personal = ProyectoSolicitado::with('user')->where('estado', '=', 'aceptado')->get();
 
-        // $proyectos_personales = HistorialProyecto::with('proyecto')
-        //                     ->get()
-        //                     ->map(function($dato){
-        //                         return [
-        //                             'id' => $dato->proyecto->id,
-        //                             'nombre' => $dato->proyecto->nombre,
-        //                             'user_id' => $dato->user_id,
-        //                         ];
-        //                     });
 
         return Inertia::render('ProyectoSolicitadoAdm',[
             'proyectoSolicitado' => $pSolicitado,
             'usuario_aceptado' => $proyecto_personal,
-            // 'proyectos'=>$proyectos_personales,
+           
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -102,21 +84,6 @@ class ProyectoSolicitadoController extends Controller
         return redirect()->route('contactenos');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProyectoSolicitado $proyectoSolicitado)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProyectoSolicitado $proyectoSolicitado)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -138,11 +105,4 @@ class ProyectoSolicitadoController extends Controller
         $proyectoSolicitado->update($validate);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProyectoSolicitado $proyectoSolicitado)
-    {
-        //
-    }
 }

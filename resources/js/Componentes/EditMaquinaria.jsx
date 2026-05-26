@@ -18,8 +18,7 @@ export default function EditMaquinaria() {
     const [errores, setErrores] = useState({});
     const [id, setId] = useState(null);
 
-    const {errors} = usePage().props;
-
+   
     const validar = () => {
 
         const nuevosErrores = {}

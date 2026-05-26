@@ -35,7 +35,6 @@ export default function FormularioEditar() {
             nuevosErrores.Email = "El formato del email no es válido";
         }
     
-        // password opcional, solo valida si rellena algo
         if(password && password.length < 8){
             nuevosErrores.password = "La contraseña debe tener al menos 8 caracteres";
         }

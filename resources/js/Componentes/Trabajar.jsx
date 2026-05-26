@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../Styles/Trabajar.css";
 import "../Styles/Errores.css";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 
 export default function Trabajar(){
     
@@ -10,6 +10,7 @@ export default function Trabajar(){
     const [formKey, setFormKey] = useState(0);
 
     const [errores, setErrores] = useState({});
+    const { errors } = usePage().props;
 
     const validar = () => {
 
@@ -81,6 +82,7 @@ export default function Trabajar(){
                             />
 
                         {errores.email && <span className="mensajeError">{errores.email}</span>}
+                        {errors.email && <span className="mensajeError">{errors.email}</span>}
 
                         <label htmlFor="cv">Añade tu curriculum vitae</label>
                         <input  id="cv" 

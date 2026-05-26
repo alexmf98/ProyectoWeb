@@ -160,7 +160,6 @@ export default function ProyectoPersonalAdmin() {
         formData.append("localizacion", localizacion);
         formData.append("categoria", Categoria);
 
-        // solo añade imagen si es un archivo nuevo
         if(Imagen instanceof File){
             formData.append("imagen", Imagen);
         }
@@ -170,8 +169,6 @@ export default function ProyectoPersonalAdmin() {
         });
 
     }
-
-    console.log(proyectos)
     
     return (
         <>

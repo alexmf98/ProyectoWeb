@@ -42,13 +42,6 @@ class TrabajadorController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -71,21 +64,6 @@ class TrabajadorController extends Controller
         Trabajador::create($validate);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Trabajador $trabajador)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Trabajador $trabajador)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -153,14 +131,6 @@ class TrabajadorController extends Controller
 
         Gate::authorize('proyectos', Trabajador::class);
 
-        // $proyectos = Trabajador::where('user_id', Auth::user()->id)->get();
-        // $proyectos = Trabajador::with('proyecto')->get()->map(function($dato){
-        //     return[
-        //         'proyecto'=>[
-        //             'nombre'=>$dato->proyecto->nombre,
-        //         ]
-        //     ];
-        // });
         $proyectos = Trabajador::with('proyecto')
         ->where('user_id', Auth::user()->id)
         ->get()

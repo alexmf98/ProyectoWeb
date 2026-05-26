@@ -30,8 +30,10 @@ class CurriculumVitaeController extends Controller
 
     public function store(Request $request){
         $validate = $request->validate([
-            'email'=>'email|required',
+            'email' => 'email|required|unique:curriculum_vitaes,email',
             'cv'=>'file|mimes:pdf',
+        ],[
+            'email.unique' => 'Este email no esta disponible',
         ]);
 
         if($request->hasFile('cv')){

@@ -71,7 +71,9 @@ export default function ProyectosSolicitados(){
                                     <td data-label="Presupuesto">
                                         {
                                             dato.estado !== 'pendiente' &&
-                                                <a href={dato.presupuesto} download>Descargar</a>
+                                                <a 
+                                                    className="btnDescargar"
+                                                    href={dato.presupuesto} download>Descarga</a>
                                         }
                                     </td>
                                     

@@ -26,34 +26,7 @@ class ProyectoController extends Controller
 
     }
 
-    // public function indexAdm(Request $request){
-
-    //     $categoria = $request->input('categoria');
-    //     $query = Proyecto::query();
-
-    //     if($categoria){
-    //         $query->where('categoria', $categoria);
-    //     }
-
-
-    //     $proyecto = $query->get()->map(function($dato){
-    //         return[
-    //             'id'=>$dato->id,
-    //             'nombre'=>$dato->nombre,
-    //             'localizacion'=>$dato->localizacion,
-    //             'coste'=>$dato->coste,
-    //             'categoria'=>$dato->categoria,
-    //             'imagen'=>$dato->categoria === 'personal' 
-    //                         ? Storage::url('proyectos' . '/' . $dato->imagen)             
-    //                         : Storage::url('proyectos/' . $dato->categoria . '/' . $dato->imagen) ,
-    //         ];
-    //     });
-
-    //     return Inertia::render('ProyectoPersonalAdm',[
-    //         'proyectos'=>$proyecto,
-    //     ]);
-    // }
-
+   
     public function indexAdm(Request $request){
 
         Gate::authorize('view', User::class);
@@ -160,14 +133,7 @@ class ProyectoController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -291,22 +257,7 @@ class ProyectoController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Proyecto $proyecto)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Proyecto $proyecto)
-    {
-        //
-    }
-
+   
     /**
      * Update the specified resource in storage.
      */

@@ -19,9 +19,7 @@ class FacturacionMaquinariaController extends Controller
     {
 
         Gate::authorize('view', User::class);
-        // $historial = HistorialMaquinaria::with('facturas')
-        //                                     ->where('is_cancelled', false)
-        //                                     ->get();
+        
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
 
@@ -58,51 +56,4 @@ class FacturacionMaquinariaController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(FacturacionMaquinaria $facturacionMaquinaria)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FacturacionMaquinaria $facturacionMaquinaria)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FacturacionMaquinaria $facturacionMaquinaria)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FacturacionMaquinaria $facturacionMaquinaria)
-    {
-        //
-    }
 }

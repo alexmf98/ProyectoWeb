@@ -193,7 +193,6 @@ export default function ImagenProyecto() {
             nuevosErrores.fechaCertificadoEditar = "Debe de seleccionar una fecha";
         }
     
-        // solo valida si selecciona un archivo nuevo
         if(certificadoEditar instanceof File && !/\.(pdf)$/i.test(certificadoEditar.name)){
             nuevosErrores.certificadoEditar = "Formato valido pdf";
         }

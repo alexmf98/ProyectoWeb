@@ -4,7 +4,7 @@ import "../Styles/Login.css";
 import cs from "../Imagenes/logo/logo_sarmiento.svg";
 
 import { useAuth } from "../Hooks/useAuth";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Cabecera() {
 
@@ -31,7 +31,6 @@ export default function Cabecera() {
 
             <Link href={'/home'}>Inicio</Link>
 
-            {/* <Link href={'/trabajar'}>Trabaja con nosotros</Link> */}
 
             <div className="proyectos">
 
@@ -42,7 +41,6 @@ export default function Cabecera() {
 
                     <Link href={'/obrapublica'}>Obra pública</Link>
 
-                    {/* <Link href={'/personal'}>Personal</Link> */}
                 </div>
             </div>
 
@@ -108,7 +106,7 @@ export default function Cabecera() {
                                 <button className="btnCerrarSesion" onClick={handleLogout}>
                                     Cerrar Sesión
                                 </button>
-                                {/* <Link>Cerrar Sesión</Link> */}
+                              
                             </div>
                         )}
                     </div>

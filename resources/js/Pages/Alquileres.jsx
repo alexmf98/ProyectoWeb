@@ -32,7 +32,6 @@ export default function Alquiler({ maquinas }) {
                     onChange={(e)=>setBusqueda(e.target.value)}
                     />
 
-                    {/* <button type="submit">Buscar</button> */}
             </div>
 
             

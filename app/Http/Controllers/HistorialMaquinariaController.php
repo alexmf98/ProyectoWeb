@@ -56,23 +56,10 @@ class HistorialMaquinariaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
-        /**
-         * Comprobar que en la fecha inicio no se pueda alquilar si ya no hay stock ese dia
-         * Comprobar solapamiento de fecha si el stock = 1
-         */
 
         $maquina = Maquinaria::findOrFail($request->input('maquinaria_id'));
 
@@ -109,22 +96,6 @@ class HistorialMaquinariaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(HistorialMaquinaria $historialMaquinaria)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(HistorialMaquinaria $historialMaquinaria)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, HistorialMaquinaria $historialMaquinaria)
@@ -149,12 +120,4 @@ class HistorialMaquinariaController extends Controller
 
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(HistorialMaquinaria $historialMaquinaria)
-    {
-        //
-    }
 }

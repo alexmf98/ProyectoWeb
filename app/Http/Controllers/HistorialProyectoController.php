@@ -22,11 +22,7 @@ class HistorialProyectoController extends Controller
     {
 
         Gate::authorize('view', HistorialProyecto::class);
-        // $historial = HistorialProyecto::where('user_id', '=', Auth::user()->id)->get();
 
-        //Usar la relacion con proyecto para sacar el nombre coste imagenes
-
-        // $historial = HistorialProyecto::with('proyecto')->get();
         Gate::authorize('view', HistorialProyecto::class);
 
     $historial = HistorialProyecto::with('proyecto')
@@ -51,51 +47,4 @@ class HistorialProyectoController extends Controller
         ]);
     }
     
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(HistorialProyecto $historialProyecto)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(HistorialProyecto $historialProyecto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, HistorialProyecto $historialProyecto)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(HistorialProyecto $historialProyecto)
-    {
-        //
-    }
 }

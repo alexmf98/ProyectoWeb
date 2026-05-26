@@ -52,13 +52,6 @@ class FacturacionProyectoController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -81,22 +74,6 @@ class FacturacionProyectoController extends Controller
       
         FacturacionProyecto::create($validate);
 
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(FacturacionProyecto $facturacionProyecto)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FacturacionProyecto $facturacionProyecto)
-    {
-        //
     }
 
     /**

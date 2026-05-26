@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 export default function ProyectoSolicitadoAdmin() {
 
     const { proyectoSolicitado } = usePage().props;
-    // const {usuarios } = usePage().props;
+    
 
     const [ver, setVer] = useState(false);
     const [id, setId] = useState(null);

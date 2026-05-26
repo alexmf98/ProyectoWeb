@@ -63,13 +63,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -105,21 +98,6 @@ class UserController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -174,17 +152,6 @@ class UserController extends Controller
         return redirect()->route('editAdmin');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        // $user = Auth::user();
-
-        // $user->delete();
-
-        // return redirect()->route('home');
-    }
 
     public function desactivar(User $user){
         

@@ -38,13 +38,6 @@ export default function FacturacionMaquinaria() {
 
     function handleSumaCoste() {
 
-        // let total = 0;
-
-        // historial.map((dato) => (
-        //     total += Number(dato.coste)
-        // ))
-
-        // return total;
         return historialFiltrado.reduce((total, dato) => total + Number(dato.coste), 0);
     }
 

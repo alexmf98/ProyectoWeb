@@ -98,7 +98,10 @@ export default function Cabecera() {
                                     </>
                                 }
                                 
-                                <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
+                                {
+                                    !isAdmin &&
+                                        <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
+                                }
 
                                 {
                                     trabajador && 

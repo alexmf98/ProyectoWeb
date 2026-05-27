@@ -264,36 +264,54 @@ class ProyectoController extends Controller
     public function update(Request $request, Proyecto $proyecto)
     {
         $validate = $request->validate([
-            'nombre'=>'required',
-            'coste'=>'required',        
-            'localizacion'=>'required',
-            'categoria'=>'required',
-            'imagen'=>'nullable',     
+            'nombre'      => 'required',
+            'coste'       => 'required',        
+            'localizacion'=> 'required',
+            'categoria'   => 'required',
+            'imagen'      => 'nullable',     
         ]);
-        
-        if($request->hasFile('imagen')){
+    
+        if ($request->hasFile('imagen')) {
             
-            if($request->input('categoria') === 'adecuacion'){
-                Storage::delete('proyectos/adecuacion/' . $proyecto->imagen);
-                
+            if ($request->input('categoria') === 'adecuacion') {
+                Storage::disk('public')->delete('proyectos/adecuacion/' . $proyecto->imagen);
                 $path = Storage::disk('public')->put('proyectos/adecuacion/', $request->file('imagen'));
                 $validate['imagen'] = basename($path);
             }
 
-            if($request->input('categoria') === 'restauracion'){
-                Storage::delete('proyectos/restauracion/' . $proyecto->imagen);
-
+            if ($request->input('categoria') === 'restauracion') {
+                Storage::disk('public')->delete('proyectos/restauracion/' . $proyecto->imagen);
                 $path = Storage::disk('public')->put('proyectos/restauracion/', $request->file('imagen'));
                 $validate['imagen'] = basename($path);
             }
 
-            if($request->input('categoria') === 'personal'){
-                Storage::delete('proyectos/' . $proyecto->imagen);
-
+            if ($request->input('categoria') === 'personal') {
+                Storage::disk('public')->delete('proyectos/' . $proyecto->imagen);
                 $path = Storage::disk('public')->put('proyectos/', $request->file('imagen'));
                 $validate['imagen'] = basename($path);
             }
+
+        } elseif ($request->input('categoria') !== $proyecto->categoria) {
             
+            
+            if ($proyecto->categoria === 'adecuacion') {
+                $rutaAntigua = 'proyectos/adecuacion/' . $proyecto->imagen;
+            } elseif ($proyecto->categoria === 'restauracion') {
+                $rutaAntigua = 'proyectos/restauracion/' . $proyecto->imagen;
+            } else {
+                $rutaAntigua = 'proyectos/' . $proyecto->imagen;
+            }
+
+            if ($request->input('categoria') === 'adecuacion') {
+                $rutaNueva = 'proyectos/adecuacion/' . $proyecto->imagen;
+            } elseif ($request->input('categoria') === 'restauracion') {
+                $rutaNueva = 'proyectos/restauracion/' . $proyecto->imagen;
+            } else {
+                $rutaNueva = 'proyectos/' . $proyecto->imagen;
+            }
+
+            Storage::disk('public')->move($rutaAntigua, $rutaNueva);
+            $validate['imagen'] = $proyecto->imagen;
         }
 
         $proyecto->update($validate);

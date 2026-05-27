@@ -44,6 +44,10 @@ export default function MaquinariaAlquiladaAdmin() {
         );
     }, [alquileres, filtro]);
 
+    const capitalizar = (str) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
 
     return (
         <>
@@ -106,10 +110,10 @@ export default function MaquinariaAlquiladaAdmin() {
                                         {dato.is_cancelled ? 'Cancelado' : 'Alquilado'}
                                     </td>
                                     <td data-label="Nombre">
-                                        {dato.user.name}
+                                        {capitalizar(dato.user.name)}
                                     </td>
                                     <td data-label="Apellido">
-                                        {dato.user.apellido}
+                                        {capitalizar(dato.user.apellido)}
                                     </td>
                                     {!dato.is_cancelled && new Date(dato.fecha_fin) >= hoy
                                     ? <td>

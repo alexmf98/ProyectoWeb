@@ -25,7 +25,7 @@ class HistorialMaquinariaPolicy
     }
 
     public function historialMaquinaria(User $user){
-        return $user->role === 'usuario';
+        return $user->role === 'usuario' || $user->role === 'trabajador';
     }
 
     /**

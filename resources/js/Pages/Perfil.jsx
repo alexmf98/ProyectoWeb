@@ -4,7 +4,7 @@ import "../Styles/Perfil.css";
 
 export default function Perfil() {
 
-    const { nombre, email, user } = useAuth();
+    const { nombre, email, user, dni, fecha_nacimiento } = useAuth();
 
     const handleEdit = () =>{
         router.get('/editPerfil');
@@ -16,6 +16,16 @@ export default function Perfil() {
         if (confirmado) {
             router.post(`/desactivarPerfil/${user.id}`);
         }
+    }
+
+    const handleFecha = (fecha)=>{
+        const f = new Date(fecha);
+
+        const dia = f.getDate();
+        const mes = f.getMonth() + 1;
+        const año = f.getFullYear();
+
+        return dia + "/" + mes + "/" + año
     }
 
     return (
@@ -32,6 +42,22 @@ export default function Perfil() {
                     <span className="etiqueta">Email</span>
                     <span className="valor">{email}</span>
                 </div>
+
+                {
+                    user.role === 'trabajador' &&
+                    <>
+                    
+                        <div className="campoPerfil">
+                            <span className="etiqueta">DNI</span>
+                            <span className="valor">{dni}</span>
+                        </div>
+
+                        <div className="campoPerfil">
+                            <span className="etiqueta">Fecha Nacimiento</span>
+                            <span className="valor">{handleFecha(fecha_nacimiento)}</span>
+                        </div>
+                    </>
+                }
 
                     <div className="botonesPerfil">
                         <button onClick={handleEdit} className="btnEditar">Editar</button>

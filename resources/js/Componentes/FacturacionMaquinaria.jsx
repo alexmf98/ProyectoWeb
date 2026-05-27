@@ -65,6 +65,11 @@ export default function FacturacionMaquinaria() {
         router.get('/facturamaquinaria', {}, {replace: true})
     }
 
+    const capitalizar = (str) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
     return (
         <>
             <div className="fechaMaquinaria">
@@ -118,7 +123,7 @@ export default function FacturacionMaquinaria() {
                                     <td data-label="Nombre maquina">{dato.maquinaria.nombre}</td>
                                     <td data-label="Coste">{dato.coste} €</td>
                                     <td data-label="Fecha">{dato.fecha_inicio} - {dato.fecha_fin}</td>
-                                    <td>{dato.user.name} {dato.user.apellido}</td>
+                                    <td>{capitalizar(dato.user.name)} {capitalizar(dato.user.apellido)}</td>
                                 </tr>
                             ))
                             : <tr><td colSpan={4}>No se encontraron resultados</td></tr>

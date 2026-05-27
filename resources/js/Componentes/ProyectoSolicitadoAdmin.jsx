@@ -130,6 +130,11 @@ export default function ProyectoSolicitadoAdmin() {
         window.scrollTo({top: 0, behavior: "smooth"});
     }
 
+    const capitalizar = (str) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
     return (
         <>
             <div className="filtrosProyectoSolicitado">
@@ -202,7 +207,7 @@ export default function ProyectoSolicitadoAdmin() {
                                     <td data-label="Email">{dato.email}</td>
                                     <td data-label="Tipo">{dato.tipo}</td>
                                     <td data-label="Estado">{dato.estado}</td>
-                                    <td data-label="Nombre Apellido">{dato.user.name + " " + dato.user.apellido}</td>
+                                    <td data-label="Nombre Apellido">{capitalizar(dato.user.name) + " " + capitalizar(dato.user.apellido)}</td>
 
                                     <td data-label="Ver proyecto">
                                         {dato.estado === 'realizado' && dato.proyecto_id &&

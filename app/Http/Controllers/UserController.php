@@ -74,28 +74,49 @@ class UserController extends Controller
             'apellido'=>'required',
             'email'=>'required',
             'password'=>'required',
+            'segundo_apellido'=>'nullable',
         ]);
-
+        
         $nombre = $request->input('name');
         $apellido = $request->input('apellido');
-        $email = $request->input('email');
-
+        $segundoapellido = $request->input('segundo_apellido');
+        
+        
         $existe = User::where('name', $nombre)
                         ->where('apellido', $apellido)
-                        ->where('email', $email)->exists();
-
+                        ->where('segundo_apellido', $segundoapellido)
+                        ->exists();
+    
         if($existe){
             return back()->withErrors([
                 'errorcreate'=>"Ya existe ese usuario"
             ]);
         }
 
+        $emailOcupado = User::where('email', $request->email)
+                        ->exists();
+
+        if ($emailOcupado) {
+            return back()->withErrors([
+                'erroremail' => 'Este email ya está en uso'
+            ]);
+        }
+        
         $validated['password'] = Hash::make($request->password);
         $validated['role'] = 'usuario';
 
         User::create($validated);
 
-        return redirect()->route('home');
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials) && Auth::user()->is_active !== false) {
+            $request->session()->regenerate();
+    
+            return redirect()->route('home');
+        }
     }
 
 
@@ -105,17 +126,53 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-
+       
         $user = Auth::user();
 
         $validated = $request->validate([
             'name'=>'required',
             'apellido'=>'required',
-            'email'=>'required|unique:users,email,' . $user->id,
+            'email'=>'required',
             'password'=>'nullable',
+            'dni'=>'nullable',
+            'segundo_apellido'=>'nullable',
+            'fecha_nacimiento'=>'nullable',
         ]);
 
+        $existeDuplicado = User::where('name', $request->name)
+                            ->where('apellido', $request->apellido)
+                            ->where('segundo_apellido', $request->segundo_apellido)
+                            ->where('id', '!=', $user->id)
+                            ->exists();
+     
+        
+        $emailOcupado = User::where('email', $request->email)
+                            ->where('id', '!=', $user->id)
+                            ->exists();
 
+        $dniOcupado = $request->filled('dni') && User::where('dni', $request->dni)
+                            ->where('id', '!=', $user->id)
+                            ->exists();
+        
+        if ($dniOcupado) {
+            return back()->withErrors([
+                'dni' => 'Este DNI ya está en uso por otro usuario'
+            ]);
+        }
+
+        if ($emailOcupado) {
+            return back()->withErrors([
+                'email' => 'Este email ya está en uso por otro usuario'
+            ]);
+        }
+        
+        if ($existeDuplicado) {
+            return back()->withErrors([
+                'errorupdate' => 'Ya existe un usuario con esos datos'
+            ]);
+        }
+
+        
         if($request->filled('password')){
             $validated['password'] = Hash::make($request->password);
         }else{
@@ -129,17 +186,54 @@ class UserController extends Controller
 
     public function updateAdmin(Request $request, $id)
     {
-        
+      
+       
         Gate::authorize('update', User::class);
 
         $user = User::findOrFail($id);
 
         $validated = $request->validate([
             'name'     => 'required',
-            'email'    => 'required|unique:users,email,' . $user->id,
+            'apellido' => 'required',
+            'email'    => 'required',
             'password' => 'nullable',
             'role'     => 'required|in:administrador,usuario,trabajador',
+            'dni'=>'nullable',
+            'segundo_apellido'=>'nullable',
+            'fecha_nacimiento'=>'nullable',
         ]);
+
+        $emailOcupado = User::where('email', $request->email)
+                            ->where('id', '!=', $id)
+                            ->exists();
+                    
+        $existeDuplicado = User::where('name', $request->name)
+                            ->where('apellido', $request->apellido)
+                            ->where('segundo_apellido', $request->segundo_apellido)
+                            ->where('id', '!=', $id)
+                            ->exists();
+
+        $dniOcupado = $request->filled('dni') && User::where('dni', $request->dni)
+                            ->where('id', '!=', $id)
+                            ->exists();
+        
+        if ($dniOcupado) {
+            return back()->withErrors([
+                'dni' => 'Este DNI ya está en uso por otro usuario'
+            ]);
+        }
+
+        if ($emailOcupado) {
+            return back()->withErrors([
+                'email' => 'Este email ya está en uso por otro usuario'
+            ]);
+        }
+        
+        if ($existeDuplicado) {
+            return back()->withErrors([
+                'errorupdate' => 'Ya existe un usuario con esos datos'
+            ]);
+        }
 
         if ($request->filled('password')) {
             $validated['password'] = Hash::make($request->password);
@@ -147,6 +241,7 @@ class UserController extends Controller
             unset($validated['password']);
         }
 
+        
         $user->update($validated);
 
         return redirect()->route('editAdmin');

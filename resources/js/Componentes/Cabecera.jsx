@@ -24,6 +24,11 @@ export default function Cabecera() {
         setMenuOpen(false);
     },[user])
 
+    const capitalizar = (str) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
     return (
         <div className="cabeceraHome">
 
@@ -44,6 +49,7 @@ export default function Cabecera() {
                 </div>
             </div>
 
+            
             <Link href={'/alquileres'}>Alquileres</Link>
 
             <Link href={'/contactenos'}>Contactenos</Link>
@@ -61,7 +67,7 @@ export default function Cabecera() {
                             <div className="submenus">
 
                             <div>
-                               <p>Login: {user?.name}</p> 
+                               <h3>Login: {capitalizar(user?.name)}</h3> 
                             </div>
 
                             {
@@ -89,9 +95,10 @@ export default function Cabecera() {
 
                                         <Link href={'/proyectoSolicitado'}>Mis proyectos solicitados</Link>
                                     
-                                        <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
                                     </>
                                 }
+                                
+                                <Link href={'/historialmaquinaria'}>Historial Alquileres</Link>
 
                                 {
                                     trabajador && 

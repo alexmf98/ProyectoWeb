@@ -9,6 +9,7 @@ export default function FormularioCrear() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errores, setErrores] = useState({});
+    const [segundoApellido, setSegundoApellido] = useState("");
 
     const {errors} = usePage().props;
    
@@ -26,6 +27,10 @@ export default function FormularioCrear() {
             nuevosErrores.apellido = "El apellido es obligatorio"
         }else if(!/^[a-zA-Z]+$/.test(apellido)){
             nuevosErrores.apellido = "El apellido no puede contener caracteres ni números"
+        }
+
+        if(segundoApellido.trim() && /[0-9]/.test(segundoApellido)){
+            nuevosErrores.segundoApellido = "El apellido no puede contener números"
         }
 
         if(!email.trim()){
@@ -57,8 +62,9 @@ export default function FormularioCrear() {
         setErrores({});
 
         router.post('/crearcuenta', {
-            name: name,
-            apellido: apellido,
+            name: name.toLowerCase(),
+            apellido: apellido.toLowerCase(),
+            segundo_apellido: segundoApellido.toLowerCase(),
             email: email,
             password: password,
         });
@@ -66,15 +72,15 @@ export default function FormularioCrear() {
 
     return (
         <>
-        {
-            errors.errorcreate && 
-                <div className="mensajeErrorInicio">
-                    {errors.errorcreate}
-                </div>
-        }
 
         <div className="contenedorFormulario">
             <form onSubmit={handleCrearCuenta} className="tarjetaFormulario">
+            {
+            errors.errorcreate && 
+                <div className="mensajeError">
+                    {errors.errorcreate}
+                </div>
+            }
 
                 <label htmlFor="name">Nombre de Usuario</label>
 
@@ -93,6 +99,14 @@ export default function FormularioCrear() {
 
                 {errores.apellido && <span className="mensajeError">{errores.apellido}</span>}
 
+                <label htmlFor="segun_apellido">Segundo Apellido</label>
+
+                <input type="text"
+                    value={segundoApellido}
+                    onChange={(e) => setSegundoApellido(e.target.value)} />
+
+                {errores.segundoApellido && <span className="mensajeError">{errores.segundoApellido}</span>}
+                
                 <label htmlFor="email">Email</label>
 
                 <input id="email"
@@ -101,6 +115,7 @@ export default function FormularioCrear() {
                     onChange={(e) => setEmail(e.target.value)} />
 
                 {errores.email && <span className="mensajeError">{errores.email}</span>}
+                {errors.erroremail && <span className="mensajeError">{errors.erroremail}</span>}
 
                 <label htmlFor="password">Contraseña</label>
 

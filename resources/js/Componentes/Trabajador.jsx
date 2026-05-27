@@ -132,6 +132,11 @@ export default function Trabajador(){
         }
     }
 
+    const capitalizar = (str) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
     return(
         <>
             {!editando &&
@@ -251,7 +256,7 @@ export default function Trabajador(){
                             {nominasFiltradas.length > 0 
                                 ? nominasFiltradas.map((dato, index)=>(
                                     <tr key={index}>
-                                        <td>{dato.nombre} {dato.apellido}</td>
+                                        <td>{capitalizar(dato.nombre)} {capitalizar(dato.apellido)}</td>
                                         <td>{editarFecha(dato.fecha_nomina)}</td>
                                         <td><a href={dato.nomina} download>Descargar</a></td>
                                         <td>
